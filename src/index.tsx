@@ -8,13 +8,14 @@ import { Provider } from 'react-redux';
 
 import { store } from 'store';
 import { theme, GlobalStyle } from 'theme';
+import { App } from 'components';
 
 const rootComponent = (
   <Provider store={store}>
     <Router>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <div>The app</div>
+        <App />
       </ThemeProvider>
     </Router>
   </Provider>

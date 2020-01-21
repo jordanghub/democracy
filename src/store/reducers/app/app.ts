@@ -2,7 +2,11 @@ import { DUMMY_ACTION } from "store/actionTypes";
 import { TAppState } from "types/state";
 import { AppReducerActionTypes } from "store/reducers/app/interface";
 
-const initialState: TAppState = {};
+import { latestThreads } from "fixtures/latestThreads";
+
+const initialState: TAppState = {
+  latestThreads: latestThreads
+};
 
 export function appReducer(state:TAppState = initialState, action: AppReducerActionTypes): TAppState {
 

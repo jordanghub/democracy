@@ -1,9 +1,7 @@
 import React from 'react';
 import * as Styled from './DummyComponent.style';
 
-import { DummyComponentProps } from './interface';
 
-
-export const DummyComponent = ({}: DummyComponentProps) => (
+export const DummyComponent = () => (
   <Styled.Wrapper>dummy component</Styled.Wrapper>
 )
