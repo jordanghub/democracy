@@ -1,5 +1,11 @@
 import styled from "styled-components";
-import { Paper } from "@material-ui/core";
+import { Card, CardActions, Paper } from "@material-ui/core";
+
+export const CardWrapper = styled(Card)``
+export const CardCategories = styled(CardActions)`
+  margin-left: .4rem;
+  margin-bottom: .4rem;
+`
 
 export const Wrapper = styled(Paper)`
   padding: 1rem;
