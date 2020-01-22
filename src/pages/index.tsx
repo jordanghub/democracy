@@ -6,7 +6,7 @@ import { NextPage, NextPageContext } from 'next';
 import { ThreadHomepage as ThreadHomepageType } from 'types/thread';
 
 import { fetchLatestThreads } from 'store/actions';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TState } from 'types/state';
 
@@ -25,9 +25,15 @@ const Homepage: NextPage<HomepageProps> = () => {
     dispatch(fetchLatestThreads())
   }, []);
 
-  if(!threads) {    
-    fetchThreads();
-  }
+  useEffect(() => {
+    
+
+    if(!threads) {    
+      fetchThreads();
+    }
+  }, [])
+
+  
 
   const threadList = threads?.map((thread) => (
     <ThreadHomepage title={thread.title} />
