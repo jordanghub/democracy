@@ -28,11 +28,15 @@ export const MessageContent = styled.div<MessageContentStyleProps>`
   
   & .MuiSpeedDial-root {
     position: absolute;
+    transform: translateY(-50%);
     top: ${props => props.posY}px;
-    left: ${props => props.posX}px;
+    left: ${props => props.posX + 50}px;
   }
-
 `
+
+export const HightlightedPart = styled.span`
+  background-color: rgba(0,0,0,0.3);
+`;
 
 type MessageContentStyleProps = {
   posX: number;

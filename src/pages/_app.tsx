@@ -8,9 +8,14 @@ import withRedux from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
 
 import createStore from 'store';
+import { Store } from 'redux';
 
 
-class MyApp extends App {
+interface MyAppProps {
+  store: Store
+}
+
+class MyApp extends App<MyAppProps> {
   static async getInitialProps({ Component, ctx }) {
     let pageProps = {}
 
@@ -21,7 +26,6 @@ class MyApp extends App {
   }
 
   render() {
-    // @ts-ignore
     const { Component, pageProps, store } = this.props
     return (
       <Provider store={store}>

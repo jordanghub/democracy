@@ -8,7 +8,6 @@ export const ThreadFull = ({ title, messages, categories }: ThreadFullProps) => 
     <ThreadMessage content={message.content} />
   ))
   
-  
   return (
     <Styled.Wrapper>
       <ThreadHomepage
