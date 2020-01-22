@@ -3,7 +3,7 @@ import React, { useState, useCallback, useRef, memo } from 'react';
 import * as Styled from './Rating.style';
 import { Stars as RatingIcon } from '@material-ui/icons';
 import { Popper, Paper, Tabs } from '@material-ui/core';
-import { RatingShow } from './RatingShow';
+import { RatingShow } from 'components';
 
 import { criterias } from 'fixtures/ratingCriterias';
 

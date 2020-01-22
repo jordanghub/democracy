@@ -6,7 +6,6 @@ import { Menu } from '@material-ui/icons';
 import * as Styled from './Nav.style';
 
 import { Link } from 'components/Utils';
-import { HOMEPAGE_ROUTE } from 'appConsts/routes';
 
 
 export const Nav = memo(() => (
@@ -17,7 +16,7 @@ export const Nav = memo(() => (
             <Menu />
           </IconButton>
           <Typography variant="h6">
-            <Link to={HOMEPAGE_ROUTE}>Democracy</Link>
+            <Link to="/">Democracy</Link>
           </Typography>
 
           <Link to="/">

@@ -1,4 +1,4 @@
-import { ThreadHomepage } from "types/thread";
+import { ThreadHomepage } from "../types/thread";
 
 export const latestThreads: ThreadHomepage[] = [
   {

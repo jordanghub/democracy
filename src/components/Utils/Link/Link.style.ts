@@ -1,7 +1,11 @@
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import Link from "next/link";
 
-export const Wrapper = styled(NavLink)`
+export const Wrapper = styled(Link)`
+`
+  
+
+export const LinkStyle = styled.a`
 
   color: inherit;
   text-decoration: none;
@@ -11,5 +15,7 @@ export const Wrapper = styled(NavLink)`
   }
   &:hover {
     text-decoration: underline;
+    cursor: pointer;
   }
+ 
 `

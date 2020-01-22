@@ -8,5 +8,6 @@ export const Wrapper = styled.div`
   & .MuiTypography-root {
     flex-grow: 1;
   }
+  color: white;
 
 `;

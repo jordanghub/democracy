@@ -1,3 +1,3 @@
-import { DummyActionType } from "store/actions/app/interface";
+import { DummyActionType, ChangeLatestThreadsActionType } from "store/actions/app/interface";
 
-export type AppReducerActionTypes = DummyActionType;
+export type AppReducerActionTypes = DummyActionType | ChangeLatestThreadsActionType;
