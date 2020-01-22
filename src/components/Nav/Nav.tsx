@@ -19,13 +19,15 @@ export const Nav = memo(() => (
             <Link to="/">Democracy</Link>
           </Typography>
 
-          <Link to="/">
+          <Link to="/register">
+            <Button color="inherit">S'inscrire</Button> 
+          </Link>
+          <Link to="/login">
             <Button color="inherit">Se connecter</Button> 
           </Link>
           <Link to="/thread/new">
             <Button color="inherit">Créer un thread</Button> 
           </Link>
-
         </Toolbar>
       </AppBar>
   </Styled.Wrapper>
