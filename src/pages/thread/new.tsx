@@ -1,4 +1,4 @@
-import * as Styled from 'pageStyle/thread-show.style';
+import * as Styled from 'pagesStyle/thread-show.style';
 import { Nav, ThreadFull } from 'components';
 import { threadSingle } from 'fixtures/thread' 
 import { useRouter } from 'next/router';
