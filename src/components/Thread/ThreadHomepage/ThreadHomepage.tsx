@@ -5,14 +5,16 @@ import { Typography, Chip, Grid } from '@material-ui/core';
 import { Link } from 'components/Utils';
 import { Rating } from 'components';
 
-export const ThreadHomepage = memo(({ title }: ThreadHomepageProps) => {
+export const ThreadHomepage = memo(({ title, withoutLink }: ThreadHomepageProps) => {
 
   return (
     <Styled.Wrapper elevation={3}>
       <Grid container alignItems="center">
         <Grid item xs={11}> 
           <Typography variant="h6" component="h3">
-            <Link to="/">{title}</Link>        
+            {
+              withoutLink ? title : <Link to="/thread/dummy-id">{title}</Link> 
+            }                   
           </Typography>
           <Typography>Crée par zoubizoub le 21 janvier 2020 à 02:32</Typography>
           <Styled.Categories>
@@ -26,6 +28,5 @@ export const ThreadHomepage = memo(({ title }: ThreadHomepageProps) => {
       </Grid>    
      
     </Styled.Wrapper>
-  )
-  
+  )  
 })

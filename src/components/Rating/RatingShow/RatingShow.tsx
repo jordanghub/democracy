@@ -8,7 +8,7 @@ function valuetext(value: Number) {
   return `${value}`;
 }
 
-export const RatingShow = memo(({ criterias }:RatingShowProps) => {
+export const RatingShow = memo(({ criterias, disabled }:RatingShowProps) => {
 
   return (
     <Styled.Wrapper>
@@ -19,7 +19,7 @@ export const RatingShow = memo(({ criterias }:RatingShowProps) => {
           </Typography>
           
           <Slider
-            disabled
+            disabled={disabled}
             defaultValue={criteria.value}
             getAriaValueText={valuetext}
             valueLabelDisplay="auto"
