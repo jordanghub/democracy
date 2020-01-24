@@ -1,15 +1,25 @@
 import React, { useState, useCallback, useRef, memo } from 'react';
 
-import * as Styled from './Rating.style';
 import { Stars as RatingIcon } from '@material-ui/icons';
-import { Popper, Paper, Tabs } from '@material-ui/core';
-import { RatingShow } from 'components';
+import { Popper, Paper, Tabs, AppBar, Tab, Typography, Box, Button } from '@material-ui/core';
+import { RatingShow, TabPanel } from 'components';
+import * as Styled from './Rating.style';
 
 import { criterias } from 'fixtures/ratingCriterias';
 
-export const Rating = memo(() => {
+import { RatingProps } from './interface';
+
+function a11yProps(index: any) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
+
+export const Rating = memo(({ voteDisabled }: RatingProps) => {
 
   const [isRatingOpen, changeisRatingOpen] = useState(false);
+  const [tabItem, changeTabItem] = useState(0);
   
   const ref = useRef<HTMLDivElement>(null);
 
@@ -20,6 +30,10 @@ export const Rating = memo(() => {
   const handleMouseLeave = useCallback(() => {
     changeisRatingOpen(false);
   }, [])
+
+  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    changeTabItem(newValue)
+  }
 
   return (
     <Styled.Wrapper ref={ref} onMouseEnter={handleIconClick} onMouseLeave={handleMouseLeave}>
@@ -33,8 +47,28 @@ export const Rating = memo(() => {
             disablePortal={true}                  
           >            
             <Paper elevation={3}>
-              {/*<RatingShow criterias={criterias} />*/}
-              <RatingShow criterias={criterias} disabled />
+              {
+                voteDisabled 
+                  ?  <RatingShow criterias={criterias} disabled />
+                  : (
+                    <>
+                      <AppBar position="static">
+                        <Tabs value={tabItem} onChange={handleTabChange} aria-label="simple tabs example">
+                          <Tab label="Notes" {...a11yProps(0)} />
+                          <Tab label="Voter" {...a11yProps(1)} />
+                        </Tabs>
+                      </AppBar>
+                      <TabPanel value={tabItem} index={0}>
+                        <RatingShow criterias={criterias} disabled />
+                      </TabPanel>
+                      <TabPanel value={tabItem} index={1}>
+                        <RatingShow criterias={criterias} />
+                        <Button fullWidth variant="contained">Envoyer</Button>
+                      </TabPanel>
+                    </>
+                  )
+              }             
+              
             </Paper>            
           </Popper>
         )
@@ -42,3 +76,5 @@ export const Rating = memo(() => {
     </Styled.Wrapper>
   )
 });
+
+

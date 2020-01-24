@@ -23,7 +23,7 @@ export const ThreadHomepage = memo(({ title, withoutLink }: ThreadHomepageProps)
           </Styled.Categories>
         </Grid>
         <Grid item xs={1}>
-          <Rating />
+          <Rating voteDisabled />
         </Grid>
       </Grid>    
      
