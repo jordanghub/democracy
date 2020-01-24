@@ -1,75 +1,86 @@
-import React, { useState, useCallback, useRef, memo } from 'react';
+import React, { useState, useCallback, useRef, memo, useEffect } from 'react';
 
 import { Stars as RatingIcon } from '@material-ui/icons';
-import { Popper, Paper, Tabs, AppBar, Tab, Typography, Box, Button } from '@material-ui/core';
-import { RatingShow, TabPanel } from 'components';
+import { Popper } from '@material-ui/core';
 import * as Styled from './Rating.style';
 
 import { criterias } from 'fixtures/ratingCriterias';
 
 import { RatingProps } from './interface';
+import { RatingTabs } from './RatingTabs';
 
-function a11yProps(index: any) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
+
+const ratingClosed = {
+  isOpened: false,
+  persist: false,
 }
+
+const ratingOpenedMouse = {
+  isOpened: true,
+  persist: false,
+};
+
+const ratingOpenedClick = {
+  isOpened: true,
+  persist: true,
+};
 
 export const Rating = memo(({ voteDisabled }: RatingProps) => {
 
-  const [isRatingOpen, changeisRatingOpen] = useState(false);
-  const [tabItem, changeTabItem] = useState(0);
-  
+  const [isRatingOpen, changeisRatingOpen] = useState(ratingClosed);
+
   const ref = useRef<HTMLDivElement>(null);
+  const popperRef = useRef(null);
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOut);
+    return () => document.removeEventListener('click', handleClickOut);
+  }, [isRatingOpen])
+
+  const handleClickOut = useCallback((evt) => {
+    if(isRatingOpen.isOpened && isRatingOpen.persist) {
+      if(popperRef.current) {
+        if(!popperRef.current.reference.contains(evt.target)) {
+          changeisRatingOpen(ratingClosed);
+        }
+      }
+    }
+  }, [isRatingOpen])
 
   const handleIconClick = useCallback(() => {
-    changeisRatingOpen(true);
-  }, []);
+    if(isRatingOpen.isOpened && isRatingOpen.persist) {
+      changeisRatingOpen(ratingClosed);
+    } else {
+      changeisRatingOpen(ratingOpenedClick);
+    }
+  }, [isRatingOpen]);
+  
+  const handleMouseEnter = useCallback(() => {
+    if(!isRatingOpen.isOpened) {
+      changeisRatingOpen(ratingOpenedMouse);
+    }
+  }, [isRatingOpen])
 
   const handleMouseLeave = useCallback(() => {
-    changeisRatingOpen(false);
-  }, [])
-
-  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-    changeTabItem(newValue)
-  }
+    if(!isRatingOpen.persist) {
+      changeisRatingOpen(ratingClosed);
+    }
+  }, [isRatingOpen])  
 
   return (
-    <Styled.Wrapper ref={ref} onMouseEnter={handleIconClick} onMouseLeave={handleMouseLeave}>
+    <Styled.Wrapper ref={ref} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <RatingIcon fontSize="large" cursor="pointer" onClick={handleIconClick} />
       {
         isRatingOpen && (
-          <Popper 
-            open={isRatingOpen}
+          <Popper
+            className="MuiTabsContainer"
+            popperRef={popperRef}
+            open={isRatingOpen.isOpened}
             anchorEl={ref.current}
             placement="right"
             disablePortal={true}                  
-          >            
-            <Paper elevation={3}>
-              {
-                voteDisabled 
-                  ?  <RatingShow criterias={criterias} disabled />
-                  : (
-                    <>
-                      <AppBar position="static">
-                        <Tabs value={tabItem} onChange={handleTabChange} aria-label="simple tabs example">
-                          <Tab label="Notes" {...a11yProps(0)} />
-                          <Tab label="Voter" {...a11yProps(1)} />
-                        </Tabs>
-                      </AppBar>
-                      <TabPanel value={tabItem} index={0}>
-                        <RatingShow criterias={criterias} disabled />
-                      </TabPanel>
-                      <TabPanel value={tabItem} index={1}>
-                        <RatingShow criterias={criterias} />
-                        <Button fullWidth variant="contained">Envoyer</Button>
-                      </TabPanel>
-                    </>
-                  )
-              }             
-              
-            </Paper>            
+          >  
+            <RatingTabs criterias={criterias} voteDisabled={voteDisabled} />                      
           </Popper>
         )
       }
