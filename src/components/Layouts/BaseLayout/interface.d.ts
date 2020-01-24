@@ -1,5 +1,7 @@
 import { ReactNode } from "react";
 
 export interface BaseLayoutProps {
-  children: ReactNode
+  children: ReactNode;
+  title?: string;
+  description?: string;
 }
