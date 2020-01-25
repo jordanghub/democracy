@@ -38,6 +38,11 @@ export const HightlightedPart = styled.span`
   background-color: rgba(0,0,0,0.3);
 `;
 
+export const Sources = styled.div`
+  margin-top: 1rem;
+`
+
+
 type MessageContentStyleProps = {
   posX: number;
   posY: number;

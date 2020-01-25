@@ -6,7 +6,10 @@ import { ThreadHomepage, ThreadMessage } from 'components';
 import { AnswerThreadForm } from 'containers/Forms/AnswerThreadForm';
 export const ThreadFull = ({ title, messages, categories }: ThreadFullProps) => {
   const messagesList = messages.map((message) => (
-    <ThreadMessage content={message.content} />
+    <ThreadMessage
+     content={message.content}
+     sources={message.sources}
+    />
   ))
   
   return (

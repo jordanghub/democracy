@@ -3,10 +3,13 @@ import * as Styled from './ThreadMessage.style';
 import { ThreadMessageProps } from './interface';
 import { Rating } from 'components';
 import { Typography, Avatar, Grid } from '@material-ui/core';
-import { FileCopy, Save, Print, Share, Favorite, CallSplit, Add, Remove } from '@material-ui/icons';
+import { CallSplit, Add, Remove } from '@material-ui/icons';
 import { SpeedDial, SpeedDialIcon, SpeedDialAction } from '@material-ui/lab';
+import { ThreadSource } from '../ThreadSource';
 
-export const ThreadMessage = memo(({ content }: ThreadMessageProps) => {
+export const ThreadMessage = memo(({ content, sources }: ThreadMessageProps) => {
+
+  console.log(sources);
 
   const [selectedParts, changeSelectedParts] = useState([]);
 
@@ -98,6 +101,10 @@ export const ThreadMessage = memo(({ content }: ThreadMessageProps) => {
     />
   ))
 
+  const sourcesList = sources?.map((source) => (
+    <ThreadSource name={source.name} url={source.url} />
+  ))
+
   return (
     <Styled.Wrapper>
       <Styled.Header container alignItems="center">
@@ -117,7 +124,7 @@ export const ThreadMessage = memo(({ content }: ThreadMessageProps) => {
         <Typography onMouseUp={handleOnMouseUp}>{content}</Typography>
         { 
           toolBarInfo.isOpened && (
-            <SpeedDial
+            <SpeedDial              
               ariaLabel="SpeedDial example"
               icon={<SpeedDialIcon onClick={handleClose} />}
               direction="down"
@@ -129,7 +136,12 @@ export const ThreadMessage = memo(({ content }: ThreadMessageProps) => {
         }
         
       </Styled.MessageContent>
+      <Styled.Sources>
+        <Typography variant="h6">Liste des sources</Typography>
+        {sourcesList && sourcesList.length > 0 ? sourcesList : <Typography>Aucune source liée à ce message</Typography> }
+      </Styled.Sources>
     </Styled.Wrapper>
+
   )
   
 })

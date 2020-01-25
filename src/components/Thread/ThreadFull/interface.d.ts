@@ -1,13 +1,14 @@
 export interface ThreadFullProps {
   title: string;
   categories: ThreadCategory[];
-  messages: ThreadMessage[];
+  messages: ThreadMessage[];  
 }
 
 type ThreadMessage = {
   id: number;
   content: string;
   scoring: ThreadMessageScoring[];
+  sources?: ThreadSource[];
 }
 
 type ThreadMessageScoring = {
@@ -16,4 +17,9 @@ type ThreadMessageScoring = {
 }
 type ThreadCategory = {
   name: string;
+}
+
+type ThreadSource = {
+  name: string;
+  url: string;
 }
