@@ -5,10 +5,11 @@ import { Menu } from '@material-ui/icons';
 
 import * as Styled from './Nav.style';
 
-import { Link } from 'components/Utils';
+import { LinkComponent } from 'components/Utils';
+import { NavProps } from './interface';
 
 
-export const Nav = memo(() => (
+export const Nav = memo(({ isLoggedIn, logoutCallback }: NavProps) => (
   <Styled.Wrapper>
     <AppBar position="static">
         <Toolbar>
@@ -16,18 +17,36 @@ export const Nav = memo(() => (
             <Menu />
           </IconButton>
           <Typography variant="h6">
-            <Link to="/">Democracy</Link>
+            <LinkComponent to="/">Democracy</LinkComponent>
           </Typography>
 
-          <Link to="/register">
-            <Button color="inherit">S'inscrire</Button> 
-          </Link>
-          <Link to="/login">
-            <Button color="inherit">Se connecter</Button> 
-          </Link>
-          <Link to="/thread/new">
-            <Button color="inherit">Créer un thread</Button> 
-          </Link>
+          { !isLoggedIn && (
+            <>
+              <LinkComponent to="/register">
+                <Button color="inherit">S'inscrire</Button> 
+              </LinkComponent>
+              <LinkComponent to="/login">
+                <Button color="inherit">Se connecter</Button> 
+              </LinkComponent>
+            </>
+            )
+          }
+
+          {
+            isLoggedIn && (
+              <>
+                <LinkComponent to="/thread/new">
+                  <Button color="inherit">Créer un thread</Button> 
+                </LinkComponent>
+                <LinkComponent to="/profile">
+                  <Button color="inherit">Mon profil</Button> 
+                </LinkComponent>
+                <Button color="inherit" onClick={logoutCallback}>Se déconnecter</Button> 
+              </>
+            )
+          }      
+          
+          
         </Toolbar>
       </AppBar>
   </Styled.Wrapper>

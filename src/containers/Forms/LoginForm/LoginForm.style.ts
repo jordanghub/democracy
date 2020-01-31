@@ -11,3 +11,10 @@ export const Form = styled.form`
   }
 
 `;
+export const FormWrapper = styled.div`
+
+  & .MuiAlert-root {
+    margin-top: 1rem;
+  }
+
+`

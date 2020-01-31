@@ -1,1 +1,4 @@
-export interface NavProps {}
+export interface NavProps {
+  isLoggedIn: boolean;
+  logoutCallback: () => void 
+}

@@ -4,6 +4,7 @@ import { Button, Typography } from '@material-ui/core';
 
 import { Text } from 'components/Inputs';
 import * as Styled from './AnswerThreadForm.style'
+import { ThreadSourcesInput } from 'components/Inputs/ThreadSourcesInput';
 
 
 export const AnswerThreadFormComponent = ({ handleSubmit}: FormRenderProps) => {
@@ -11,6 +12,7 @@ export const AnswerThreadFormComponent = ({ handleSubmit}: FormRenderProps) => {
     <Styled.Form onSubmit={handleSubmit}>
       <Typography variant="h6" component="p">Poster une réponse</Typography>
       <Text name="content" multiline label="" rows={15} />
+      <ThreadSourcesInput />
       <Button fullWidth variant="contained" type="submit">Envoyer la réponse</Button>
     </Styled.Form>
   )
@@ -18,7 +20,7 @@ export const AnswerThreadFormComponent = ({ handleSubmit}: FormRenderProps) => {
 
 export const AnswerThreadForm = () => {
   const handleSubmit = () => {
-    console.log('form submitted');
+    // form submit
   }
   return (
     <Form 

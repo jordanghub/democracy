@@ -1,9 +1,4 @@
 import styled from "styled-components";
-import Link from "next/link";
-
-export const Wrapper = styled(Link)`
-`
-  
 
 export const LinkStyle = styled.a`
 

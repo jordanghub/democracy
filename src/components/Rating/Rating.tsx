@@ -25,7 +25,7 @@ const ratingOpenedClick = {
   persist: true,
 };
 
-export const Rating = memo(({ voteDisabled }: RatingProps) => {
+export const Rating = ({ voteDisabled, messageType, itemId }: RatingProps) => {
 
   const [isRatingOpen, changeisRatingOpen] = useState(ratingClosed);
 
@@ -72,20 +72,25 @@ export const Rating = memo(({ voteDisabled }: RatingProps) => {
       <RatingIcon fontSize="large" cursor="pointer" onClick={handleIconClick} />
       {
         isRatingOpen && (
-          <Popper
+          <Styled.PoperRating
             className="MuiTabsContainer"
             popperRef={popperRef}
             open={isRatingOpen.isOpened}
             anchorEl={ref.current}
             placement="right"
-            disablePortal={true}                  
+            disablePortal={true}         
+            modifiers={{
+              flip: {
+                enabled: true,
+              }
+            }}         
           >  
-            <RatingTabs criterias={criterias} voteDisabled={voteDisabled} />                      
-          </Popper>
+            <RatingTabs itemId={itemId} messageType={messageType} criterias={criterias} voteDisabled={voteDisabled} />                      
+          </Styled.PoperRating>
         )
       }
     </Styled.Wrapper>
   )
-});
+};
 
 

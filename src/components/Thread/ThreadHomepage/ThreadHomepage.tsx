@@ -2,10 +2,11 @@ import React, { memo } from 'react';
 import * as Styled from './ThreadHomepage.style';
 import { ThreadHomepageProps } from './interface';
 import { Typography, Chip, Grid } from '@material-ui/core';
-import { Link } from 'components/Utils';
+import { LinkComponent } from 'components/Utils';
 import { Rating } from 'components';
+import { threadHomepageDate } from 'utils/dateFormat';
 
-export const ThreadHomepage = memo(({ title, withoutLink }: ThreadHomepageProps) => {
+export const ThreadHomepage = memo(({ id, title, withoutLink, author, date, categories, messageType }: ThreadHomepageProps) => {
 
   return (
     <Styled.Wrapper elevation={3}>
@@ -13,17 +14,16 @@ export const ThreadHomepage = memo(({ title, withoutLink }: ThreadHomepageProps)
         <Grid item xs={11}> 
           <Typography variant="h6" component="h3">
             {
-              withoutLink ? title : <Link to="/thread/dummy-id">{title}</Link> 
+              withoutLink ? title : <LinkComponent to={`/thread/[slug]`} visibleLink={`/thread/${id}`}>{title}</LinkComponent> 
             }                   
           </Typography>
-          <Typography>Crée par zoubizoub le 21 janvier 2020 à 02:32</Typography>
+        <Typography>Crée par {author.username} le {threadHomepageDate(date)}</Typography>
           <Styled.Categories>
-            <Chip label="Politique" />
-            <Chip label="Informations" />
+            { categories?.map((category) => <Chip key={category.id} label={category.name} />)}
           </Styled.Categories>
         </Grid>
         <Grid item xs={1}>
-          <Rating voteDisabled />
+          <Rating itemId={id} voteDisabled messageType={messageType} />
         </Grid>
       </Grid>    
      

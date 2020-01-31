@@ -1,7 +1,6 @@
 import { NextPage, NextPageContext } from 'next';
 import { useDispatch, useSelector } from 'react-redux'
 import { Store } from 'redux'
-import { useCallback, useEffect } from 'react'
 import { Typography } from '@material-ui/core'
 
 import { ThreadHomepage as ThreadHomepageType } from 'types/thread'
@@ -12,7 +11,7 @@ import * as Styled from 'pagesStyle/index.style'
 import { ThreadHomepage } from 'components'
 import { fetchLatestThreads } from 'store/actions'
 
-import { BaseLayout } from 'components/Layouts'
+import { BaseLayout } from 'containers/Layouts'
 
 
 interface HomepageProps {
@@ -24,7 +23,16 @@ const Homepage: NextPage<HomepageProps> = () => {
   const threads  = useSelector((state: TState) => state.app.latestThreads);
 
   const threadList = threads?.map((thread) => (
-    <ThreadHomepage key={thread.title} title={thread.title} />
+    <ThreadHomepage 
+      key={thread.id}
+      id={thread.id}
+      title={thread.title}
+      author={thread.author}
+      date={thread.createdAt}
+      categories={thread.categories}
+      messageType="thread"
+    />
+     
   ))
   
   return (
@@ -40,21 +48,10 @@ const Homepage: NextPage<HomepageProps> = () => {
 }
 
 Homepage.getInitialProps = async (ctx: NextPageContext & { store: Store, isServer: boolean }) => {
-
-  const { store } = ctx
-
+  const { store } = ctx;
+ 
   store.dispatch(fetchLatestThreads());  
 
-  await new Promise((resolve) => {
-    const unsubscribe = store.subscribe(() => {
-      const state = store.getState();
-      if(state.app.latestThreads) {
-        unsubscribe()
-        resolve()
-      }
-    })
-  })  
-  
   return {};
   
 }

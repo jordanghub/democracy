@@ -6,10 +6,9 @@ import { Typography, Avatar, Grid } from '@material-ui/core';
 import { CallSplit, Add, Remove } from '@material-ui/icons';
 import { SpeedDial, SpeedDialIcon, SpeedDialAction } from '@material-ui/lab';
 import { ThreadSource } from '../ThreadSource';
+import { threadHomepageDate } from 'utils/dateFormat';
 
-export const ThreadMessage = memo(({ content, sources }: ThreadMessageProps) => {
-
-  console.log(sources);
+export const ThreadMessage = memo(({ content, sources, id, author, date }: ThreadMessageProps) => {
 
   const [selectedParts, changeSelectedParts] = useState([]);
 
@@ -101,8 +100,9 @@ export const ThreadMessage = memo(({ content, sources }: ThreadMessageProps) => 
     />
   ))
 
+
   const sourcesList = sources?.map((source) => (
-    <ThreadSource name={source.name} url={source.url} />
+    <ThreadSource key={source.name} name={source.name} url={source.url} />
   ))
 
   return (
@@ -110,13 +110,13 @@ export const ThreadMessage = memo(({ content, sources }: ThreadMessageProps) => 
       <Styled.Header container alignItems="center">
         <Grid item xs={11}>
           <Grid container alignItems="center">
-            <Avatar>Z</Avatar>
-            <Styled.Username>Zoubizoub</Styled.Username>
-            <Styled.Date>Le 21 janvier 2020 à 02:32</Styled.Date>
+            <Avatar>{author.username.toUpperCase().charAt(0)}</Avatar>
+            <Styled.Username>{author.username}</Styled.Username>
+            <Styled.Date><Typography>le {threadHomepageDate(date)}</Typography></Styled.Date>
           </Grid>
         </Grid>
         <Grid item xs={1}>
-          <Rating />
+          <Rating itemId={id} messageType="message" />
         </Grid>
         
       </Styled.Header>

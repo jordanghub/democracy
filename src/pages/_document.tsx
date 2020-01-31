@@ -5,10 +5,9 @@ import { ServerStyleSheets } from '@material-ui/core/styles'
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const sheet = new ServerStyleSheet()
-    const materialStyle = new ServerStyleSheets()
-    
+    const materialStyle = new ServerStyleSheets()    
     const originalRenderPage = ctx.renderPage
-
+    
     try {
       ctx.renderPage = () =>
         originalRenderPage({

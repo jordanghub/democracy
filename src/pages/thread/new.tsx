@@ -1,11 +1,18 @@
-import { BaseLayout } from 'components/Layouts';
-import { CreateThreadForm } from 'containers';
-
-import * as Styled from 'pagesStyle/thread-new.style';
+import { BaseLayout } from 'containers';
+import { NextPage, NextPageContext } from 'next';
 import { Typography } from '@material-ui/core';
-import { Container } from 'components';
 
-const Thread = () => {
+import { CreateThreadForm } from 'containers';
+import { Container } from 'components';
+import * as Styled from 'pagesStyle/thread-new.style';
+import { checkAuthServ } from 'utils/checkAuthServ';
+
+import { Store } from 'redux';
+import { fetchCategories } from 'store/actions';
+import { useSelector } from 'react-redux';
+import { TState } from 'types/state';
+
+const Thread: NextPage = () => {
   return (
     <BaseLayout>
       <Container>
@@ -14,6 +21,20 @@ const Thread = () => {
       </Container>      
     </BaseLayout>
   )
+}
+
+Thread.getInitialProps = async (ctx: NextPageContext & { store: Store}) => {
+  const token = checkAuthServ(ctx)
+  
+  const { store } = ctx;
+
+  const categories = store.getState().app.categories;
+
+  if(!categories) {
+    store.dispatch(fetchCategories());
+  }
+
+  return {};
 }
 
 export default Thread; 

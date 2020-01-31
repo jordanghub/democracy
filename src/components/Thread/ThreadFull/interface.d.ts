@@ -1,7 +1,10 @@
 export interface ThreadFullProps {
   title: string;
   categories: ThreadCategory[];
-  messages: ThreadMessage[];  
+  messages: ThreadMessage[]; 
+  id: number ;
+  date: string;
+  author: any
 }
 
 type ThreadMessage = {
@@ -9,6 +12,8 @@ type ThreadMessage = {
   content: string;
   scoring: ThreadMessageScoring[];
   sources?: ThreadSource[];
+  author: any
+  createdAt: string;
 }
 
 type ThreadMessageScoring = {

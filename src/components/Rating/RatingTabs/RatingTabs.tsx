@@ -1,8 +1,13 @@
-import React, { useState, useCallback } from 'react';
-import { Paper, AppBar, Tabs, Tab, Button } from '@material-ui/core';
+import React, { useState, useCallback, useEffect } from 'react';
+import { Paper, AppBar, Tabs, Tab, Button, CircularProgress, Typography } from '@material-ui/core';
 
 import { RatingShow, TabPanel } from 'components';
 import { RatingTabsProps } from './interface';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchMessageVotes, fetchThreadVotes } from 'store/actions';
+import { TState } from 'types/state';
+import { RatingForm } from '../RatingForm/RatingForm';
+import { Alert, AlertTitle } from '@material-ui/lab';
 
 function a11yProps(index: any) {
   return {
@@ -11,7 +16,47 @@ function a11yProps(index: any) {
   };
 }
 
-export const RatingTabs = ({ voteDisabled, criterias }: RatingTabsProps) => {
+export const RatingTabs = ({ voteDisabled, criterias, messageType = "thread", itemId }: RatingTabsProps) => {
+
+  const dispatch = useDispatch();
+
+  
+  const fetchMessageVotesAction = useCallback(
+    (payload) => dispatch(fetchMessageVotes(payload)),
+    [dispatch]
+  );
+  const fetchThreadVotesAction = useCallback(
+    (payload) => dispatch(fetchThreadVotes(payload)),
+    [dispatch]
+  );
+  
+
+  console.log(messageType)
+
+  const votes = useSelector((state: TState) => state.app.votes[messageType === "thread" ? "threads": "messages"])
+
+  const scoringCategories = useSelector((state: TState) => state.app.scoringCategories);
+
+  const item = votes.find((messageOrThread) => messageOrThread.id === itemId);
+
+
+  useEffect(() => {
+    
+    if (messageType === "thread") {
+      console.log('je suis un thread')
+      fetchThreadVotesAction({
+        id: itemId,
+      })
+    }
+
+    if (messageType === "message") {
+      console.log('je suis un message')
+      fetchMessageVotesAction({
+        id: itemId,
+      })
+    }    
+
+  }, [])
 
   const [tabItem, changeTabItem] = useState(0);
 
@@ -22,8 +67,11 @@ export const RatingTabs = ({ voteDisabled, criterias }: RatingTabsProps) => {
   return (
     <Paper elevation={3}>
       {
-        voteDisabled 
-          ?  <RatingShow criterias={criterias} disabled />
+        item ? (
+          voteDisabled 
+          ?  (
+              <RatingShow votes={item.votes} criterias={scoringCategories} disabled />
+            )
           : (
             <>
               <AppBar position="static">
@@ -33,14 +81,17 @@ export const RatingTabs = ({ voteDisabled, criterias }: RatingTabsProps) => {
                 </Tabs>
               </AppBar>
               <TabPanel value={tabItem} index={0}>
-                <RatingShow criterias={criterias} disabled />
+                <Typography variant="h5" style={{ textAlign: "center"}}>Notes du message</Typography>
+                <RatingShow criterias={scoringCategories} votes={item.votes} disabled />
               </TabPanel>
-              <TabPanel value={tabItem} index={1}>
-                <RatingShow criterias={criterias} />
-                <Button fullWidth variant="contained">Envoyer</Button>
+              <TabPanel value={tabItem} index={1}>                
+                <Typography variant="h5" style={{ textAlign: "center"}}>Voter pour ce message</Typography>
+                <RatingForm messageId={itemId} criterias={scoringCategories} votes={[]} />                
               </TabPanel>
             </>
           )
+        ) : <div><CircularProgress /></div>
+        
       }
     </Paper>   
   )
