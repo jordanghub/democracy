@@ -57,7 +57,6 @@ class MyApp extends App<MyAppProps> {
 
     
     if(typeof window === 'undefined') {
-      console.log('dispatch');
       ctx.store.dispatch(fetchScoringCategories());
       const { token } = nextCookie(ctx);
       if(!token) {        

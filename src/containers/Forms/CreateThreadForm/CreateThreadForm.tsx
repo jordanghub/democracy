@@ -12,7 +12,7 @@ import { createThreadValidation } from 'validators/createThreadValidation';
 
 export const CreateThreadFormComponent = ({ handleSubmit}: FormRenderProps) => {
 
-  const categories = useSelector((state: TState) => state.app.categories);
+  const categories = useSelector((state: TState) => state.thread.categories);
 
   return (
     <Styled.Form onSubmit={handleSubmit} >

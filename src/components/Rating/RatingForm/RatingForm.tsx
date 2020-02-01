@@ -54,7 +54,7 @@ const SliderField = ({ name, criteria, disabled }) => {
 
 const RatingFormComponent = ({ handleSubmit, messageId, disabled }) => {
 
-  const categories = useSelector((state:TState) => state.app.scoringCategories);
+  const categories = useSelector((state:TState) => state.votes.scoringCategories);
 
   const formData = useSelector((state: TState) => state.forms.forms[`scoring${messageId}`]);
 
@@ -90,7 +90,7 @@ const RatingFormElement = ({ messageId }) => {
     [dispatch]
   )
 
-  const votes = useSelector((state: TState) => state.app.votes.user);
+  const votes = useSelector((state: TState) => state.votes.user);
 
   const item = votes.find((msgVote) => msgVote.id === messageId);
 
@@ -128,8 +128,6 @@ const RatingFormElement = ({ messageId }) => {
 const validateForm = () => ({})
 
 export const RatingForm = memo(({ votes, messageId }:RatingFormProps) => {  
-
-  console.log(votes);
   return (
     <Styled.Wrapper>
       <RatingFormElement messageId={messageId} />

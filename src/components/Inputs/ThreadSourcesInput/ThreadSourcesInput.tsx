@@ -95,7 +95,7 @@ export const ThreadSourcesInput = memo(() => {
               const newValues = [...input.value];
 
               newValues.push({
-                name: labelField.value,
+                label: labelField.value,
                 url: inputField.value,
               })
 
@@ -141,7 +141,7 @@ export const ThreadSourcesInput = memo(() => {
                           <Typography 
                             component="span"
                           >
-                            <a href={val.url} target="_blank">{val.name}</a>
+                            <a href={val.url} target="_blank">{val.label}</a>
                           </Typography>
                           <RemoveCircle cursor="pointer" color="action" onClick={handleRemoveClick(index)}/>
                         </Styled.SourceItem>

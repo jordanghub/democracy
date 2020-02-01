@@ -102,7 +102,7 @@ export const ThreadMessage = memo(({ content, sources, id, author, date }: Threa
 
 
   const sourcesList = sources?.map((source) => (
-    <ThreadSource key={source.name} name={source.name} url={source.url} />
+    <ThreadSource key={source.id} name={source.label} url={source.url} />
   ))
 
   return (
@@ -112,7 +112,7 @@ export const ThreadMessage = memo(({ content, sources, id, author, date }: Threa
           <Grid container alignItems="center">
             <Avatar>{author.username.toUpperCase().charAt(0)}</Avatar>
             <Styled.Username>{author.username}</Styled.Username>
-            <Styled.Date><Typography>le {threadHomepageDate(date)}</Typography></Styled.Date>
+            <Styled.Date>le {threadHomepageDate(date)}</Styled.Date>
           </Grid>
         </Grid>
         <Grid item xs={1}>

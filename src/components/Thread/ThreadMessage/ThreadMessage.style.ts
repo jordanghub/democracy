@@ -6,9 +6,6 @@ export const Wrapper = styled(Paper)`
   margin-top: 1rem;
   padding: 1rem;
 
-  & .MuiTypography-root {
-    margin-left: 0.5rem !important;
-  }
 `;
 
 export const Header = styled(Grid)`
@@ -17,10 +14,11 @@ export const Header = styled(Grid)`
 
 export const Username = styled(Typography)`
   font-weight: bold !important;
+  margin-left: 0.5rem !important;
 `;
 
 export const Date = styled(Typography)`
-  justify-self: right;
+  margin-left: 0.5rem !important;
 `
 
 export const MessageContent = styled.div<MessageContentStyleProps>`
@@ -40,6 +38,7 @@ export const HightlightedPart = styled.span`
 
 export const Sources = styled.div`
   margin-top: 1rem;
+  margin-left: 0;
 `
 
 

@@ -4,7 +4,7 @@ import { Paper, AppBar, Tabs, Tab, Button, CircularProgress, Typography } from '
 import { RatingShow, TabPanel } from 'components';
 import { RatingTabsProps } from './interface';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchMessageVotes, fetchThreadVotes } from 'store/actions';
+import { fetchMessageVotes, fetchThreadVotes, fetchScoringCategories } from 'store/actions';
 import { TState } from 'types/state';
 import { RatingForm } from '../RatingForm/RatingForm';
 import { Alert, AlertTitle } from '@material-ui/lab';
@@ -25,32 +25,38 @@ export const RatingTabs = ({ voteDisabled, criterias, messageType = "thread", it
     (payload) => dispatch(fetchMessageVotes(payload)),
     [dispatch]
   );
+  const fetchScoringCategoriesAction = useCallback(
+    () => dispatch(fetchScoringCategories()),
+    [dispatch]
+  );
   const fetchThreadVotesAction = useCallback(
     (payload) => dispatch(fetchThreadVotes(payload)),
     [dispatch]
   );
   
 
-  console.log(messageType)
+  const votes = useSelector((state: TState) => state.votes[messageType === "thread" ? "threads": "messages"])
 
-  const votes = useSelector((state: TState) => state.app.votes[messageType === "thread" ? "threads": "messages"])
+  const scoringCategories = useSelector((state: TState) => state.votes.scoringCategories);
 
-  const scoringCategories = useSelector((state: TState) => state.app.scoringCategories);
+  const isLoggedIn = useSelector((state: TState) => state.user.isLoggedIn);
 
   const item = votes.find((messageOrThread) => messageOrThread.id === itemId);
 
 
   useEffect(() => {
+
+    if(!scoringCategories) {
+      fetchScoringCategoriesAction();
+    }
     
     if (messageType === "thread") {
-      console.log('je suis un thread')
       fetchThreadVotesAction({
         id: itemId,
       })
     }
 
     if (messageType === "message") {
-      console.log('je suis un message')
       fetchMessageVotesAction({
         id: itemId,
       })
@@ -70,7 +76,7 @@ export const RatingTabs = ({ voteDisabled, criterias, messageType = "thread", it
         item ? (
           voteDisabled 
           ?  (
-              <RatingShow votes={item.votes} criterias={scoringCategories} disabled />
+              <RatingShow votes={item.votes} criterias={scoringCategories || []} disabled />
             )
           : (
             <>
@@ -82,12 +88,23 @@ export const RatingTabs = ({ voteDisabled, criterias, messageType = "thread", it
               </AppBar>
               <TabPanel value={tabItem} index={0}>
                 <Typography variant="h5" style={{ textAlign: "center"}}>Notes du message</Typography>
-                <RatingShow criterias={scoringCategories} votes={item.votes} disabled />
+                <RatingShow criterias={scoringCategories || []} votes={item.votes} disabled />
               </TabPanel>
-              <TabPanel value={tabItem} index={1}>                
-                <Typography variant="h5" style={{ textAlign: "center"}}>Voter pour ce message</Typography>
-                <RatingForm messageId={itemId} criterias={scoringCategories} votes={[]} />                
-              </TabPanel>
+              <TabPanel value={tabItem} index={1}>
+                { isLoggedIn && (
+                    <>
+                      <Typography variant="h5" style={{ textAlign: "center"}}>Voter pour ce message</Typography>
+                      <RatingForm messageId={itemId} criterias={scoringCategories || []} votes={[]} />                
+                    </>
+                  )
+                }              
+                { !isLoggedIn && (
+                    <>
+                      <Typography  style={{ textAlign: "center"}}>Vous devez être connecté pour voter</Typography>
+                    </>
+                  )
+                }              
+                </TabPanel>
             </>
           )
         ) : <div><CircularProgress /></div>

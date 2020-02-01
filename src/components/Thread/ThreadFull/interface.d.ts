@@ -23,8 +23,8 @@ type ThreadMessageScoring = {
 type ThreadCategory = {
   name: string;
 }
-
 type ThreadSource = {
-  name: string;
+  id: number;
+  label: string;
   url: string;
 }

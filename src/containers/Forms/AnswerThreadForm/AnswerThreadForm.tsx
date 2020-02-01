@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { FormRenderProps, Form } from 'react-final-form';
 import { Button, Typography } from '@material-ui/core';
 
 import { Text } from 'components/Inputs';
 import * as Styled from './AnswerThreadForm.style'
 import { ThreadSourcesInput } from 'components/Inputs/ThreadSourcesInput';
+import { createThreadAnswerValidation } from 'validators/createThreadAnswerValidation';
+import { useDispatch } from 'react-redux';
+import { createThreadAnswerFormSubmit } from 'store/actions';
 
 
 export const AnswerThreadFormComponent = ({ handleSubmit}: FormRenderProps) => {
@@ -19,13 +22,18 @@ export const AnswerThreadFormComponent = ({ handleSubmit}: FormRenderProps) => {
 }
 
 export const AnswerThreadForm = () => {
-  const handleSubmit = () => {
-    // form submit
+  const dispatch = useDispatch();
+  const formSubmitAction = useCallback(
+    (payload) => dispatch(createThreadAnswerFormSubmit(payload)),
+    [dispatch]
+  );
+  const handleSubmit = (values) => {
+    formSubmitAction(values);
   }
   return (
     <Form 
       render={AnswerThreadFormComponent}
-      validate={formValidation}
+      validate={createThreadAnswerValidation}
       onSubmit={handleSubmit}
     />
   )

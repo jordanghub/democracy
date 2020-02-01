@@ -3,7 +3,8 @@ import {
   LOGIN_FORM_SUBMIT,
   CREATE_THREAD_FORM_SUBMIT,
   SET_FORM_ERROR,
-  FORM_SUBMIT_SUCCESS
+  FORM_SUBMIT_SUCCESS,
+  CREATE_THREAD_ANSWER_FORM_SUBMIT
 } from "store/actionTypes/forms";
 
 import {
@@ -16,7 +17,9 @@ import {
   SetFormErrorAction,
   CreateThreadSubmitPayload,
   FormSubmitSuccessPayload,
-  FormSubmitSuccessAction
+  FormSubmitSuccessAction,
+  CreateThreadAnswerSubmitPayload,
+  CreateThreadAnswerSubmitAction
 } from "./interface";
 
 
@@ -32,6 +35,11 @@ export const createThreadFormSubmit = (payload: CreateThreadSubmitPayload): Crea
   type: CREATE_THREAD_FORM_SUBMIT,
   payload,
 });
+
+export const createThreadAnswerFormSubmit = (payload: CreateThreadAnswerSubmitPayload): CreateThreadAnswerSubmitAction => ({
+  type: CREATE_THREAD_ANSWER_FORM_SUBMIT,
+  payload
+})
 
 export const setFormError = (payload: SetFormErrorPayload): SetFormErrorAction => ({
   type: SET_FORM_ERROR,

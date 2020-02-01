@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Nav } from 'components/Nav';
 import { BaseLayoutProps } from './interface'
 import Head from 'next/head';
@@ -8,18 +8,22 @@ import { AlertTitle, Alert } from '@material-ui/lab';
 import { LinearProgress } from '@material-ui/core';
 import { logout } from 'store/actions';
 
+import io from 'socket.io-client';
+
 import * as Styled from './BaseLayout.style';
 
 export const BaseLayout = ({ children, title = 'Democracy', description }: BaseLayoutProps) => {
 
   const dispatch = useDispatch();
 
-  const { flashMessage, isPageLoading, isLoggedIn} = useSelector((state: TState) => state.app);
+  const { flashMessage, isPageLoading } = useSelector((state: TState) => state.app);
+  const { isLoggedIn} = useSelector((state: TState) => state.user);
 
   const logoutAction = useCallback(
     () => dispatch(logout()),
     [dispatch]
   )
+
   return(
     <div>
       <Head>
@@ -45,8 +49,7 @@ export const BaseLayout = ({ children, title = 'Democracy', description }: BaseL
             <AlertTitle >{flashMessage.message}</AlertTitle>
           </Styled.FlashMessage>
         )
-      }  
-      
+      }      
       {children}
     </div>
   )

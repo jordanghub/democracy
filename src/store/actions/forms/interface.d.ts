@@ -1,4 +1,4 @@
-import { REGISTER_FORM_SUBMIT, LOGIN_FORM_SUBMIT, CREATE_THREAD_FORM_SUBMIT, SET_FORM_ERROR, FORM_SUBMIT_SUCCESS } from "store/actionTypes";
+import { REGISTER_FORM_SUBMIT, LOGIN_FORM_SUBMIT, CREATE_THREAD_FORM_SUBMIT, SET_FORM_ERROR, FORM_SUBMIT_SUCCESS, CREATE_THREAD_ANSWER_FORM_SUBMIT } from "store/actionTypes";
 
 export interface RegisterFormSubmitAction {
   type: typeof REGISTER_FORM_SUBMIT,
@@ -29,7 +29,20 @@ export type CreateThreadSubmitPayload = {
   title: string,
   content: string,
   categories: [string],
-  sources: {
+  sources?: {
+    label: string,
+    url: string
+  }[],
+}
+
+export interface CreateThreadAnswerSubmitAction {
+  type: typeof CREATE_THREAD_ANSWER_FORM_SUBMIT,
+  payload: CreateThreadAnswerSubmitPayload
+}
+
+export type CreateThreadAnswerSubmitPayload = {
+  content: string,
+  sources?: {
     label: string,
     url: string
   }[],

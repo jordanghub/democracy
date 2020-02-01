@@ -12,21 +12,26 @@ import { DummyActionType,
   SetScoringCategoriesAction,
   SetMessageVotesAction,
   SetThreadVoteAction,
-  SetCurrentUserVoteAction
-} from "store/actions/app/interface";
+  SetCurrentUserVoteAction,
+  AddNewThreadMessageAction,
+  ClearThreadSingleAction
+} from "store/actions";
 
-export type AppReducerActionTypes = ChangeLatestThreadsActionType 
-| LogoutAction
-| LoginSuccess
-| RouteChangeStartAction
+export type AppReducerActionTypes = 
+// ChangeLatestThreadsActionType 
+// | LogoutAction
+// | LoginSuccess
+RouteChangeStartAction
 | RouteChangeCompleteAction
 | SetFlashMessageAction
-| SetAuthStatusAction
+// | SetAuthStatusAction
 | ChangeIsPageLoadingAction
-| ChangeCategoriesAction
-| SetThreadSingleAction
-| SetScoringCategoriesAction
-| SetMessageVotesAction
-| SetThreadVoteAction
-| SetCurrentUserVoteAction
+// | ChangeCategoriesAction
+// | SetThreadSingleAction
+// | SetScoringCategoriesAction
+// | SetMessageVotesAction
+// | SetThreadVoteAction
+// | SetCurrentUserVoteAction
+// | AddNewThreadMessageAction
+// | ClearThreadSingleAction
 ;

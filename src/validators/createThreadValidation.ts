@@ -1,6 +1,3 @@
-
-
-
 export const createThreadValidation = ({ title, content, categories, sources}) => {
   
   const errors: any = {};
@@ -31,6 +28,5 @@ export const createThreadValidation = ({ title, content, categories, sources}) =
   if(Array.isArray(categories) && categories.length === 0) {
     errors.categories = 'Vous devez choisir au moins une catégorie';
   }
-  console.log(errors);
   return errors;
 }

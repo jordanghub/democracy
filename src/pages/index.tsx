@@ -20,7 +20,7 @@ interface HomepageProps {
 
 const Homepage: NextPage<HomepageProps> = () => {
   
-  const threads  = useSelector((state: TState) => state.app.latestThreads);
+  const threads  = useSelector((state: TState) => state.thread.latestThreads);
 
   const threadList = threads?.map((thread) => (
     <ThreadHomepage 

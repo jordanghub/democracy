@@ -6,6 +6,7 @@ export interface ThreadMessageProps {
   date: string;
 }
 type ThreadSource = {
-  name: string;
+  id: number;
+  label: string;
   url: string;
 }

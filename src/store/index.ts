@@ -5,7 +5,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import cookies from 'js-cookie';
 import nextCookies from 'next-cookies';
 
-import { appReducer, formsReducer } from 'store/reducers'
+import { appReducer, formsReducer, threadReducer, userReducer, votesReducer } from 'store/reducers'
 import { start } from 'store/sagas';
 import Router from 'next/router';
 import { getAxios, resetAxios } from 'utils/Axios';
@@ -35,6 +35,9 @@ function configureStore(initialState = {}, nextProps) {
   const reducers = combineReducers({
     app: appReducer,
     forms: formsReducer,
+    thread: threadReducer,
+    user: userReducer,
+    votes: votesReducer,
   })
   
   const store = createStore(reducers, initialState, enhancers);
