@@ -1,10 +1,7 @@
 import React, { useState, useCallback, useRef, memo, useEffect } from 'react';
 
 import { Stars as RatingIcon } from '@material-ui/icons';
-import { Popper } from '@material-ui/core';
 import * as Styled from './Rating.style';
-
-import { criterias } from 'fixtures/ratingCriterias';
 
 import { RatingProps } from './interface';
 import { RatingTabs } from './RatingTabs';
@@ -85,7 +82,7 @@ export const Rating = ({ voteDisabled, messageType, itemId }: RatingProps) => {
               }
             }}         
           >  
-            <RatingTabs itemId={itemId} messageType={messageType} criterias={criterias} voteDisabled={voteDisabled} />                      
+            <RatingTabs itemId={itemId} messageType={messageType} voteDisabled={voteDisabled} />                      
           </Styled.PoperRating>
         )
       }

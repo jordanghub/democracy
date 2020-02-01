@@ -16,7 +16,7 @@ function a11yProps(index: any) {
   };
 }
 
-export const RatingTabs = ({ voteDisabled, criterias, messageType = "thread", itemId }: RatingTabsProps) => {
+export const RatingTabs = ({ voteDisabled, messageType = "thread", itemId }: RatingTabsProps) => {
 
   const dispatch = useDispatch();
 
