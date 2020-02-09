@@ -14,18 +14,18 @@ const months = [
 ];
 
 const days = [
+  'Dimanche',
   'Lundi',
   'Mardi',
   'Mercredi',
   'Jeudi',
   'Vendredi',
   'Samedi',
-  'Dimanche'
 ]
 
 export const threadHomepageDate = (dateString: string) => {
   const date = new Date(dateString);
-  const day = date.getDay() - 1;
+  const day = date.getDay();
   
   const monthDayNumber = date.getDate();
   const month = date.getMonth()

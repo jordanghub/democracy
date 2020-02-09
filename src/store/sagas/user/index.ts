@@ -16,10 +16,10 @@ import {
   formSubmitSuccess,
   loginSuccess,
   setFlashMessage,
+  setRefreshStatus,
 } from 'store/actions';
 
-import { BASE_API_URL, REGISTER_ENDPOINT, LOGIN_ENDPOINT } from 'appConstant/apiEndpoint';
-import { parseFieldErrors } from 'utils/parseFieldsError';
+import { BASE_API_URL, REGISTER_ENDPOINT, LOGIN_ENDPOINT, REFRESH_ENDPOINT } from 'appConstant/apiEndpoint';
 import { AxiosResponse } from 'axios';
 
 export function* logout() {
@@ -32,7 +32,6 @@ export function* logout() {
     message: 'Vous êtes déconnecté'
   }))
 }
-
 export function* loginFormSubmit({ type, payload }) {
   
   const axios = getAxios();
@@ -44,7 +43,7 @@ export function* loginFormSubmit({ type, payload }) {
 
     if(response.status === 201) {
       const token = response.data.access_token;
-      cookie.set('token', token);
+      //cookie.set('token', token);
       yield put(loginSuccess());
       
       Router.push('/');
@@ -90,11 +89,7 @@ export function* registerFormSubmit({ type, payload}) {
     const { data, status } = err.response;
     
     if(data.message) {
-      const errors: any = parseFieldErrors(data.message);
-
-      // Form errors
-
-      yield put(setFormError({ formName: 'register', errors}));
+      yield put(setFormError({ formName: 'register', errors: data.message}));
     }
   }
 }

@@ -28,7 +28,7 @@ Thread.getInitialProps = async (ctx: NextPageContext & { store: Store}) => {
   
   const { store } = ctx;
 
-  const categories = store.getState().app.categories;
+  const categories = store.getState().thread.categories;
 
   if(!categories) {
     store.dispatch(fetchCategories());

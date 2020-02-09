@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components'
 import { GlobalStyle, theme } from 'theme';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
-import cookie from 'js-cookie';
+import cookies from 'cookie';
 import nextCookie from 'next-cookies';
 import Router from 'next/router';
 
@@ -12,7 +12,7 @@ import withRedux from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
 
 import createStore from 'store';
-import { routeChangeComplete, routeChangeStart, setAuthStatus, fetchScoringCategories } from 'store/actions';
+import { routeChangeComplete, routeChangeStart, setAuthStatus, fetchScoringCategories, fetchCategories } from 'store/actions';
 
 
 interface MyAppProps {
@@ -58,11 +58,17 @@ class MyApp extends App<MyAppProps> {
     
     if(typeof window === 'undefined') {
       ctx.store.dispatch(fetchScoringCategories());
-      const { token } = nextCookie(ctx);
-      if(!token) {        
-        ctx.store.dispatch(setAuthStatus({ status: false }))
+      ctx.store.dispatch(fetchCategories());
+
+      if(typeof ctx.req.headers.cookie === 'string') {
+        const cookiesList = cookies.parse(ctx.req.headers.cookie);
+        if(cookiesList && cookiesList.token) {        
+          ctx.store.dispatch(setAuthStatus({ status: true }))
+        } else {
+          ctx.store.dispatch(setAuthStatus({ status: false }));
+        }
       } else {
-        ctx.store.dispatch(setAuthStatus({ status: true }));
+        ctx.store.dispatch(setAuthStatus({ status: false }));
       }
     }
 

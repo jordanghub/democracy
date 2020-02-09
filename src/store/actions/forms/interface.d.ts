@@ -1,4 +1,4 @@
-import { REGISTER_FORM_SUBMIT, LOGIN_FORM_SUBMIT, CREATE_THREAD_FORM_SUBMIT, SET_FORM_ERROR, FORM_SUBMIT_SUCCESS, CREATE_THREAD_ANSWER_FORM_SUBMIT } from "store/actionTypes";
+import { REGISTER_FORM_SUBMIT, LOGIN_FORM_SUBMIT, CREATE_THREAD_FORM_SUBMIT, SET_FORM_ERROR, FORM_SUBMIT_SUCCESS, CREATE_THREAD_ANSWER_FORM_SUBMIT, SET_INITIAL_FORM_DATA, RESET_FORM_DATA } from "store/actionTypes";
 
 export interface RegisterFormSubmitAction {
   type: typeof REGISTER_FORM_SUBMIT,
@@ -64,4 +64,23 @@ export interface FormSubmitSuccessAction {
 
 export type FormSubmitSuccessPayload = {
   formName: string,
+}
+
+export interface ISetInitialFormDataAction {
+  type: typeof SET_INITIAL_FORM_DATA,
+  payload: ISetInitialFormDataPayload
+}
+
+export type ISetInitialFormDataPayload = {
+  formName: string
+  data: any
+}
+
+export interface IResetFormDataAction {
+  type: typeof RESET_FORM_DATA,
+  payload: IResetFormDataPayload
+}
+
+export type IResetFormDataPayload = {
+  formName: string
 }

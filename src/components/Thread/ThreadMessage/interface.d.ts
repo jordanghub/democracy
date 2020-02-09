@@ -4,6 +4,8 @@ export interface ThreadMessageProps {
   id: number;
   author: any;
   date: string;
+  threadId: number;
+  highlightedItems: any
 }
 type ThreadSource = {
   id: number;

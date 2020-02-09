@@ -5,6 +5,7 @@ export interface ThreadFullProps {
   id: number ;
   date: string;
   author: any
+  originalSelection: any;
 }
 
 type ThreadMessage = {
@@ -13,6 +14,7 @@ type ThreadMessage = {
   scoring: ThreadMessageScoring[];
   sources?: ThreadSource[];
   author: any
+  highlightedItems: any
   createdAt: string;
 }
 

@@ -30,10 +30,14 @@ export const MessageContent = styled.div<MessageContentStyleProps>`
     top: ${props => props.posY}px;
     left: ${props => props.posX + 50}px;
   }
-`
 
+  & pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;  
+  }
+`
 export const HightlightedPart = styled.span`
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(0,0,0,0.12);
 `;
 
 export const Sources = styled.div`
@@ -41,8 +45,8 @@ export const Sources = styled.div`
   margin-left: 0;
 `
 
-
 type MessageContentStyleProps = {
   posX: number;
   posY: number;
 }
+

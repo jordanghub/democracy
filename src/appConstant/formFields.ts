@@ -5,6 +5,10 @@ const formFields = {
 
   title: "Le titre",
   content: "Le message",
+  message: "Le message",
+  categories: "Les catégories",
+  sources: "Les sources",
+  selectedText: "La selection"
 }
 
 export const getFormFieldLabel = (key, locale = "fr") => {

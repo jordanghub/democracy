@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { FormRenderProps, Form, useForm } from 'react-final-form';
 import { Button } from '@material-ui/core';
 import { AnyObject, FormApi } from 'final-form';
@@ -6,7 +6,7 @@ import { Alert, AlertTitle } from '@material-ui/lab';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { LinkComponent } from 'components';
-import { registerFormSubmit } from 'store/actions';
+import { registerFormSubmit, resetFormData } from 'store/actions';
 import { registerFormValidation } from 'validators/registerForm';
 import { getErrorFromConstraint } from 'utils/parseFieldsError';
 import { Text } from 'components/Inputs';
@@ -37,6 +37,11 @@ export const RegisterForm = () => {
     (payload) => dispatch(registerFormSubmit(payload)),
     [dispatch]
   )
+  const resetFormDataAction = useCallback(payload => dispatch(resetFormData(payload)), [dispatch])
+  
+  useEffect(() => {
+    return () => resetFormDataAction({ formName: 'register'});
+  }, [])
 
   const handleSubmit = (data: AnyObject, form: FormApi) => {
     formSubmitAction(data);

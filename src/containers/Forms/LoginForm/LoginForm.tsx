@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { FormRenderProps, Form, AnyObject } from 'react-final-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { FormApi } from 'final-form';
@@ -6,7 +6,7 @@ import { Button } from '@material-ui/core';
 
 import { Text } from 'components/Inputs';
 import { loginFormValidation } from 'validators/loginForm';
-import { loginFormSubmit } from 'store/actions';
+import { loginFormSubmit, resetFormData } from 'store/actions';
 import * as Styled from './LoginForm.style'
 import { TState } from 'types/state';
 import { Alert, AlertTitle } from '@material-ui/lab';
@@ -31,6 +31,12 @@ export const LoginForm = () => {
     (payload) => dispatch(loginFormSubmit(payload)),
     [dispatch]
   )
+
+  const resetFormDataAction = useCallback(payload => dispatch(resetFormData(payload)), [dispatch])
+  
+  useEffect(() => {
+    return () => resetFormDataAction({ formName: 'login'});
+  }, [])
 
   const formData = useSelector((state: TState) => state.forms.forms.login);
   

@@ -2,6 +2,7 @@ import {
   LOGOUT,
   LOGIN_SUCCESS,
   SET_AUTH_STATUS,
+  SET_REFRESH_STATUS,
 } from "store/actionTypes";
 
 import { TAppState, IUserState } from "types/state";
@@ -9,6 +10,7 @@ import { UserReducerActionTypes } from "./interface";
 
 const initialState: IUserState = {
   isLoggedIn: null,
+  refreshFailed: null,
 };
 
 export function userReducer(state:IUserState = initialState, action: UserReducerActionTypes): IUserState {
@@ -33,6 +35,12 @@ export function userReducer(state:IUserState = initialState, action: UserReducer
       return {
         ...state,
         isLoggedIn: action.payload.status
+      }
+    }
+    case SET_REFRESH_STATUS: {
+      return {
+        ...state,
+        refreshFailed: action.payload.status
       }
     }
 

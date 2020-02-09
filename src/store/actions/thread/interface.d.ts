@@ -6,7 +6,10 @@ import {
   FETCH_THREAD_SINGLE,
   SET_THREAD_SINGLE,
   ADD_NEW_THREAD_MESSAGE, 
-  CLEAR_THREAD_SINGLE, 
+  CLEAR_THREAD_SINGLE,
+  FETCH_THREADS_BY_CATEGORY,
+  SEARCH_THREAD,
+  CHANGE_SEARCH_THREAD_RESULT, 
 } from 'store/actionTypes'
 
 import { ThreadHomepage } from 'types/thread'
@@ -14,14 +17,38 @@ import { ThreadHomepage } from 'types/thread'
 
 export interface FetchLatestThreadsActionType {
   type: typeof FETCH_LATEST_THREADS;
+  payload: FetchLatestThreadsPayload
 }
 
-export interface ChangeLatestThreadsActionType {
+export type FetchLatestThreadsPayload = {
+  page: number;
+}
+
+export interface IChangeLatestThreadsAction {
   type: typeof CHANGE_LATEST_THREADS;
-  payload: ChangeLatestThreadsActionPayloadType;
+  payload: IChangeLatestThreadsPayload;
 }
 
-export interface ChangeLatestThreadsActionPayloadType {
+export interface IChangeLatestThreadsPayload {
+  threads: ThreadHomepage[];
+}
+
+export interface IFetchThreadsByCategoryAction {
+  type: typeof FETCH_THREADS_BY_CATEGORY,
+  payload: FetchLatestThreadsPayload
+}
+
+export type IFetchThreadsByCategoryPayload = {
+  page: number;
+  categoryId: number;
+}
+
+export interface IChangeCategoryThreadsAction {
+  type: typeof CHANGE_CATEGORY_THREADS;
+  payload: IChangeCategoryThreadsPayload;
+}
+
+export interface IChangeCategoryThreadsPayload {
   threads: ThreadHomepage[];
 }
 
@@ -54,4 +81,22 @@ export interface AddNewThreadMessageAction {
 
 export interface ClearThreadSingleAction {
   type: typeof CLEAR_THREAD_SINGLE,
+}
+
+export interface ISearchThreadAction {
+  type: typeof SEARCH_THREAD
+  payload: ISearchThreadPayload
+}
+
+export interface ISearchThreadPayload {
+  search: string
+}
+
+export interface IChangeThreadSearchResultAction {
+  type: typeof CHANGE_SEARCH_THREAD_RESULT
+  payload: IChangeThreadSearchResultPayload
+}
+
+export interface IChangeThreadSearchResultPayload {
+  searchResult: any;
 }

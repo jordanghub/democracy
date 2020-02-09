@@ -4,7 +4,9 @@ import {
   CREATE_THREAD_FORM_SUBMIT,
   SET_FORM_ERROR,
   FORM_SUBMIT_SUCCESS,
-  CREATE_THREAD_ANSWER_FORM_SUBMIT
+  CREATE_THREAD_ANSWER_FORM_SUBMIT,
+  SET_INITIAL_FORM_DATA,
+  RESET_FORM_DATA
 } from "store/actionTypes/forms";
 
 import {
@@ -19,7 +21,11 @@ import {
   FormSubmitSuccessPayload,
   FormSubmitSuccessAction,
   CreateThreadAnswerSubmitPayload,
-  CreateThreadAnswerSubmitAction
+  CreateThreadAnswerSubmitAction,
+  ISetInitialFormDataAction,
+  ISetInitialFormDataPayload,
+  IResetFormDataAction,
+  IResetFormDataPayload
 } from "./interface";
 
 
@@ -47,5 +53,15 @@ export const setFormError = (payload: SetFormErrorPayload): SetFormErrorAction =
 })
 export const formSubmitSuccess = (payload: FormSubmitSuccessPayload): FormSubmitSuccessAction => ({
   type: FORM_SUBMIT_SUCCESS,
+  payload,
+})
+
+export const setInitialFormData = (payload: ISetInitialFormDataPayload): ISetInitialFormDataAction => ({
+  type: SET_INITIAL_FORM_DATA,
+  payload,
+});
+
+export const resetFormData = (payload: IResetFormDataPayload): IResetFormDataAction => ({
+  type: RESET_FORM_DATA,
   payload,
 })

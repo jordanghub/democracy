@@ -1,15 +1,19 @@
 import { createStore, combineReducers, applyMiddleware, compose, Store } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension'
+import axios from 'axios';
 
 import cookies from 'js-cookie';
 import nextCookies from 'next-cookies';
 
-import { appReducer, formsReducer, threadReducer, userReducer, votesReducer } from 'store/reducers'
+import { appReducer, formsReducer, threadReducer, userReducer, votesReducer, paginationReducer } from 'store/reducers'
 import { start } from 'store/sagas';
 import Router from 'next/router';
 import { getAxios, resetAxios } from 'utils/Axios';
-import { setFlashMessage, logout, changeisPageLoading } from './actions';
+import { setFlashMessage, logout, changeisPageLoading, getNewTokenWithRefresh, setRefreshStatus, setAuthStatus } from './actions';
+import { TState } from 'types/state';
+import { logoutActions } from 'utils/logout';
+import { BASE_API_URL, REFRESH_ENDPOINT } from 'appConstant/apiEndpoint';
 
 
 // TODO Auth reducer
@@ -38,6 +42,7 @@ function configureStore(initialState = {}, nextProps) {
     thread: threadReducer,
     user: userReducer,
     votes: votesReducer,
+    pagination: paginationReducer,
   })
   
   const store = createStore(reducers, initialState, enhancers);
@@ -59,6 +64,8 @@ const axiosInterceptors = (store: Store, res, req) => {
 
   const Axios = getAxios();
   Axios.interceptors.request.use((config) => {
+
+    config.withCredentials = true;
 
     
     if(!isServer) {
@@ -93,7 +100,7 @@ const axiosInterceptors = (store: Store, res, req) => {
       }))
     }
     return response;
-  }, (error) => {
+  }, async (error) => {
     if(error.response) {
       switch(error.response.status) {
         case 500: {          
@@ -104,23 +111,37 @@ const axiosInterceptors = (store: Store, res, req) => {
           break;
         }
         case 401: {
-          
-          if(!isServer) {
-            store.dispatch(logout());
-            Router.push('/login');
-          }
-          
-          store.dispatch(setFlashMessage({
-            type: 'error',
-            message: 'Vous devez être connecté pour effectuer cette action'
-          }))
+          try {
+            const cleanAxios = axios.create({ withCredentials: true});
+            const response = await cleanAxios.post(`${BASE_API_URL}${REFRESH_ENDPOINT}`);
 
-          // dispatch logout
-          if(isServer) {
-            res.writeHead(302, { Location: '/login' })
-            res.end()
+            if(typeof window === "undefined") {
+              res.setHeader('Set-Cookie', `token=${response.data.access_token} HttpOnly;`)
+            }
+            return Axios.request(error.config);                
+            
+          } catch (err) {
+            if(typeof window === "undefined") {
+              logoutActions(res);
+            }
+            
+            store.dispatch(setFlashMessage({
+              type: 'error',
+              message: 'Vous devez être connecté pour effectuer cette action'
+            }))
+
+            if(isServer) {
+              logoutActions(res);
+              res.writeHead(302, { Location: '/login' })
+              res.end()
+            } else {
+              store.dispatch(setAuthStatus({ status: false }));
+              Router.push('/login');             
+            }
+            return Promise.reject(err);
           }
           break;
+        
 
         }
         case 403: {

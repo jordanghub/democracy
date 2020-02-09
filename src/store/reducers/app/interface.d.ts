@@ -1,37 +1,14 @@
-import { DummyActionType,
-  ChangeLatestThreadsActionType,
-  LogoutAction,
-  LoginSuccess,
+import {   
   RouteChangeCompleteAction,
   SetFlashMessageAction,
   RouteChangeStartAction,
-  SetAuthStatusAction,
   ChangeIsPageLoadingAction,
-  ChangeCategoriesAction,
-  SetThreadSingleAction,
-  SetScoringCategoriesAction,
-  SetMessageVotesAction,
-  SetThreadVoteAction,
-  SetCurrentUserVoteAction,
-  AddNewThreadMessageAction,
-  ClearThreadSingleAction
-} from "store/actions";
+  IResetFlashMessageAction
+} from "store/actions/app/interface";
 
 export type AppReducerActionTypes = 
-// ChangeLatestThreadsActionType 
-// | LogoutAction
-// | LoginSuccess
 RouteChangeStartAction
 | RouteChangeCompleteAction
 | SetFlashMessageAction
-// | SetAuthStatusAction
 | ChangeIsPageLoadingAction
-// | ChangeCategoriesAction
-// | SetThreadSingleAction
-// | SetScoringCategoriesAction
-// | SetMessageVotesAction
-// | SetThreadVoteAction
-// | SetCurrentUserVoteAction
-// | AddNewThreadMessageAction
-// | ClearThreadSingleAction
-;
+| IResetFlashMessageAction;

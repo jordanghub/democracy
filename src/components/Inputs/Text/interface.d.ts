@@ -4,4 +4,6 @@ export interface TextProps {
   multiline?: boolean;
   rows?: number;
   type?: string; 
+  disabled?: boolean;
+  hidden?: boolean;
 };

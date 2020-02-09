@@ -3,7 +3,9 @@ import {
   CHANGE_CATEGORIES,
   SET_THREAD_SINGLE,
   ADD_NEW_THREAD_MESSAGE,
-  CLEAR_THREAD_SINGLE
+  CLEAR_THREAD_SINGLE,
+  CHANGE_CATEGORY_THREADS,
+  CHANGE_SEARCH_THREAD_RESULT
 } from "store/actionTypes";
 
 import { IThreadState } from "types/state";
@@ -38,8 +40,7 @@ export function threadReducer(state:IThreadState = initialState, action: ThreadR
         ...state,
         threadSingle: action.payload,
       }
-    }
-    
+    }   
 
     case ADD_NEW_THREAD_MESSAGE: {
       return {
@@ -59,7 +60,21 @@ export function threadReducer(state:IThreadState = initialState, action: ThreadR
         ...state,
         threadSingle: null,
       }
-    }    
+    }
+
+    case CHANGE_CATEGORY_THREADS: {
+      return {
+        ...state,
+        categoryThreads: action.payload.threads,
+      }
+    }
+
+    case CHANGE_SEARCH_THREAD_RESULT: {
+      return {
+        ...state,
+        searchResults: action.payload.searchResult
+      }
+    }
 
     default: 
       return state;

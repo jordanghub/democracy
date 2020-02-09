@@ -2,9 +2,11 @@ import {
   LogoutAction,
   LoginSuccess,
   SetAuthStatusAction,
-} from "store/actions/app/interface";
+  ISetRefreshStatusAction,
+} from "store/actions/user/interface";
 
 export type UserReducerActionTypes = LogoutAction
 | LoginSuccess
 | SetAuthStatusAction
+| ISetRefreshStatusAction
 ;

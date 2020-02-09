@@ -1,22 +1,21 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { Nav } from 'components/Nav';
 import { BaseLayoutProps } from './interface'
 import Head from 'next/head';
 import { useSelector, useDispatch } from 'react-redux';
 import { TState } from 'types/state';
-import { AlertTitle, Alert } from '@material-ui/lab';
-import { LinearProgress } from '@material-ui/core';
 import { logout } from 'store/actions';
 
-import io from 'socket.io-client';
 
 import * as Styled from './BaseLayout.style';
+import { FlashMessage } from 'containers/FlashMessage/FlashMessage';
 
 export const BaseLayout = ({ children, title = 'Democracy', description }: BaseLayoutProps) => {
 
   const dispatch = useDispatch();
 
   const { flashMessage, isPageLoading } = useSelector((state: TState) => state.app);
+  const categories = useSelector((state: TState) => state.thread.categories);
   const { isLoggedIn} = useSelector((state: TState) => state.user);
 
   const logoutAction = useCallback(
@@ -30,14 +29,12 @@ export const BaseLayout = ({ children, title = 'Democracy', description }: BaseL
         <title>{title}</title>
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />   
         { description && <meta name="description" content={description} />}
         
       </Head>
 
       
-      <Nav isLoggedIn={isLoggedIn} logoutCallback={logoutAction} />
+      <Nav isLoggedIn={isLoggedIn} logoutCallback={logoutAction} categories={categories} />
       {
         isPageLoading && <Styled.Loading color="secondary" />
       }
@@ -45,9 +42,7 @@ export const BaseLayout = ({ children, title = 'Democracy', description }: BaseL
       {
         (flashMessage) && (
           // @ts-ignore
-          <Styled.FlashMessage severity={flashMessage.type}>
-            <AlertTitle >{flashMessage.message}</AlertTitle>
-          </Styled.FlashMessage>
+          <FlashMessage />
         )
       }      
       {children}

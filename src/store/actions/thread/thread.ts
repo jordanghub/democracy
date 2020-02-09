@@ -5,14 +5,18 @@ import {
   CHANGE_CATEGORIES,
   FETCH_THREAD_SINGLE,
   SET_THREAD_SINGLE,
-  ADD_NEW_THREAD_MESSAGE, 
-  CLEAR_THREAD_SINGLE, 
+  ADD_NEW_THREAD_MESSAGE,
+  CLEAR_THREAD_SINGLE,
+  FETCH_THREADS_BY_CATEGORY,
+  CHANGE_CATEGORY_THREADS,
+  SEARCH_THREAD,
+  CHANGE_SEARCH_THREAD_RESULT,
 } from 'store/actionTypes'
 
 import { 
   FetchLatestThreadsActionType,
-  ChangeLatestThreadsActionType,
-  ChangeLatestThreadsActionPayloadType,
+  IChangeLatestThreadsAction,
+  IChangeLatestThreadsPayload,
   FetchCategoriesAction,
   ChangeCategoriesAction,
   FetchThreadSingleAction,
@@ -20,17 +24,38 @@ import {
   SetThreadSingleAction, 
   SetThreadSinglePayload, 
   AddNewThreadMessageAction, 
-  ClearThreadSingleAction, 
+  ClearThreadSingleAction,
+  FetchLatestThreadsPayload,
+  IFetchThreadsByCategoryPayload,
+  IFetchThreadsByCategoryAction,
+  IChangeCategoryThreadsPayload,
+  IChangeCategoryThreadsAction,
+  ISearchThreadPayload,
+  ISearchThreadAction,
+  IChangeThreadSearchResultPayload,
+  IChangeThreadSearchResultAction, 
 } from './interface'
 
 
-export const fetchLatestThreads = (): FetchLatestThreadsActionType => ({
-  type: FETCH_LATEST_THREADS
+export const fetchLatestThreads = (payload: FetchLatestThreadsPayload): FetchLatestThreadsActionType => ({
+  type: FETCH_LATEST_THREADS,
+  payload,
 });
-export const changeLatestThreads = (payload: ChangeLatestThreadsActionPayloadType): ChangeLatestThreadsActionType => ({
+
+export const changeLatestThreads = (payload: IChangeLatestThreadsPayload): IChangeLatestThreadsAction => ({
   type: CHANGE_LATEST_THREADS,
   payload,
 });
+
+export const fetchThreadsByCategory = (payload: IFetchThreadsByCategoryPayload): IFetchThreadsByCategoryAction => ({
+  type: FETCH_THREADS_BY_CATEGORY,
+  payload,
+});
+
+export const changeCategoryThreads = (payload: IChangeCategoryThreadsPayload): IChangeCategoryThreadsAction => ({
+  type: CHANGE_CATEGORY_THREADS,
+  payload,
+})
 
 export const fetchCategories = (): FetchCategoriesAction => ({
   type: FETCH_CATEGORIES,
@@ -55,7 +80,16 @@ export const addNewThreadMessage = (payload): AddNewThreadMessageAction => ({
   payload
 })
 
-
 export const clearThreadSingle = (): ClearThreadSingleAction => ({
   type: CLEAR_THREAD_SINGLE
+})
+
+export const searchThread = (payload: ISearchThreadPayload): ISearchThreadAction => ({
+  type: SEARCH_THREAD,
+  payload
+})
+
+export const changeSearchThreadResult = (payload: IChangeThreadSearchResultPayload): IChangeThreadSearchResultAction => ({
+  type: CHANGE_SEARCH_THREAD_RESULT,
+  payload,
 })

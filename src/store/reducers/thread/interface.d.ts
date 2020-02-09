@@ -3,12 +3,16 @@ import {
   ChangeCategoriesAction,
   SetThreadSingleAction,
   AddNewThreadMessageAction,
-  ClearThreadSingleAction
-} from "store/actions/app/interface";
+  ClearThreadSingleAction,
+  IChangeCategoryThreadsAction,
+  IChangeThreadSearchResultAction,
+} from "store/actions/thread/interface";
 
-export type ThreadReducerActionTypes = ChangeLatestThreadsActionType 
+export type ThreadReducerActionTypes =  ClearThreadSingleAction
+| ChangeLatestThreadsActionType 
 | ChangeCategoriesAction
 | SetThreadSingleAction
 | AddNewThreadMessageAction
-| ClearThreadSingleAction
+| IChangeCategoryThreadsAction
+| IChangeThreadSearchResultAction
 ;

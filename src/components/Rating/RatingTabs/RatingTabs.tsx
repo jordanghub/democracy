@@ -19,7 +19,6 @@ function a11yProps(index: any) {
 export const RatingTabs = ({ voteDisabled, messageType = "thread", itemId }: RatingTabsProps) => {
 
   const dispatch = useDispatch();
-
   
   const fetchMessageVotesAction = useCallback(
     (payload) => dispatch(fetchMessageVotes(payload)),
@@ -32,8 +31,7 @@ export const RatingTabs = ({ voteDisabled, messageType = "thread", itemId }: Rat
   const fetchThreadVotesAction = useCallback(
     (payload) => dispatch(fetchThreadVotes(payload)),
     [dispatch]
-  );
-  
+  );  
 
   const votes = useSelector((state: TState) => state.votes[messageType === "thread" ? "threads": "messages"])
 

@@ -19,7 +19,11 @@ export const ThreadHomepage = memo(({ id, title, withoutLink, author, date, cate
           </Typography>
         <Typography>Crée par {author.username} le {threadHomepageDate(date)}</Typography>
           <Styled.Categories>
-            { categories?.map((category) => <Chip key={category.id} label={category.name} />)}
+            { categories?.map((category) => (
+              <LinkComponent key={category.id} to={`/categories/[slug]`} visibleLink={`/categories/${category.id}`}>            
+                <Chip component="span" label={category.name} />
+              </LinkComponent>
+            ))}
           </Styled.Categories>
         </Grid>
         <Grid item xs={1}>

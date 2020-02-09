@@ -5,58 +5,14 @@ import { Store } from 'redux';
 import { fetchThreadSingle, addNewThreadMessage, clearThreadSingle } from 'store/actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { TState } from 'types/state';
-import { useEffect, useCallback, useRef } from 'react';
+import { useEffect, useCallback, useRef, memo } from 'react';
 import socket from 'utils/websockets';
 import { EVENT_NEW_THREAD_MESSAGE } from 'appConstant/websockets';
 import { CircularProgress, Backdrop } from '@material-ui/core';
 
-const Thread: NextPage  = () => {
+const Thread: NextPage  = memo(() => {
 
   const thread = useSelector((state: TState) => state.thread.threadSingle);
-
-
-  const usePrevious = (value: any) => {
-    const ref = useRef();
-    useEffect(() => {
-      ref.current = value;
-    });
-    return ref.current;
-  }
-
-  const oldThreadId = usePrevious(thread?.id);
-
-  console.log(oldThreadId);
-
-  const dispatch = useDispatch();
-
-  const addMessageAction = useCallback(
-    (payload) => dispatch(addNewThreadMessage(payload)),
-    [dispatch],
-  )
-
-  const handleNewMessage = useCallback(
-    (payload) => addMessageAction(payload),
-    [addMessageAction]
-  )
-  const clearThreadAction = useCallback(
-    () => dispatch(clearThreadSingle()),
-    [dispatch],
-  ) 
-
-  useEffect(() => {
-    if (thread?.id && (thread?.id !== oldThreadId) && socket) {
-      
-      console.log(`Ajout  de l'écouteur sur le thread ${thread.id}`)
-      socket.on(`${EVENT_NEW_THREAD_MESSAGE}${thread.id}`, handleNewMessage);
-      return () => {
-        console.log(`Retrait de l'écouteur sur le thread ${thread.id}`)
-        clearThreadAction();
-        return socket.off(`${EVENT_NEW_THREAD_MESSAGE}${thread.id}`,handleNewMessage);
-      };
-    }    
-  }, [thread?.id])
-
-  
 
   return (
     <BaseLayout>
@@ -70,6 +26,7 @@ const Thread: NextPage  = () => {
               messages={thread.messages}
               categories={thread.categories}
               date={thread.createdAt}
+              originalSelection={thread.originalSelection}
             />
           ) : (
             <Backdrop open>
@@ -81,8 +38,11 @@ const Thread: NextPage  = () => {
       </Container>
     </BaseLayout>
   )
-}
+})
+
 Thread.getInitialProps = async ({ store, query}: NextPageContext & {store: Store}) => {
+
+  console.log('initial props');
 
   store.dispatch(fetchThreadSingle({
     id: Number(query.slug),

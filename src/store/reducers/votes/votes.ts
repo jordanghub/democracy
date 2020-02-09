@@ -27,8 +27,7 @@ export function votesReducer(state:IVotesState = initialState, action: VotesRedu
     }
 
     case SET_MESSAGE_VOTES: {
-
-      // @ts-ignore
+      
       const { id, votes } = action.payload;
       const newMessages = state.messages.filter(el => el.id !== id);
 

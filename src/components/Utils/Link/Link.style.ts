@@ -12,5 +12,11 @@ export const LinkStyle = styled.a`
     text-decoration: underline;
     cursor: pointer;
   }
+
+  & .MuiChip-root {
+    &:hover {
+      cursor: pointer;
+    }
+  }
  
 `

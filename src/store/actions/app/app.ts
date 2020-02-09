@@ -5,6 +5,7 @@ import {
   SetFlashMessageAction,
   ChangeIsPageLoadingAction,
   ChangeIsPageLoadingPayload,
+  IResetFlashMessageAction,
 } from "./interface";
 
 import { 
@@ -12,6 +13,7 @@ import {
   ROUTE_CHANGE_COMPLETE,
   SET_FLASH_MESSAGE,
   CHANGE_IS_PAGE_LOADING,
+  RESET_FLASH_MESSAGE,
 } from "store/actionTypes";
 
 export const routeChangeStart = (): RouteChangeStartAction => ({
@@ -24,6 +26,10 @@ export const routeChangeComplete = (): RouteChangeCompleteAction => ({
 export const setFlashMessage = (payload: SetFlashMessagePayload): SetFlashMessageAction => ({
   type: SET_FLASH_MESSAGE,
   payload,
+})
+
+export const resetFlashMessage = (): IResetFlashMessageAction => ({
+  type: RESET_FLASH_MESSAGE,
 })
 
 export const changeisPageLoading = (payload: ChangeIsPageLoadingPayload): ChangeIsPageLoadingAction => ({
