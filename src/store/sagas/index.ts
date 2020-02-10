@@ -5,9 +5,5 @@ import { votesSagas } from './votes';
 import { userSagas } from './user';
 
 export function* start() {
-  yield all([
-    ...threadSaga,
-    ...votesSagas,
-    ...userSagas,
-  ])
+  yield all([...threadSaga, ...votesSagas, ...userSagas]);
 }

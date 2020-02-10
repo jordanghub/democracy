@@ -1,2 +1,3 @@
+export * from './RatingForm';
 export * from './RatingShow';
-export * from './Rating';
+export * from './RatingTabs';

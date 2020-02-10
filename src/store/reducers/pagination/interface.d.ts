@@ -1,7 +1,8 @@
 import {
   IChangePaginationPageAction,
-  ISetPaginationDataAction
+  ISetPaginationDataAction,
 } from 'store/actions/pagination/interface';
 
-export type PaginationReducerActionTypes = IChangePaginationPageAction
-| ISetPaginationDataAction;
+export type PaginationReducerActionTypes =
+  | IChangePaginationPageAction
+  | ISetPaginationDataAction;

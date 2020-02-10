@@ -1,10 +1,10 @@
 export interface RatingShowProps {
-  criterias: Criteria[]
+  criterias: Criteria[];
   disabled?: boolean;
-  votes?: any
-};
+  votes?: any;
+}
 
 type Criteria = {
   name: string;
   value: number;
-}
+};

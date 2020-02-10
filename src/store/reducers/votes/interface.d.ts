@@ -1,12 +1,12 @@
-import { 
+import {
   SetScoringCategoriesAction,
   SetMessageVotesAction,
   SetThreadVoteAction,
   SetCurrentUserVoteAction,
-} from "store/actions/app/interface";
+} from 'store/actions/app/interface';
 
-export type VotesReducerActionTypes = SetScoringCategoriesAction
-| SetMessageVotesAction
-| SetThreadVoteAction
-| SetCurrentUserVoteAction
-;
+export type VotesReducerActionTypes =
+  | SetScoringCategoriesAction
+  | SetMessageVotesAction
+  | SetThreadVoteAction
+  | SetCurrentUserVoteAction;

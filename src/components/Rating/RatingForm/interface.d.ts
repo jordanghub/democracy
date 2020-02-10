@@ -1,11 +1,8 @@
-export interface RatingFormProps {
-  criterias: Criteria[]
-  disabled?: boolean;
-  votes?: any
-  messageId: number;
-};
+import { ScoringCategory } from 'types/categories';
 
-type Criteria = {
-  name: string;
-  value: number;
+export interface RatingFormProps {
+  criterias: ScoringCategory[];
+  disabled?: boolean;
+  votes?: any;
+  messageId: number;
 }

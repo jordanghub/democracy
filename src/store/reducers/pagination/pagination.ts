@@ -1,18 +1,16 @@
-import { 
-  CHANGE_PAGINATION_PAGE, SET_PAGINATION_DATA,
-} from "store/actionTypes";
+import { CHANGE_PAGINATION_PAGE, SET_PAGINATION_DATA } from 'store/actionTypes';
 
-import { IPaginationState } from "types/state";
+import { IPaginationState } from 'types/state';
 
-import { PaginationReducerActionTypes } from "./interface";
+import { PaginationReducerActionTypes } from './interface';
 
-const initialState: IPaginationState = {
-  
-};
+const initialState: IPaginationState = {};
 
-export function paginationReducer(state:IPaginationState = initialState, action: PaginationReducerActionTypes): IPaginationState {
-
-  switch(action.type) {
+export function paginationReducer(
+  state: IPaginationState = initialState,
+  action: PaginationReducerActionTypes,
+): IPaginationState {
+  switch (action.type) {
     case CHANGE_PAGINATION_PAGE: {
       return state;
     }
@@ -21,16 +19,16 @@ export function paginationReducer(state:IPaginationState = initialState, action:
       const { resource, count, pages, currentPage } = action.payload;
 
       return {
-        ...state, 
+        ...state,
         [resource]: {
           count,
           pages,
           currentPage,
-        }
-      }
+        },
+      };
     }
 
-    default: 
+    default:
       return state;
   }
 }

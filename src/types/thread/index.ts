@@ -6,10 +6,10 @@ export interface ThreadHomepage {
     id: number;
   };
   createdAt?: string;
-  categories?: ThreadCategory[]
+  categories?: ThreadCategory[];
 }
 
 type ThreadCategory = {
   id: number;
   name: string;
-}
+};

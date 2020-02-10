@@ -45,6 +45,19 @@ export const Sources = styled.div`
   margin-left: 0;
 `
 
+export const UserAvatar = styled.div`
+  width: 50px;
+  height: 50px;
+  
+
+
+  & img {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+  }
+`
+
 type MessageContentStyleProps = {
   posX: number;
   posY: number;

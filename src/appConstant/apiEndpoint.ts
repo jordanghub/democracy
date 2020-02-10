@@ -12,3 +12,5 @@ export const MESSAGES_ENDPOINT = '/messages';
 export const SCORING_ENDPOINT = '/scoring';
 
 export const WEBSOCKET_GATEWAY = '127.0.0.1:3000';
+
+export const AVATAR_ENDPOINT = '/avatars';

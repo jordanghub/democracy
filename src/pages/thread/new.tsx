@@ -16,25 +16,27 @@ const Thread: NextPage = () => {
   return (
     <BaseLayout>
       <Container>
-        <Typography variant="h4" component="h2">Créer un nouveau thread</Typography>
-        <CreateThreadForm />        
-      </Container>      
+        <Typography variant="h4" component="h2">
+          Créer un nouveau thread
+        </Typography>
+        <CreateThreadForm />
+      </Container>
     </BaseLayout>
-  )
-}
+  );
+};
 
-Thread.getInitialProps = async (ctx: NextPageContext & { store: Store}) => {
-  const token = checkAuthServ(ctx)
-  
+Thread.getInitialProps = async (ctx: NextPageContext & { store: Store }) => {
+  const token = checkAuthServ(ctx);
+
   const { store } = ctx;
 
   const categories = store.getState().thread.categories;
 
-  if(!categories) {
+  if (!categories) {
     store.dispatch(fetchCategories());
   }
 
   return {};
-}
+};
 
-export default Thread; 
+export default Thread;

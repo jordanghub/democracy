@@ -1,5 +1,4 @@
-import styled from "styled-components";
-import { InputBase } from "@material-ui/core";
+import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   & .MuiAppBar-root {
@@ -9,7 +8,6 @@ export const Wrapper = styled.div`
   & .MuiButton-root {
     color: white;
     cursor: pointer;
-    padding-right: 0;
   }
 
   & a {
@@ -20,10 +18,13 @@ export const Wrapper = styled.div`
     align-items: inherit;
     justify-content: inherit;
   }
+  & ul {
+    margin-top: 0;
+    padding-left: 0;
+  }
 
   & #menu-categories a {
     text-transform: capitalize;
   }
   color: white;
-
 `;

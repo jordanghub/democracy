@@ -4,14 +4,14 @@ export interface ThreadHomepageProps {
   author: {
     username: string;
     id: number;
-  }
+  };
   withoutLink?: boolean;
   date: string;
-  categories?: ThreadCategory[]
+  categories?: ThreadCategory[];
   messageType?: string;
 }
 
 type ThreadCategory = {
   id: number;
   name: string;
-}
+};

@@ -1,3 +1,3 @@
-import { styled } from "@material-ui/core";
+import { styled } from '@material-ui/core';
 
 //export const TabsWrapper = styled()

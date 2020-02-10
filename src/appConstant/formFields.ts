@@ -8,7 +8,8 @@ const formFields = {
   message: "Le message",
   categories: "Les catégories",
   sources: "Les sources",
-  selectedText: "La selection"
+  selectedText: "La selection",
+  avatar: "L'avatar",
 }
 
 export const getFormFieldLabel = (key, locale = "fr") => {

@@ -1,14 +1,14 @@
-import {   
+import {
   RouteChangeCompleteAction,
   SetFlashMessageAction,
   RouteChangeStartAction,
   ChangeIsPageLoadingAction,
-  IResetFlashMessageAction
-} from "store/actions/app/interface";
+  IResetFlashMessageAction,
+} from 'store/actions/app/interface';
 
-export type AppReducerActionTypes = 
-RouteChangeStartAction
-| RouteChangeCompleteAction
-| SetFlashMessageAction
-| ChangeIsPageLoadingAction
-| IResetFlashMessageAction;
+export type AppReducerActionTypes =
+  | RouteChangeStartAction
+  | RouteChangeCompleteAction
+  | SetFlashMessageAction
+  | ChangeIsPageLoadingAction
+  | IResetFlashMessageAction;

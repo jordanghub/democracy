@@ -1,4 +1,4 @@
-import { 
+import {
   FetchScoringCategoriesAction,
   SetScoringCategoriesAction,
   ScoringFormSubmitAction,
@@ -15,7 +15,7 @@ import {
   SetMessageVotesAction,
   SetMessageVotesPayload,
   FetchMessagesVoteAction,
-} from "./interface";
+} from './interface';
 
 import {
   FETCH_SCORING_CATEGORIES,
@@ -27,48 +27,62 @@ import {
   SCORING_FORM_SUBMIT,
   FETCH_USER_VOTE,
   SET_USER_VOTE,
-} from "store/actionTypes";
+} from 'store/actionTypes';
 
 export const fetchScoringCategories = (): FetchScoringCategoriesAction => ({
   type: FETCH_SCORING_CATEGORIES,
-})
+});
 
 export const setScoringCategories = (payload): SetScoringCategoriesAction => ({
   type: SET_SCORING_CATEGORIES,
   payload,
-})
+});
 
-export const fetchThreadVotes = (payload: FetchThreadVotePayload): FetchThreadVoteAction  => ({
+export const fetchThreadVotes = (
+  payload: FetchThreadVotePayload,
+): FetchThreadVoteAction => ({
   type: FETCH_THREAD_VOTES,
   payload,
-})
+});
 
-export const setThreadVotes = (payload: SetThreadVotePayload): SetThreadVoteAction => ({
+export const setThreadVotes = (
+  payload: SetThreadVotePayload,
+): SetThreadVoteAction => ({
   type: SET_THREAD_VOTES,
   payload,
-})
+});
 
-export const fetchMessageVotes = (payload: FetchMessagesVotePayload): FetchMessagesVoteAction => ({
+export const fetchMessageVotes = (
+  payload: FetchMessagesVotePayload,
+): FetchMessagesVoteAction => ({
   type: FETCH_MESSAGE_VOTES,
   payload,
-})
+});
 
-export const setMessageVote = (payload: SetMessageVotesPayload): SetMessageVotesAction => ({
+export const setMessageVote = (
+  payload: SetMessageVotesPayload,
+): SetMessageVotesAction => ({
   type: SET_MESSAGE_VOTES,
   payload,
-})
+});
 
-export const fetchCurrentUserMessageVote = (payload: FetchCurrentUserMessageVotesPayload): FetchCurrentUserMessageVotesAction => ({
+export const fetchCurrentUserMessageVote = (
+  payload: FetchCurrentUserMessageVotesPayload,
+): FetchCurrentUserMessageVotesAction => ({
   type: FETCH_USER_VOTE,
-  payload
-})
+  payload,
+});
 
-export const setCurrentUserMessageVote = (payload: SetCurrentUserVotePayload): SetCurrentUserVoteAction => ({
+export const setCurrentUserMessageVote = (
+  payload: SetCurrentUserVotePayload,
+): SetCurrentUserVoteAction => ({
   type: SET_USER_VOTE,
-  payload
-})
+  payload,
+});
 
-export const scoringFormSubmit = (payload: ScoringFormSubmitPayload): ScoringFormSubmitAction => ({
+export const scoringFormSubmit = (
+  payload: ScoringFormSubmitPayload,
+): ScoringFormSubmitAction => ({
   type: SCORING_FORM_SUBMIT,
-  payload
-})
+  payload,
+});

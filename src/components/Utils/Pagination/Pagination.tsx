@@ -2,7 +2,12 @@ import React from 'react';
 import { TablePagination } from '@material-ui/core';
 import { IPaginationProps } from './interface';
 
-export const Pagination = ({ page, pageSize, count, onPageChange }: IPaginationProps) => (
+export const Pagination = ({
+  page,
+  pageSize,
+  count,
+  onPageChange,
+}: IPaginationProps) => (
   <TablePagination
     component="nav"
     page={page}
@@ -11,4 +16,4 @@ export const Pagination = ({ page, pageSize, count, onPageChange }: IPaginationP
     rowsPerPageOptions={[]}
     onChangePage={onPageChange}
   />
-)
+);

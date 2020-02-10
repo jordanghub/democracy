@@ -1,6 +1,6 @@
 import { DefaultTheme, createGlobalStyle } from 'styled-components';
 
-export const theme: DefaultTheme = {}
+export const theme: DefaultTheme = {};
 
 export const GlobalStyle = createGlobalStyle`
   body, html {
@@ -9,6 +9,4 @@ export const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
   }  
-`
-
-
+`;

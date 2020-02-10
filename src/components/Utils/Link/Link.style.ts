@@ -1,7 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const LinkStyle = styled.a`
-
   color: inherit;
   text-decoration: none;
 
@@ -18,5 +17,4 @@ export const LinkStyle = styled.a`
       cursor: pointer;
     }
   }
- 
-`
+`;

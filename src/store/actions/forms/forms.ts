@@ -1,4 +1,4 @@
-import { 
+import {
   REGISTER_FORM_SUBMIT,
   LOGIN_FORM_SUBMIT,
   CREATE_THREAD_FORM_SUBMIT,
@@ -6,8 +6,8 @@ import {
   FORM_SUBMIT_SUCCESS,
   CREATE_THREAD_ANSWER_FORM_SUBMIT,
   SET_INITIAL_FORM_DATA,
-  RESET_FORM_DATA
-} from "store/actionTypes/forms";
+  RESET_FORM_DATA,
+} from 'store/actionTypes/forms';
 
 import {
   RegisterFormSubmitAction,
@@ -25,43 +25,58 @@ import {
   ISetInitialFormDataAction,
   ISetInitialFormDataPayload,
   IResetFormDataAction,
-  IResetFormDataPayload
-} from "./interface";
+  IResetFormDataPayload,
+} from './interface';
 
-
-export const registerFormSubmit = (payload: RegisterFormSubmitPayload): RegisterFormSubmitAction => ({
+export const registerFormSubmit = (
+  payload: RegisterFormSubmitPayload,
+): RegisterFormSubmitAction => ({
   type: REGISTER_FORM_SUBMIT,
   payload,
 });
-export const loginFormSubmit = (payload: LoginFormSubmitPayload): LoginFormSubmitAction => ({
+export const loginFormSubmit = (
+  payload: LoginFormSubmitPayload,
+): LoginFormSubmitAction => ({
   type: LOGIN_FORM_SUBMIT,
   payload,
 });
-export const createThreadFormSubmit = (payload: CreateThreadSubmitPayload): CreateThreadSubmitAction => ({
+export const createThreadFormSubmit = (
+  payload: CreateThreadSubmitPayload,
+): CreateThreadSubmitAction => ({
   type: CREATE_THREAD_FORM_SUBMIT,
   payload,
 });
 
-export const createThreadAnswerFormSubmit = (payload: CreateThreadAnswerSubmitPayload): CreateThreadAnswerSubmitAction => ({
+export const createThreadAnswerFormSubmit = (
+  payload: CreateThreadAnswerSubmitPayload,
+): CreateThreadAnswerSubmitAction => ({
   type: CREATE_THREAD_ANSWER_FORM_SUBMIT,
-  payload
-})
+  payload,
+});
 
-export const setFormError = (payload: SetFormErrorPayload): SetFormErrorAction => ({
+export const setFormError = (
+  payload: SetFormErrorPayload,
+): SetFormErrorAction => ({
   type: SET_FORM_ERROR,
   payload,
-})
-export const formSubmitSuccess = (payload: FormSubmitSuccessPayload): FormSubmitSuccessAction => ({
+});
+export const formSubmitSuccess = (
+  payload: FormSubmitSuccessPayload,
+): FormSubmitSuccessAction => ({
   type: FORM_SUBMIT_SUCCESS,
   payload,
-})
+});
 
-export const setInitialFormData = (payload: ISetInitialFormDataPayload): ISetInitialFormDataAction => ({
+export const setInitialFormData = (
+  payload: ISetInitialFormDataPayload,
+): ISetInitialFormDataAction => ({
   type: SET_INITIAL_FORM_DATA,
   payload,
 });
 
-export const resetFormData = (payload: IResetFormDataPayload): IResetFormDataAction => ({
+export const resetFormData = (
+  payload: IResetFormDataPayload,
+): IResetFormDataAction => ({
   type: RESET_FORM_DATA,
   payload,
-})
+});

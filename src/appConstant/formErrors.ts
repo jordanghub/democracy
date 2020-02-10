@@ -8,7 +8,8 @@ export const formErrors = {
   isNotEmpty: "ne doit pas être vide",
   minLength: "est trop court",
   maxLength: "est trop long",
-  arrayNotEmpty: "doivent contenir au moins un élément valide"
+  arrayNotEmpty: "doivent contenir au moins un élément valide",
+  wrongType: "n'est pas du bon type"
 }
 
 export const getFormError = (errorKey: string, locale = "fr") => {

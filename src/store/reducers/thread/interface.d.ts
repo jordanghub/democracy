@@ -1,4 +1,4 @@
-import { 
+import {
   ChangeLatestThreadsActionType,
   ChangeCategoriesAction,
   SetThreadSingleAction,
@@ -6,13 +6,13 @@ import {
   ClearThreadSingleAction,
   IChangeCategoryThreadsAction,
   IChangeThreadSearchResultAction,
-} from "store/actions/thread/interface";
+} from 'store/actions/thread/interface';
 
-export type ThreadReducerActionTypes =  ClearThreadSingleAction
-| ChangeLatestThreadsActionType 
-| ChangeCategoriesAction
-| SetThreadSingleAction
-| AddNewThreadMessageAction
-| IChangeCategoryThreadsAction
-| IChangeThreadSearchResultAction
-;
+export type ThreadReducerActionTypes =
+  | ClearThreadSingleAction
+  | ChangeLatestThreadsActionType
+  | ChangeCategoriesAction
+  | SetThreadSingleAction
+  | AddNewThreadMessageAction
+  | IChangeCategoryThreadsAction
+  | IChangeThreadSearchResultAction;

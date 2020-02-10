@@ -10,7 +10,7 @@ const months = [
   'Septembre',
   'Octobre',
   'Novembre',
-  'Décembre'
+  'Décembre',
 ];
 
 const days = [
@@ -21,19 +21,20 @@ const days = [
   'Jeudi',
   'Vendredi',
   'Samedi',
-]
+];
 
 export const threadHomepageDate = (dateString: string) => {
   const date = new Date(dateString);
   const day = date.getDay();
-  
+
   const monthDayNumber = date.getDate();
-  const month = date.getMonth()
+  const month = date.getMonth();
   const hours = date.getHours();
   let minutes = date.getMinutes().toString();
 
-  minutes = minutes.toString().length === 1 ? "0" + minutes: minutes;
+  minutes = minutes.toString().length === 1 ? '0' + minutes : minutes;
 
-  return `${days[day].toLowerCase()} ${monthDayNumber} ${months[month]} à ${hours}h${minutes}`;
-  
-}
+  return `${days[day].toLowerCase()} ${monthDayNumber} ${
+    months[month]
+  } à ${hours}h${minutes}`;
+};

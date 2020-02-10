@@ -1,16 +1,17 @@
-import { getFormError } from "appConstant/formErrors";
-import { getFormFieldLabel } from "appConstant/formFields";
-
+import { getFormError } from 'appConstant/formErrors';
+import { getFormFieldLabel } from 'appConstant/formFields';
 
 export const getErrorFromConstraint = (errors) => {
-
-  if(!errors) {
+  if (!errors) {
     return [];
-  }  
+  }
 
-  const errorsList = errors.map((error) => (
-    `${getFormFieldLabel(error.property)} ${getFormError(error.constraints[0])}`
-  ))
+  const errorsList = errors.map(
+    (error) =>
+      `${getFormFieldLabel(error.property)} ${getFormError(
+        error.constraints[0],
+      )}`,
+  );
 
   return errorsList;
-}
+};

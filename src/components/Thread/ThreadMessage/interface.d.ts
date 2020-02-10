@@ -1,3 +1,6 @@
+import { SetFlashMessagePayload } from 'store/actions/app/interface';
+import { ISetInitialFormDataAction } from 'store/actions/forms/interface';
+
 export interface ThreadMessageProps {
   content: string;
   sources?: ThreadSource[];
@@ -5,10 +8,12 @@ export interface ThreadMessageProps {
   author: any;
   date: string;
   threadId: number;
-  highlightedItems: any
+  highlightedItems: any;
+  setInitialFormDataAction: (payload: ISetInitialFormDataPayload) => void;
+  setFlashMessageAction: (payload: SetFlashMessagePayload) => void;
 }
 type ThreadSource = {
   id: number;
   label: string;
   url: string;
-}
+};
