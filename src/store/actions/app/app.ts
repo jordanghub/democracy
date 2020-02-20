@@ -6,6 +6,8 @@ import {
   ChangeIsPageLoadingAction,
   ChangeIsPageLoadingPayload,
   IResetFlashMessageAction,
+  IAddLoadingErrorPayload,
+  IAddLoadingErrorAction,
 } from './interface';
 
 import {
@@ -14,6 +16,7 @@ import {
   SET_FLASH_MESSAGE,
   CHANGE_IS_PAGE_LOADING,
   RESET_FLASH_MESSAGE,
+  ADD_LOADING_ERROR,
 } from 'store/actionTypes';
 
 export const routeChangeStart = (): RouteChangeStartAction => ({
@@ -38,5 +41,12 @@ export const changeisPageLoading = (
   payload: ChangeIsPageLoadingPayload,
 ): ChangeIsPageLoadingAction => ({
   type: CHANGE_IS_PAGE_LOADING,
+  payload,
+});
+
+export const addLoadingError = (
+  payload: IAddLoadingErrorPayload,
+): IAddLoadingErrorAction => ({
+  type: ADD_LOADING_ERROR,
   payload,
 });

@@ -5,7 +5,6 @@ import { GlobalStyle, theme } from 'theme';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
 import cookies from 'cookie';
-import nextCookie from 'next-cookies';
 import Router from 'next/router';
 
 import withRedux from 'next-redux-wrapper';
@@ -18,6 +17,7 @@ import {
   setAuthStatus,
   fetchScoringCategories,
   fetchCategories,
+  fetchUserData,
 } from 'store/actions';
 
 interface MyAppProps {
@@ -52,15 +52,16 @@ class MyApp extends App<MyAppProps> {
     Router.events.on('routeChangeComplete', this.handleRouteChangeComplete);
   }
 
-  // First render is only back then is called on every page change
-  static async getInitialProps({ Component, ctx }) {
-    console.log('------ _app.tsx initial props -----');
-    let pageProps = {};
-
+  static initialRequest(ctx) {
     if (typeof window === 'undefined') {
       ctx.store.dispatch(fetchScoringCategories());
       ctx.store.dispatch(fetchCategories());
+      ctx.store.dispatch(fetchUserData());
+    }
+  }
 
+  static checkAuth(ctx) {
+    if (typeof window === 'undefined') {
       if (typeof ctx.req.headers.cookie === 'string') {
         const cookiesList = cookies.parse(ctx.req.headers.cookie);
         if (cookiesList && cookiesList.token) {
@@ -72,6 +73,14 @@ class MyApp extends App<MyAppProps> {
         ctx.store.dispatch(setAuthStatus({ status: false }));
       }
     }
+  }
+
+  // First render is only back then is called on every page change
+  static async getInitialProps({ Component, ctx }) {
+    let pageProps = {};
+
+    this.initialRequest(ctx);
+    this.checkAuth(ctx);
 
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);

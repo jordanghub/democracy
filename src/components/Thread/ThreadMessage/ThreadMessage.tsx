@@ -1,31 +1,15 @@
-import React, {
-  memo,
-  useState,
-  useEffect,
-  useCallback,
-  ReactComponentElement,
-} from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import Router from 'next/router';
-import { Typography, Avatar, Grid } from '@material-ui/core';
-import { CallSplit, BorderColor } from '@material-ui/icons';
-import {
-  SpeedDial,
-  SpeedDialIcon,
-  SpeedDialAction,
-  ToggleButton,
-} from '@material-ui/lab';
-import { useDispatch } from 'react-redux';
-
-import { setInitialFormData, setFlashMessage } from 'store/actions';
+import { CallSplit } from '@material-ui/icons';
+import { SpeedDialAction } from '@material-ui/lab';
 import { LinkComponent } from 'components/Utils';
-import { Rating } from 'containers';
-import { threadHomepageDate } from 'utils/dateFormat';
 import { checkSelection } from 'validators/checkSelection';
-
-import { ThreadSource } from '../ThreadSource';
+import { MessageHeader } from './MessageHeader';
+import { MessageContent } from './MessageContent';
+import { MessageSources } from './MessageSources';
 import * as Styled from './ThreadMessage.style';
 import { ThreadMessageProps } from './interface';
-import { AVATAR_ENDPOINT, BASE_API_URL } from 'appConstant/apiEndpoint';
+import { Zoom } from '@material-ui/core';
 
 const mapSelection = (items: any, content: string) => {
   let parts: any[] = [content];
@@ -194,71 +178,32 @@ export const ThreadMessage = memo(
       />
     ));
 
-    const sourcesList = sources?.map((source) => (
-      <ThreadSource key={source.id} name={source.label} url={source.url} />
-    ));
-
     return (
-      <Styled.Wrapper>
-        <Styled.Header container alignItems="center" justify="space-between">
-          <Grid item xs={10}>
-            <Grid container alignItems="center">
-              {author.avatarFileName ? (
-                <Styled.UserAvatar>
-                  <img
-                    src={`${BASE_API_URL}${AVATAR_ENDPOINT}/${author.avatarFileName}`}
-                    alt={`avatar de ${author.username}`}
-                  />
-                </Styled.UserAvatar>
-              ) : (
-                <Avatar>{author.username.toUpperCase().charAt(0)}</Avatar>
-              )}
-              <Styled.Username>{author.username}</Styled.Username>
-              <Styled.Date>le {threadHomepageDate(date)}</Styled.Date>
-            </Grid>
-          </Grid>
-          <Grid item xs={2}>
-            <Grid container justify="flex-end" alignItems="center">
-              <ToggleButton
-                value="check"
-                selected={showRefs}
-                onChange={() => {
-                  changeShowRefs(!showRefs);
-                }}
-                size="small"
-              >
-                <BorderColor fontSize="small" />
-              </ToggleButton>
-              <Rating itemId={id} messageType="message" />
-            </Grid>
-          </Grid>
-        </Styled.Header>
+      <Zoom in timeout={500} unmountOnExit>
+        <Styled.Wrapper>
+          <MessageHeader
+            author={author}
+            changeShowRefs={changeShowRefs}
+            showRefs={showRefs}
+            date={date}
+            messageId={id}
+          />
 
-        <Styled.MessageContent posX={toolBarInfo.posX} posY={toolBarInfo.posY}>
-          <Typography component="pre" onMouseUp={handleOnMouseUp}>
-            {showRefs ? contentItems : content}
-          </Typography>
+          <MessageContent
+            isOpen={toolBarInfo?.isOpened}
+            posX={toolBarInfo.posX}
+            posY={toolBarInfo.posY}
+            handleOnMouseUp={handleOnMouseUp}
+            handleClose={handleClose}
+            actionsList={actionsList}
+            showRefs={showRefs}
+            contentItems={contentItems}
+            content={content}
+          />
 
-          {toolBarInfo.isOpened && (
-            <SpeedDial
-              ariaLabel="SpeedDial example"
-              icon={<SpeedDialIcon onClick={handleClose} />}
-              direction="down"
-              open
-            >
-              {actionsList}
-            </SpeedDial>
-          )}
-        </Styled.MessageContent>
-        <Styled.Sources>
-          <Typography variant="h6">Liste des sources</Typography>
-          {sourcesList && sourcesList.length > 0 ? (
-            sourcesList
-          ) : (
-            <Typography>Aucune source liée à ce message</Typography>
-          )}
-        </Styled.Sources>
-      </Styled.Wrapper>
+          <MessageSources sources={sources} />
+        </Styled.Wrapper>
+      </Zoom>
     );
   },
 );

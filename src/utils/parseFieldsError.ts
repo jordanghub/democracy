@@ -6,6 +6,10 @@ export const getErrorFromConstraint = (errors) => {
     return [];
   }
 
+  if (!Array.isArray(errors)) {
+    return [];
+  }
+
   const errorsList = errors.map(
     (error) =>
       `${getFormFieldLabel(error.property)} ${getFormError(

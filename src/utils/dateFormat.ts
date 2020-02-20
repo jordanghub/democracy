@@ -23,8 +23,8 @@ const days = [
   'Samedi',
 ];
 
-export const threadHomepageDate = (dateString: string) => {
-  const date = new Date(dateString);
+export const threadHomepageDate = (dateVal: string | number) => {
+  const date = new Date(dateVal);
   const day = date.getDay();
 
   const monthDayNumber = date.getDate();
@@ -36,5 +36,5 @@ export const threadHomepageDate = (dateString: string) => {
 
   return `${days[day].toLowerCase()} ${monthDayNumber} ${
     months[month]
-  } à ${hours}h${minutes}`;
+  } à ${hours}h${minutes}`.toLowerCase();
 };

@@ -6,11 +6,11 @@ import {
 } from 'store/actionTypes';
 import { TFormState } from 'types/state';
 
-const initialState: TFormState = {
+export const initialFormsState: TFormState = {
   forms: {},
 };
 
-export function formsReducer(state = initialState, action: any): any {
+export function formsReducer(state = initialFormsState, action: any): any {
   switch (action.type) {
     case SET_INITIAL_FORM_DATA: {
       const { formName, data } = action.payload;
@@ -50,6 +50,7 @@ export function formsReducer(state = initialState, action: any): any {
             ...state.forms[formName],
             submitSuccess: true,
             errors: null,
+            initialData: null,
           },
         },
       };

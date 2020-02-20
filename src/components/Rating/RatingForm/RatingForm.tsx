@@ -1,13 +1,7 @@
 import React, { memo, useCallback, useEffect } from 'react';
 
 import * as Styled from './RatingForm.style';
-import {
-  Typography,
-  Slider,
-  FormHelperText,
-  Grid,
-  Button,
-} from '@material-ui/core';
+import { Typography, Slider, Button } from '@material-ui/core';
 import { RatingFormProps } from './interface';
 import { Field, Form } from 'react-final-form';
 import { useSelector, useDispatch } from 'react-redux';
@@ -15,7 +9,7 @@ import { TState } from 'types/state';
 
 import { scoringFormSubmit, fetchCurrentUserMessageVote } from 'store/actions';
 import { AnyObject, FormApi } from 'final-form';
-import { Alert, AlertTitle } from '@material-ui/lab';
+import { useForms } from 'hooks';
 
 function valuetext(value: Number) {
   return `${value}`;
@@ -65,29 +59,32 @@ const RatingFormComponent = ({ handleSubmit, messageId, disabled }) => {
   const submitSuccess = formData && formData.submitSuccess;
 
   return (
-    <form onSubmit={handleSubmit}>
-      {categories.map((criteria) => (
-        <div key={criteria.name}>
-          <SliderField
-            name={`criteria-${criteria.id}`}
-            criteria={criteria.name}
-            disabled={disabled}
-          />
-        </div>
-      ))}
-      <Button
-        type="submit"
-        fullWidth
-        variant="contained"
-        disabled={submitSuccess}
-      >
-        Envoyer
-      </Button>
-    </form>
+    <>
+      <form onSubmit={handleSubmit}>
+        {categories.map((criteria) => (
+          <div key={criteria.name}>
+            <SliderField
+              name={`criteria-${criteria.id}`}
+              criteria={criteria.name}
+              disabled={disabled}
+            />
+          </div>
+        ))}
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          disabled={submitSuccess}
+        >
+          Envoyer
+        </Button>
+      </form>
+    </>
   );
 };
 
 const RatingFormElement = ({ messageId }) => {
+  const { resetFormData } = useForms();
   const dispatch = useDispatch();
 
   const formSubmitAction = useCallback(
@@ -99,6 +96,14 @@ const RatingFormElement = ({ messageId }) => {
     (payload) => dispatch(fetchCurrentUserMessageVote(payload)),
     [dispatch],
   );
+
+  useEffect(() => {
+    return () => {
+      resetFormData({
+        formName: `scoring${messageId}`,
+      });
+    };
+  }, []);
 
   const votes = useSelector((state: TState) => state.votes.user);
 
@@ -123,18 +128,20 @@ const RatingFormElement = ({ messageId }) => {
     });
   };
   return (
-    <Form
-      initialValues={initialValues}
-      render={(props) => (
-        <RatingFormComponent
-          {...props}
-          messageId={messageId}
-          disabled={!!!item}
-        />
-      )}
-      validate={validateForm}
-      onSubmit={handleSubmit}
-    />
+    <>
+      <Form
+        initialValues={initialValues}
+        render={(props) => (
+          <RatingFormComponent
+            {...props}
+            messageId={messageId}
+            disabled={false}
+          />
+        )}
+        validate={validateForm}
+        onSubmit={handleSubmit}
+      />
+    </>
   );
 };
 

@@ -6,6 +6,9 @@ import {
   ISetRefreshStatusAction,
   ISetRefreshStatusPayload,
   IGetNewTokenWithRefresh,
+  IFetchUserDataAction,
+  IChangeUserDataPayload,
+  IChangeUserDataAction,
 } from './interface';
 
 import {
@@ -14,6 +17,8 @@ import {
   SET_AUTH_STATUS,
   SET_REFRESH_STATUS,
   GET_NEW_TOKEN_WITH_REFRESH,
+  FETCH_USER_DATA,
+  CHANGE_USER_DATA,
 } from 'store/actionTypes';
 
 export const logout = (): LogoutAction => ({
@@ -39,4 +44,15 @@ export const setRefreshStatus = (
 });
 export const getNewTokenWithRefresh = (): IGetNewTokenWithRefresh => ({
   type: GET_NEW_TOKEN_WITH_REFRESH,
+});
+
+export const fetchUserData = (): IFetchUserDataAction => ({
+  type: FETCH_USER_DATA,
+});
+
+export const changeUserData = (
+  payload: IChangeUserDataPayload,
+): IChangeUserDataAction => ({
+  type: CHANGE_USER_DATA,
+  payload,
 });

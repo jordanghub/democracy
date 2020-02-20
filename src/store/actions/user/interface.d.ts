@@ -4,6 +4,10 @@ import {
   SET_AUTH_STATUS,
   SET_REFRESH_STATUS,
   GET_NEW_TOKEN_WITH_REFRESH,
+  FETCH_USER_DATA,
+  CHANGE_USER_DATA,
+  CHANGE_USER_TOKEN,
+  REFRESH_NOTIFICATION_WEBSOCKET,
 } from 'store/actionTypes';
 
 export interface LogoutAction {
@@ -33,3 +37,14 @@ export type ISetRefreshStatusPayload = {
 export interface IGetNewTokenWithRefresh {
   type: typeof GET_NEW_TOKEN_WITH_REFRESH;
 }
+
+export interface IFetchUserDataAction {
+  type: typeof FETCH_USER_DATA;
+}
+
+export interface IChangeUserDataAction {
+  type: typeof CHANGE_USER_DATA;
+  payload: IChangeUserDataPayload;
+}
+
+export interface IChangeUserDataPayload {}

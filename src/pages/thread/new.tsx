@@ -4,13 +4,10 @@ import { Typography } from '@material-ui/core';
 
 import { CreateThreadForm } from 'containers';
 import { Container } from 'components';
-import * as Styled from 'pagesStyle/thread-new.style';
 import { checkAuthServ } from 'utils/checkAuthServ';
 
 import { Store } from 'redux';
 import { fetchCategories } from 'store/actions';
-import { useSelector } from 'react-redux';
-import { TState } from 'types/state';
 
 const Thread: NextPage = () => {
   return (

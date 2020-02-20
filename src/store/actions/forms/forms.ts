@@ -7,6 +7,7 @@ import {
   CREATE_THREAD_ANSWER_FORM_SUBMIT,
   SET_INITIAL_FORM_DATA,
   RESET_FORM_DATA,
+  USER_EDIT_FORM_SUBMIT,
 } from 'store/actionTypes/forms';
 
 import {
@@ -26,6 +27,7 @@ import {
   ISetInitialFormDataPayload,
   IResetFormDataAction,
   IResetFormDataPayload,
+  IUserEditFormSubmitAction,
 } from './interface';
 
 export const registerFormSubmit = (
@@ -78,5 +80,10 @@ export const resetFormData = (
   payload: IResetFormDataPayload,
 ): IResetFormDataAction => ({
   type: RESET_FORM_DATA,
+  payload,
+});
+
+export const userEditFormSubmit = (payload): IUserEditFormSubmitAction => ({
+  type: USER_EDIT_FORM_SUBMIT,
   payload,
 });

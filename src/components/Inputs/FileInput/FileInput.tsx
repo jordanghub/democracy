@@ -11,7 +11,6 @@ export const FileInput = ({ name, label = 'Choisir un fichier' }) => {
         const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
           onChange(evt.target.files);
         };
-        console.log(value);
 
         return (
           <Styled.Wrapper>

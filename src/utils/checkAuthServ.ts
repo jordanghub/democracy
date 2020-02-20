@@ -1,6 +1,4 @@
 import nextCookie from 'next-cookies';
-import Router from 'next/router';
-import { setFlashMessage } from 'store/actions';
 
 export const onlyAnonymousPage = (ctx) => {
   const token = getToken(ctx);

@@ -7,7 +7,7 @@ import { NextPage, NextPageContext } from 'next';
 import { Store } from 'redux';
 import { useSelector, useDispatch } from 'react-redux';
 import { TState } from 'types/state';
-import { CircularProgress, Backdrop, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import { BaseLayout } from 'containers';
 import { Pagination } from 'components/Utils/Pagination';
 import { fetchThreadsByCategory } from 'store/actions';
@@ -36,6 +36,7 @@ const Category: NextPage = memo(() => {
       date={thread.createdAt}
       categories={thread.categories}
       messageType="thread"
+      withAvatar
     />
   ));
 

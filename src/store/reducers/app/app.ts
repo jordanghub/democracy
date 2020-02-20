@@ -1,20 +1,24 @@
+// @ts-nocheck
+
 import {
   ROUTE_CHANGE_COMPLETE,
   SET_FLASH_MESSAGE,
   ROUTE_CHANGE_START,
   CHANGE_IS_PAGE_LOADING,
   RESET_FLASH_MESSAGE,
+  ADD_LOADING_ERROR,
 } from 'store/actionTypes';
 
 import { TAppState } from 'types/state';
 import { AppReducerActionTypes } from 'store/reducers/app/interface';
 
-const initialState: TAppState = {
+export const initialAppState: TAppState = {
   isPageLoading: false,
+  loadingErrors: {},
 };
 
 export function appReducer(
-  state: TAppState = initialState,
+  state: TAppState = initialAppState,
   action: AppReducerActionTypes,
 ): TAppState {
   switch (action.type) {
@@ -53,6 +57,19 @@ export function appReducer(
       return {
         ...state,
         isPageLoading: action.payload.status,
+      };
+    }
+
+    case ADD_LOADING_ERROR: {
+      return {
+        ...state,
+        loadingErrors: {
+          ...state.loadingErrors,
+          [action.payload.key]: {
+            code: action.payload.code,
+            message: action.payload.message,
+          },
+        },
       };
     }
 

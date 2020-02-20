@@ -1,5 +1,3 @@
-export * from './DummyComponent';
-
 export * from './Nav';
 export * from './Thread';
 export * from './Rating';

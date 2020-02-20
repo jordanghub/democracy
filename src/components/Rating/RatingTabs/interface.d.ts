@@ -14,4 +14,5 @@ export interface RatingTabsProps {
   fetchThreadVotesAction: (payload: FetchThreadVotePayload) => void;
   fetchMessageVotesAction: (payload: FetchMessagesVotePayload) => void;
   scoringCategories: () => void;
+  handleClose: () => void;
 }

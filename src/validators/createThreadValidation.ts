@@ -1,9 +1,4 @@
-export const createThreadValidation = ({
-  title,
-  content,
-  categories,
-  sources,
-}) => {
+export const createThreadValidation = ({ title, content, categories }) => {
   const errors: any = {};
 
   if (title) {

@@ -16,7 +16,6 @@ export const findOverlapStart = (strToFind, strToFindIn, content) => {
     const replacement =
       strToFind.slice(strToFindMaxIdx - charIndex) +
       strToFindIn.slice(charIndex + 1);
-    //console.log(replacement);
     if (replacement === strToFindIn) {
       const rest =
         strToFind.slice(0, strToFindMaxIdx - charIndex) + strToFindIn;
@@ -40,18 +39,16 @@ export const findOverlapEnd = (strToFind, strToFindIn, content) => {
   const strToFindMaxIdx = strToFind.length - 1;
   const strToFindInMaxIdx = strToFindIn.length - 1;
 
-  for (let charIndex = 0; charIndex < strToFind.length; charIndex++) {
+  for (let charIndex = 0; charIndex <= strToFindMaxIdx; charIndex++) {
     if (charIndex > strToFindInMaxIdx) {
       return false;
     }
     const replacement =
-      strToFindIn.slice(0, strToFindInMaxIdx + 1 - charIndex) +
-      strToFind.slice(0, charIndex);
-    console.log(replacement);
-    console.log(strToFindIn);
+      strToFindIn.slice(0, strToFindInMaxIdx - charIndex) +
+      strToFind.slice(0, charIndex + 1);
     if (replacement === strToFindIn) {
       const rest =
-        strToFindIn.slice(0, strToFindInMaxIdx + 1 - charIndex) + strToFind;
+        strToFindIn.slice(0, strToFindInMaxIdx - charIndex) + strToFind;
 
       if (content.includes(rest)) {
         return true;

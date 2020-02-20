@@ -20,6 +20,7 @@ import {
   setPaginationData,
   changeCategoryThreads,
   changeSearchThreadResult,
+  addLoadingError,
 } from 'store/actions';
 
 import {
@@ -31,6 +32,7 @@ import {
   FETCH_THREADS_BY_CATEGORY,
   SEARCH_THREAD,
 } from 'store/actionTypes';
+import { FETCH_THREAD_SINGLE_ERROR } from 'appConstant/loadingErrors';
 
 export function* fetchSearchThread({ type, payload }) {
   const axios = getAxios();
@@ -80,9 +82,7 @@ export function* fetchThreadByCategory({ type, payload }) {
         currentPage: data.currentPage,
       }),
     );
-  } catch (err) {
-    // console.log(err.response);
-  }
+  } catch (err) {}
 }
 
 export function* fetchLatestThreads({ type, payload }) {
@@ -109,9 +109,7 @@ export function* fetchLatestThreads({ type, payload }) {
         currentPage: data.currentPage,
       }),
     );
-  } catch (err) {
-    // console.log(err.response);
-  }
+  } catch (err) {}
 }
 
 export function* threadCreateFormSubmit({ type, payload }) {
@@ -132,8 +130,6 @@ export function* threadCreateFormSubmit({ type, payload }) {
       data.refThreadId = payload.refThreadId;
       data.refMessageId = payload.refMessageId;
     }
-
-    console.log(payload);
 
     const response: AxiosResponse = yield axios.post(
       `${BASE_API_URL}${THREAD_LIST_ROUTE}`,
@@ -164,9 +160,7 @@ export function* fetchCategories() {
       `${BASE_API_URL}${CATEGORIES_ENDPOINT}`,
     );
     yield put(changeCategories(response.data));
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 }
 
 export function* fetchThreadSingle({ type, payload }) {
@@ -179,7 +173,12 @@ export function* fetchThreadSingle({ type, payload }) {
 
     yield put(setThreadSingle(response.data));
   } catch (err) {
-    console.log(err.response);
+    yield put(
+      addLoadingError({
+        key: FETCH_THREAD_SINGLE_ERROR,
+        code: err?.response?.status,
+      }),
+    );
   }
 }
 
@@ -206,13 +205,11 @@ export function* createThreadAnswer({ type, payload }) {
     if (response.status === 201) {
       yield put(
         formSubmitSuccess({
-          formName: 'thread-answer',
+          formName: 'answer-thread',
         }),
       );
     }
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 }
 
 export const threadSaga = [

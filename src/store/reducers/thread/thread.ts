@@ -11,14 +11,14 @@ import {
 import { IThreadState } from 'types/state';
 import { ThreadReducerActionTypes } from './interface';
 
-const initialState: IThreadState = {
+export const initialThreadState: IThreadState = {
   threadSingle: null,
   latestThreads: null,
   categories: null,
 };
 
 export function threadReducer(
-  state: IThreadState = initialState,
+  state: IThreadState = initialThreadState,
   action: ThreadReducerActionTypes,
 ): IThreadState {
   switch (action.type) {

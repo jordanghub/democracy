@@ -1,9 +1,9 @@
-import React, { useState, useCallback, useRef, memo, useEffect } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 
-import { Stars as RatingIcon } from '@material-ui/icons';
+import RatingIcon from '@material-ui/icons/HowToVoteOutlined';
 import * as Styled from './Rating.style';
 
-import { RatingProps } from './interface';
+import { IRatingProps } from './interface';
 import { RatingTabs } from 'components/Rating/RatingTabs';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -12,6 +12,8 @@ import {
   fetchThreadVotes,
 } from 'store/actions';
 import { TState } from 'types/state';
+import { ClickAwayListener, Grid } from '@material-ui/core';
+import { Transition } from 'react-transition-group';
 
 const ratingClosed = {
   isOpened: false,
@@ -28,7 +30,9 @@ const ratingOpenedClick = {
   persist: true,
 };
 
-export const Rating = ({ voteDisabled, messageType, itemId }: RatingProps) => {
+const fadeDuration = 300;
+
+export const Rating = ({ voteDisabled, messageType, itemId }: IRatingProps) => {
   const [isRatingOpen, changeisRatingOpen] = useState(ratingClosed);
 
   const ref = useRef<HTMLDivElement>(null);
@@ -54,32 +58,15 @@ export const Rating = ({ voteDisabled, messageType, itemId }: RatingProps) => {
       state.votes[messageType === 'thread' ? 'threads' : 'messages'],
   );
 
-  console.log(votes);
-  console.log(messageType);
-
   const scoringCategories = useSelector(
     (state: TState) => state.votes.scoringCategories,
   );
 
   const isLoggedIn = useSelector((state: TState) => state.user.isLoggedIn);
 
-  useEffect(() => {
-    document.addEventListener('click', handleClickOut);
-    return () => document.removeEventListener('click', handleClickOut);
-  }, [isRatingOpen]);
-
-  const handleClickOut = useCallback(
-    (evt) => {
-      if (isRatingOpen.isOpened && isRatingOpen.persist) {
-        if (popperRef.current) {
-          if (!popperRef.current.reference.contains(evt.target)) {
-            changeisRatingOpen(ratingClosed);
-          }
-        }
-      }
-    },
-    [isRatingOpen],
-  );
+  const handleRatingClose = () => {
+    changeisRatingOpen(ratingClosed);
+  };
 
   const handleIconClick = useCallback(() => {
     if (isRatingOpen.isOpened && isRatingOpen.persist) {
@@ -107,34 +94,56 @@ export const Rating = ({ voteDisabled, messageType, itemId }: RatingProps) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <RatingIcon fontSize="large" cursor="pointer" onClick={handleIconClick} />
-      {isRatingOpen && (
-        <Styled.PoperRating
-          className="MuiTabsContainer"
-          popperRef={popperRef}
-          open={isRatingOpen.isOpened}
-          anchorEl={ref.current}
-          placement="right"
-          disablePortal={true}
-          modifiers={{
-            flip: {
-              enabled: true,
-            },
-          }}
-        >
-          <RatingTabs
-            itemId={itemId}
-            messageType={messageType}
-            voteDisabled={voteDisabled}
-            fetchScoringCategoriesAction={fetchScoringCategoriesAction}
-            fetchThreadVotesAction={fetchThreadVotesAction}
-            scoringCategories={scoringCategories}
-            fetchMessageVotesAction={fetchMessageVotesAction}
-            isLoggedIn={isLoggedIn}
-            votes={votes}
+      <ClickAwayListener onClickAway={handleRatingClose}>
+        <Grid container justify="flex-end">
+          <RatingIcon
+            fontSize="large"
+            cursor="pointer"
+            onClick={handleIconClick}
           />
-        </Styled.PoperRating>
-      )}
+          <Transition
+            in={isRatingOpen.isOpened || isRatingOpen.persist}
+            timeout={{
+              enter: fadeDuration,
+              exit: fadeDuration,
+            }}
+            unmountOnExit
+            exit
+          >
+            {(state) => (
+              <Styled.PoperRating
+                state={state}
+                fadeDuration={fadeDuration}
+                className="MuiTabsContainer"
+                popperRef={popperRef}
+                open
+                anchorEl={ref.current}
+                placement="right"
+                disablePortal
+                transition
+                modifiers={{
+                  flip: {
+                    enabled: true,
+                  },
+                }}
+              >
+                <RatingTabs
+                  handleClose={handleRatingClose}
+                  itemId={itemId}
+                  messageType={messageType}
+                  voteDisabled={voteDisabled}
+                  fetchScoringCategoriesAction={fetchScoringCategoriesAction}
+                  fetchThreadVotesAction={fetchThreadVotesAction}
+                  scoringCategories={scoringCategories}
+                  fetchMessageVotesAction={fetchMessageVotesAction}
+                  isLoggedIn={isLoggedIn}
+                  votes={votes}
+                />
+              </Styled.PoperRating>
+            )}
+          </Transition>
+        </Grid>
+      </ClickAwayListener>
     </Styled.Wrapper>
   );
 };

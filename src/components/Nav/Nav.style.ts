@@ -1,4 +1,9 @@
 import styled from 'styled-components';
+import { Grid, Popper } from '@material-ui/core';
+
+export const MenuCategories = styled(Popper)`
+  z-index: 2000;
+`;
 
 export const Wrapper = styled.div`
   & .MuiAppBar-root {
@@ -10,6 +15,11 @@ export const Wrapper = styled.div`
     cursor: pointer;
   }
 
+  & #nav-category-button {
+    display: flex;
+    align-items: center;
+  }
+
   & a {
     color: inherit;
     text-decoration: none;
@@ -18,13 +28,37 @@ export const Wrapper = styled.div`
     align-items: inherit;
     justify-content: inherit;
   }
-  & ul {
-    margin-top: 0;
-    padding-left: 0;
+
+  & #menu-categories,
+  #nav-user-menu {
+    min-width: 200px;
   }
 
   & #menu-categories a {
     text-transform: capitalize;
   }
+
+  #desktop-nav {
+    display: none;
+  }
+
+  @media screen and (min-width: 1024px) {
+    display: flex;
+    flex-wrap: wrap;
+    #desktop-nav {
+      display: flex;
+    }
+    /* #nav-mobile-button-toggle {
+      display: none;
+    } */
+  }
+
   color: white;
+`;
+
+export const SearchContainer = styled(Grid)`
+  padding-bottom: 1rem;
+  @media screen and (min-width: 600px) {
+    padding-bottom: 0rem;
+  }
 `;

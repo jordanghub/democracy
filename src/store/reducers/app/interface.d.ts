@@ -4,6 +4,7 @@ import {
   RouteChangeStartAction,
   ChangeIsPageLoadingAction,
   IResetFlashMessageAction,
+  IAddLoadingErrorAction,
 } from 'store/actions/app/interface';
 
 export type AppReducerActionTypes =
@@ -11,4 +12,5 @@ export type AppReducerActionTypes =
   | RouteChangeCompleteAction
   | SetFlashMessageAction
   | ChangeIsPageLoadingAction
-  | IResetFlashMessageAction;
+  | IResetFlashMessageAction
+  | IAddLoadingErrorAction;

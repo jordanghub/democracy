@@ -13,18 +13,25 @@ export const NavSearchIcon = styled.div`
 
 export const NavSearchInput = styled(InputBase)`
   padding-left: 30px !important;
-  padding: 0.5rem;
 
   color: white !important;
-  & input {
-    width: 200px;
-    transition: width 1500ms;
-  }
-  & input:focus {
-    width: 350px;
-  }
 
   &::placeholder {
     color: white !important;
+  }
+
+  & input {
+    width: 100%;
+  }
+
+  @media screen and (min-width: 1024px) {
+    padding: 0.5rem;
+    & input {
+      width: 200px;
+      transition: width 1500ms;
+    }
+    & input:focus {
+      width: 350px;
+    }
   }
 `;

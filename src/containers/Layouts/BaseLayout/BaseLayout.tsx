@@ -20,7 +20,7 @@ export const BaseLayout = ({
     (state: TState) => state.app,
   );
   const categories = useSelector((state: TState) => state.thread.categories);
-  const { isLoggedIn } = useSelector((state: TState) => state.user);
+  const { isLoggedIn, userData } = useSelector((state: TState) => state.user);
 
   const logoutAction = useCallback(() => dispatch(logout()), [dispatch]);
 
@@ -32,11 +32,11 @@ export const BaseLayout = ({
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         {description && <meta name="description" content={description} />}
       </Head>
-
       <Nav
         isLoggedIn={isLoggedIn}
         logoutCallback={logoutAction}
         categories={categories}
+        userData={userData}
       />
       {isPageLoading && <Styled.Loading color="secondary" />}
 

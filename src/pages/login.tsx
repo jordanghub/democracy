@@ -1,7 +1,5 @@
 import { NextPage } from 'next';
 
-import * as Styled from 'pagesStyle/login.style';
-
 import { BaseLayout } from 'containers';
 import { LoginForm } from 'containers/Forms';
 import { Typography } from '@material-ui/core';
@@ -10,7 +8,7 @@ import { onlyAnonymousPage } from 'utils/checkAuthServ';
 
 const Login: NextPage = () => {
   return (
-    <BaseLayout>
+    <BaseLayout title="Connexion">
       <Container>
         <Typography variant="h4" component="h2">
           Se connecter

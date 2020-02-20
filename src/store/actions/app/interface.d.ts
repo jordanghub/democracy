@@ -37,3 +37,14 @@ export interface ChangeIsPageLoadingAction {
 export type ChangeIsPageLoadingPayload = {
   status: boolean;
 };
+
+export interface IAddLoadingErrorAction {
+  type: typeof ADD_LOADING_ERROR;
+  payload: IAddLoadingErrorPayload;
+}
+
+export interface IAddLoadingErrorPayload {
+  key: string;
+  code?: number;
+  message?: string;
+}

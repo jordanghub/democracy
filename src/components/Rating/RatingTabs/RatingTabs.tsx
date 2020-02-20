@@ -11,7 +11,8 @@ import {
 import { RatingShow, TabPanel, RatingForm } from 'components';
 import { RatingTabsProps } from './interface';
 
-import { Alert, AlertTitle } from '@material-ui/lab';
+import CloseIcon from '@material-ui/icons/Close';
+import * as Styled from './RatingTabs.style';
 
 function a11yProps(index: any) {
   return {
@@ -30,6 +31,7 @@ export const RatingTabs = ({
   fetchScoringCategoriesAction,
   fetchThreadVotesAction,
   fetchMessageVotesAction,
+  handleClose,
 }: RatingTabsProps) => {
   const item = votes.find((messageOrThread) => messageOrThread.id === itemId);
 
@@ -65,6 +67,8 @@ export const RatingTabs = ({
       {item ? (
         voteDisabled ? (
           <RatingShow
+            showCloseButton={voteDisabled}
+            handleClose={handleClose}
             votes={item.votes}
             criterias={scoringCategories || []}
             disabled
@@ -79,6 +83,9 @@ export const RatingTabs = ({
               >
                 <Tab label="Notes" {...a11yProps(0)} />
                 <Tab label="Voter" {...a11yProps(1)} />
+                <Styled.CloseButton onClick={handleClose}>
+                  <CloseIcon color="primary" />
+                </Styled.CloseButton>
               </Tabs>
             </AppBar>
             <TabPanel value={tabItem} index={0}>
@@ -86,6 +93,7 @@ export const RatingTabs = ({
                 Notes du message
               </Typography>
               <RatingShow
+                onClick={() => changeTabItem(1)}
                 criterias={scoringCategories || []}
                 votes={item.votes}
                 disabled

@@ -1,15 +1,14 @@
-import React, { useCallback, useEffect } from 'react';
-import { FormRenderProps, Form, useForm, FormSpy } from 'react-final-form';
+import React, { useEffect } from 'react';
+import { FormRenderProps, Form } from 'react-final-form';
 import { Button, Typography } from '@material-ui/core';
 
 import { Text } from 'components/Inputs';
 import * as Styled from './AnswerThreadForm.style';
 import { ThreadSourcesInput } from 'components/Inputs/ThreadSourcesInput';
 import { createThreadAnswerValidation } from 'validators/createThreadAnswerValidation';
-import { useDispatch, useSelector } from 'react-redux';
-import { createThreadAnswerFormSubmit, resetFormData } from 'store/actions';
+import { useSelector } from 'react-redux';
 import { TState } from 'types/state';
-import { getErrorFromConstraint } from 'utils/parseFieldsError';
+import { useForms } from 'hooks';
 
 export const AnswerThreadFormComponent = ({
   handleSubmit,
@@ -29,35 +28,26 @@ export const AnswerThreadFormComponent = ({
 };
 
 export const AnswerThreadForm = () => {
-  const dispatch = useDispatch();
-  const resetFormDataAction = useCallback(
-    (payload) => dispatch(resetFormData(payload)),
-    [dispatch],
-  );
-
-  const formSubmitAction = useCallback(
-    (payload) => dispatch(createThreadAnswerFormSubmit(payload)),
-    [dispatch],
-  );
+  const { createThreadAnswerFormSubmit, resetFormData } = useForms();
   useEffect(() => {
-    return () => resetFormDataAction({ formName: 'register' });
+    return () => resetFormData({ formName: 'answer-thread' });
   }, []);
 
   const formData = useSelector(
-    (state: TState) => state.forms.forms['thread-answer'],
+    (state: TState) => state.forms.forms['answer-thread'],
   );
 
   const isSuccess = formData?.submitSuccess;
 
   const handleSubmit = (values) => {
-    formSubmitAction(values);
+    createThreadAnswerFormSubmit(values);
   };
   return (
     <Form
       render={(props) => {
         if (isSuccess) {
           props.form.reset();
-          resetFormDataAction({ formName: 'register' });
+          resetFormData({ formName: 'answer-thread' });
         }
         return <AnswerThreadFormComponent {...props} />;
       }}
@@ -65,8 +55,4 @@ export const AnswerThreadForm = () => {
       onSubmit={handleSubmit}
     />
   );
-};
-
-const formValidation = () => {
-  return {};
 };

@@ -8,6 +8,10 @@ export interface ThreadFullProps {
   originalSelection: any;
 }
 
+export interface IThreadContainerProps {
+  slug: string;
+}
+
 type ThreadMessage = {
   id: number;
   content: string;

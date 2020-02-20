@@ -3,18 +3,20 @@ import {
   LOGIN_SUCCESS,
   SET_AUTH_STATUS,
   SET_REFRESH_STATUS,
+  CHANGE_USER_DATA,
 } from 'store/actionTypes';
 
 import { TAppState, IUserState } from 'types/state';
 import { UserReducerActionTypes } from './interface';
 
-const initialState: IUserState = {
+export const initialUserState: IUserState = {
   isLoggedIn: null,
   refreshFailed: null,
+  userData: null,
 };
 
 export function userReducer(
-  state: IUserState = initialState,
+  state: IUserState = initialUserState,
   action: UserReducerActionTypes,
 ): IUserState {
   switch (action.type) {
@@ -42,6 +44,13 @@ export function userReducer(
       return {
         ...state,
         refreshFailed: action.payload.status,
+      };
+    }
+
+    case CHANGE_USER_DATA: {
+      return {
+        ...state,
+        userData: action.payload,
       };
     }
 

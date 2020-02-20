@@ -5,133 +5,154 @@ import {
   Toolbar,
   IconButton,
   Typography,
-  Button,
   Grid,
-  Menu,
   MenuItem,
-  InputBase,
-  Popover,
   Popper,
   Paper,
+  useMediaQuery,
+  ClickAwayListener,
 } from '@material-ui/core';
-import {
-  Menu as MenuIcon,
-  ArrowDropDown,
-  Search as SearchIcon,
-} from '@material-ui/icons';
+import { Menu as MenuIcon, ArrowDropDown } from '@material-ui/icons';
 
 import * as Styled from './Nav.style';
 
 import { LinkComponent } from 'components/Utils';
 import { NavProps } from './interface';
 import { Search } from 'containers/Search';
+import { UserMenu } from './UserMenu';
+import { MobileNav } from './MobileNav';
 
-export const Nav = memo(
-  ({ isLoggedIn, logoutCallback, categories }: NavProps) => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const menuRef = useRef<HTMLDivElement | null>(null);
+export const Nav = memo(({ isLoggedIn, categories, userData }: NavProps) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
-    const handleCategoriesMenuClose = () => {
-      setIsMenuOpen(false);
-    };
-    const handleCategoriesMenuOpen = (evt) => {
-      setIsMenuOpen(true);
-    };
+  const handleMobileNavOpen = () => setIsMobileNavOpen(true);
+  const handleMobileNavClose = () => setIsMobileNavOpen(false);
 
-    const handleClickOut = (evt: any) => {
-      if (isMenuOpen) {
-        if (!menuRef.current.contains(evt.target)) {
-          setIsMenuOpen(false);
-        }
-      }
-    };
+  const menuRef = useRef<HTMLDivElement | null>(null);
 
-    useEffect(() => {
-      document.addEventListener('click', handleClickOut);
-      return () => document.removeEventListener('click', handleClickOut);
-    }, [isMenuOpen]);
+  const handleCategoriesMenuClose = () => {
+    setIsMenuOpen(false);
+  };
+  const handleCategoriesMenuOpen = () => {
+    setIsMenuOpen(true);
+  };
 
-    // TODO déplacer le style dans le fichier style
-    const menuCategories = (
-      <Popper
-        style={{ zIndex: 9999 }}
+  const menuCategories = (
+    <ClickAwayListener onClickAway={handleCategoriesMenuClose}>
+      <Styled.MenuCategories
         anchorEl={menuRef.current}
         id="menu-categories"
         open={isMenuOpen}
         disablePortal
       >
-        <Paper elevation={6} component="ul">
+        <Paper elevation={6} component="div" role="list">
           {categories?.map((category) => (
-            <MenuItem onClick={handleCategoriesMenuClose} key={category.name}>
-              <LinkComponent
-                to={`/categories/[slug]`}
-                visibleLink={`/categories/${category.id}`}
-              >
+            <LinkComponent
+              to={`/categories/[slug]`}
+              visibleLink={`/categories/${category.id}`}
+              key={category.name}
+            >
+              <MenuItem onClick={handleCategoriesMenuClose} component="span">
                 {category.name}
-              </LinkComponent>
-            </MenuItem>
+              </MenuItem>
+            </LinkComponent>
           ))}
         </Paper>
-      </Popper>
-    );
+      </Styled.MenuCategories>
+    </ClickAwayListener>
+  );
 
-    return (
-      <Styled.Wrapper>
-        {menuCategories}
-        <AppBar position="static">
-          <Toolbar>
-            <Grid container justify="space-between" direction="row">
-              <Grid item container alignItems="center" xs>
-                <IconButton edge="start" color="inherit" aria-label="menu">
-                  <MenuIcon />
-                </IconButton>
+  const isMobile = useMediaQuery('(max-width:1024px)');
+  const isSm = useMediaQuery('(max-width:600px)');
+
+  useEffect(() => {
+    if (!isMobile) {
+      handleMobileNavClose();
+    }
+  }, [isMobile]);
+
+  return (
+    <Styled.Wrapper>
+      {isMenuOpen && menuCategories}
+      <AppBar position="relative">
+        <Toolbar>
+          <Grid container justify="space-between" direction="row">
+            <Grid item container alignItems="center" xs={12} sm>
+              <Grid item xs={12} container alignItems="center" sm={4}>
+                {isMobile && (
+                  <IconButton
+                    edge="start"
+                    color="inherit"
+                    aria-label="menu"
+                    onClick={handleMobileNavOpen}
+                    id="nav-mobile-button-toggle"
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                )}
                 <LinkComponent to="/" isButton>
                   Democracy
                 </LinkComponent>
+                {isLoggedIn && isSm && <UserMenu userData={userData} />}
+              </Grid>
+
+              <Styled.SearchContainer item xs={12} sm>
                 <Search />
-              </Grid>
-
-              <Grid item container alignItems="center" xs justify="flex-end">
-                <Typography onClick={handleCategoriesMenuOpen} component="span">
-                  <Grid
-                    container
-                    alignItems="center"
-                    className="MuiButton-root"
-                    ref={menuRef}
-                  >
-                    <span>CATEGORIES</span>
-                    <ArrowDropDown />
-                  </Grid>
-                </Typography>
-                {!isLoggedIn && (
-                  <>
-                    <LinkComponent to="/register" isButton>
-                      S'inscrire
-                    </LinkComponent>
-                    <LinkComponent to="/login" isButton>
-                      Se connecter
-                    </LinkComponent>
-                  </>
-                )}
-
-                {isLoggedIn && (
-                  <>
-                    <LinkComponent to="/thread/new" isButton>
-                      Créer un thread
-                    </LinkComponent>
-                    <LinkComponent to="/profile" isButton>
-                      Mon profil
-                    </LinkComponent>
-                    <Button href="/logout" color="inherit">
-                      Se déconnecter
-                    </Button>
-                  </>
-                )}
-              </Grid>
+              </Styled.SearchContainer>
             </Grid>
-          </Toolbar>
-        </AppBar>
-      </Styled.Wrapper>
-    );
-  },
-);
+
+            <Grid
+              item
+              container
+              alignItems="center"
+              xs
+              justify="flex-end"
+              id="desktop-nav"
+            >
+              <Typography
+                ref={menuRef}
+                component="span"
+                className="MuiButton-root"
+                id="nav-category-button"
+                onClick={handleCategoriesMenuOpen}
+              >
+                CATEGORIES
+                <ArrowDropDown />
+              </Typography>
+              {!isLoggedIn && !isMobile && (
+                <>
+                  <LinkComponent to="/register" isButton>
+                    S'inscrire
+                  </LinkComponent>
+                  <LinkComponent to="/login" isButton>
+                    Se connecter
+                  </LinkComponent>
+                </>
+              )}
+
+              {isLoggedIn && !isMobile && (
+                <>
+                  <LinkComponent to="/thread/new" isButton>
+                    Créer un thread
+                  </LinkComponent>
+                </>
+              )}
+            </Grid>
+
+            {isMobile && (
+              <MobileNav
+                isLoggedIn={isLoggedIn}
+                isOpen={isMobileNavOpen}
+                handleClose={handleMobileNavClose}
+                handleOpen={handleMobileNavOpen}
+                categories={categories}
+              />
+            )}
+            {isLoggedIn && !isSm && <UserMenu userData={userData} />}
+          </Grid>
+        </Toolbar>
+      </AppBar>
+    </Styled.Wrapper>
+  );
+});

@@ -16,7 +16,7 @@ export const Text = ({
     {({ input, meta }) => (
       <TextField
         hidden={hidden}
-        error={meta.touched && meta.error}
+        error={!!(meta.touched && meta.error)}
         helperText={meta.touched ? meta.error : ''}
         label={label}
         name={input.name}

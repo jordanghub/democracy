@@ -1,59 +1,51 @@
 import React, { useEffect, useCallback } from 'react';
 
 import * as Styled from './Thread.style';
-import { ThreadFullProps } from './interface';
 import { ThreadHomepage, ThreadMessage } from 'components';
 import { AnswerThreadForm } from 'containers/Forms/AnswerThreadForm';
 import { ThreadOriginalSelection } from 'components/Thread/ThreadOriginalSelection';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  addNewThreadMessage,
-  clearThreadSingle,
-  fetchThreadSingle,
-  setFlashMessage,
-} from 'store/actions';
+import { setFlashMessage } from 'store/actions';
 import socket from 'utils/websockets';
 import { EVENT_NEW_THREAD_MESSAGE } from 'appConstant/websockets';
-import { Backdrop, CircularProgress } from '@material-ui/core';
-import { TState } from 'types/state';
+import { Backdrop, CircularProgress, Typography } from '@material-ui/core';
+
 import { useThread } from 'hooks';
+import { useForms } from 'hooks';
+import { TState } from 'types/state';
+import { IThreadContainerProps } from './interface';
 
-export const Thread = () => {
-  const threadData = useSelector((state: TState) => state.thread.threadSingle);
-
+export const Thread = ({ slug }: IThreadContainerProps) => {
   const dispatch = useDispatch();
+
+  const { isLoggedIn } = useSelector((state: TState) => state.user);
 
   const setFlashMessageAction = useCallback(
     (payload) => dispatch(setFlashMessage(payload)),
     [dispatch],
   );
 
-  const setInitialFormDataAction = useCallback(
-    (payload) => dispatch(setFlashMessage(payload)),
-    [dispatch],
-  );
-  const { clearThreadSingle, thread, addNewThreadMessage } = useThread();
+  const { thread, addNewThreadMessage } = useThread();
+  const { setInitialFormData } = useForms();
 
   useEffect(() => {
-    if (thread?.threadSingle?.id) {
+    if (thread?.threadSingle?.id && typeof window !== 'undefined') {
       socket.on(
         `${EVENT_NEW_THREAD_MESSAGE}${thread.threadSingle.id}`,
         addNewThreadMessage,
       );
       return () => {
-        console.log(`Retrait de l'écouteur sur le thread ${id}`);
         socket.off(
           `${EVENT_NEW_THREAD_MESSAGE}${thread.threadSingle.id}`,
           addNewThreadMessage,
         );
-        clearThreadSingle();
       };
     }
   }, [thread?.threadSingle?.id]);
 
   if (!thread.threadSingle) {
     return (
-      <Backdrop open>
+      <Backdrop open={!thread.threadSingle}>
         <CircularProgress color="primary" />
       </Backdrop>
     );
@@ -65,12 +57,13 @@ export const Thread = () => {
     title,
     createdAt,
     author,
-  } = threadData;
+    categories,
+  } = thread.threadSingle;
 
   const messagesList = messages.map((message, index) => (
     <ThreadMessage
       setFlashMessageAction={setFlashMessageAction}
-      setInitialFormDataAction={setInitialFormDataAction}
+      setInitialFormDataAction={setInitialFormData}
       threadId={id}
       key={index}
       id={message.id}
@@ -95,11 +88,20 @@ export const Thread = () => {
         title={title}
         author={author}
         date={createdAt}
+        categories={categories}
         withoutLink
         messageType="thread"
       />
       <Styled.Messages>{messagesList}</Styled.Messages>
-      <AnswerThreadForm />
+      {isLoggedIn ? (
+        <AnswerThreadForm />
+      ) : (
+        <Styled.NotLoggedInMessage>
+          <Typography component="p" variant="h6">
+            Vous devez être connecté pour envoyer un message
+          </Typography>
+        </Styled.NotLoggedInMessage>
+      )}
     </Styled.Wrapper>
   );
 };

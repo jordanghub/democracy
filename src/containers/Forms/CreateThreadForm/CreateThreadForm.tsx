@@ -1,16 +1,16 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { FormRenderProps, Form, AnyObject } from 'react-final-form';
 import { Button } from '@material-ui/core';
 
 import { Text, SelectMultipleChips } from 'components/Inputs';
 import * as Styled from './CreateThreadForm.style';
 import { ThreadSourcesInput } from 'components/Inputs/ThreadSourcesInput';
-import { useDispatch, useSelector } from 'react-redux';
-import { createThreadFormSubmit, resetFormData } from 'store/actions';
+import { useSelector } from 'react-redux';
 import { TState } from 'types/state';
 import { createThreadValidation } from 'validators/createThreadValidation';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { getErrorFromConstraint } from 'utils/parseFieldsError';
+import { useForms } from 'hooks';
 
 export const CreateThreadFormComponent = ({
   handleSubmit,
@@ -23,7 +23,7 @@ export const CreateThreadFormComponent = ({
   return (
     <Styled.Form onSubmit={handleSubmit}>
       <Text name="title" label="Le titre" />
-      <Text name="content" multiline label="Le contenu" rows={30} />
+      <Text name="content" multiline label="Le contenu" rows={15} />
       <SelectMultipleChips
         name="categories"
         label="Catégories"
@@ -44,7 +44,7 @@ export const CreateThreadFormComponent = ({
         </>
       )}
       <ThreadSourcesInput />
-      <Button variant="contained" type="submit">
+      <Button variant="contained" type="submit" fullWidth>
         Envoyer
       </Button>
     </Styled.Form>
@@ -52,22 +52,13 @@ export const CreateThreadFormComponent = ({
 };
 
 export const CreateThreadForm = () => {
-  const dispatch = useDispatch();
+  const { resetFormData, createThreadFormSubmit } = useForms();
   const formData = useSelector(
     (state: TState) => state.forms.forms['thread-create'],
   );
-  const formSubmitAction = useCallback(
-    (payload) => dispatch(createThreadFormSubmit(payload)),
-    [dispatch],
-  );
-
-  const resetFormDataAction = useCallback(
-    (payload) => dispatch(resetFormData(payload)),
-    [dispatch],
-  );
 
   useEffect(() => {
-    return () => resetFormDataAction({ formName: 'thread-create' });
+    return () => resetFormData({ formName: 'thread-create' });
   }, []);
 
   const initialData: AnyObject = {};
@@ -83,7 +74,7 @@ export const CreateThreadForm = () => {
   }
 
   const handleSubmit = (values) => {
-    formSubmitAction(values);
+    createThreadFormSubmit(values);
   };
 
   const errors = formData?.errors;

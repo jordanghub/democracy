@@ -22,6 +22,8 @@ export interface IThreadState {
 export interface IUserState {
   isLoggedIn: boolean | null;
   refreshFailed: boolean | null;
+  userData?: any;
+  token?: string;
 }
 
 export interface IVotesState {
@@ -33,6 +35,12 @@ export interface IVotesState {
 
 export interface TAppState {
   isPageLoading: boolean;
+  loadingErrors: {
+    [key: string]: {
+      code: number;
+      message?: string;
+    };
+  };
   flashMessage?: {
     type: Color;
     message: string;

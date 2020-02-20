@@ -7,6 +7,7 @@ import {
   CREATE_THREAD_ANSWER_FORM_SUBMIT,
   SET_INITIAL_FORM_DATA,
   RESET_FORM_DATA,
+  USER_EDIT_FORM_SUBMIT,
 } from 'store/actionTypes';
 
 export interface RegisterFormSubmitAction {
@@ -93,3 +94,8 @@ export interface IResetFormDataAction {
 export type IResetFormDataPayload = {
   formName: string;
 };
+
+export interface IUserEditFormSubmitAction {
+  type: typeof USER_EDIT_FORM_SUBMIT;
+  payload: any;
+}

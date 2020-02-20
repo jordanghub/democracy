@@ -7,9 +7,13 @@ import { ThreadHomepage as ThreadHomepageType } from 'types/thread';
 import { TState } from 'types/state';
 
 import * as Styled from 'pagesStyle/index.style';
-
+import cookies from 'cookie';
 import { ThreadHomepage, Container } from 'components';
-import { fetchLatestThreads, changePaginationPage } from 'store/actions';
+import {
+  fetchLatestThreads,
+  changePaginationPage,
+  fetchUserData,
+} from 'store/actions';
 
 import { BaseLayout } from 'containers/Layouts';
 import { Pagination } from 'components/Utils/Pagination';
@@ -36,6 +40,7 @@ const Homepage: NextPage<HomepageProps> = () => {
       date={thread.createdAt}
       categories={thread.categories}
       messageType="thread"
+      withAvatar
     />
   ));
 

@@ -8,7 +8,7 @@ import {
 import { IVotesState } from 'types/state';
 import { VotesReducerActionTypes } from './interface';
 
-const initialState: IVotesState = {
+export const initialVoteState: IVotesState = {
   threads: [],
   messages: [],
   user: [],
@@ -16,7 +16,7 @@ const initialState: IVotesState = {
 };
 
 export function votesReducer(
-  state: IVotesState = initialState,
+  state: IVotesState = initialVoteState,
   action: VotesReducerActionTypes,
 ): IVotesState {
   switch (action.type) {

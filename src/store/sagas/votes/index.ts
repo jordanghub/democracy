@@ -16,6 +16,7 @@ import {
   setThreadVotes,
   setMessageVote,
   setCurrentUserMessageVote,
+  setFlashMessage,
 } from 'store/actions';
 
 import {
@@ -25,12 +26,18 @@ import {
   MESSAGES_ENDPOINT,
 } from 'appConstant/apiEndpoint';
 import { AxiosResponse } from 'axios';
+import { ICustomAxiosConfig } from 'types/axios';
 
 export function* getCurrentUserMessageVote({ type, payload }) {
   const axios = getAxios();
+
+  const customConfig: ICustomAxiosConfig = {
+    redirectOnFailure: false,
+  };
   try {
     const response = yield axios.get(
       `${BASE_API_URL}${MESSAGES_ENDPOINT}/${payload.id}/votes/me`,
+      customConfig,
     );
 
     yield put(
@@ -78,9 +85,14 @@ export function* scoringFormSubmit({ type, payload }) {
         formName: `scoring${payload.id}`,
       }),
     );
-  } catch (err) {
-    console.log(err);
-  }
+
+    yield put(
+      setFlashMessage({
+        type: 'success',
+        message: 'Vote enregistré avec succès',
+      }),
+    );
+  } catch (err) {}
 }
 
 export function* fetchThreadVotes({ type, payload }) {
@@ -129,9 +141,7 @@ export function* fetchScoringCategories() {
     );
 
     yield put(setScoringCategories(response.data));
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 }
 
 export const votesSagas = [
