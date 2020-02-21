@@ -1,8 +1,10 @@
 export const createThreadAnswerValidation = ({ content }) => {
   const errors: any = {};
 
-  if (content) {
-    if (content.length < 10) {
+  const contentFiltered = content ? content.trim() : content;
+
+  if (contentFiltered) {
+    if (contentFiltered.length < 10) {
       errors.content = 'Le contenu doit faire 10 caractères minimum';
     }
   } else {

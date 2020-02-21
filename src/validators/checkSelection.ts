@@ -3,7 +3,7 @@ import { findOverlapStart, findOverlapEnd } from 'utils/overlap';
 export const checkSelection = (items, selection, content) => {
   let error = '';
 
-  if (selection === '') {
+  if (selection && selection.trim() === '') {
     error = 'La chaine ne doit pas être vide';
     return error;
   }
