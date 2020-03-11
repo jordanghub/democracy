@@ -87,6 +87,8 @@ export const ThreadMessage = memo(
     highlightedItems,
     setInitialFormDataAction,
     setFlashMessageAction,
+    scoringCategories,
+    votes,
   }: ThreadMessageProps) => {
     const [showRefs, changeShowRefs] = useState(false);
     const [contentItems, changeContentItems] = useState([]);
@@ -182,6 +184,8 @@ export const ThreadMessage = memo(
       <Zoom in timeout={500} unmountOnExit>
         <Styled.Wrapper>
           <MessageHeader
+            scoringCategories={scoringCategories}
+            votes={votes}
             author={author}
             changeShowRefs={changeShowRefs}
             showRefs={showRefs}

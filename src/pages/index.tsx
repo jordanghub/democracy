@@ -26,6 +26,9 @@ interface HomepageProps {
 const Homepage: NextPage<HomepageProps> = () => {
   const dispatch = useDispatch();
   const threads = useSelector((state: TState) => state.thread.latestThreads);
+  const scoringCategories = useSelector(
+    (state: TState) => state.votes.scoringCategories,
+  );
 
   const paginationData = useSelector(
     (state: TState) => state.pagination['latestThreads'],
@@ -39,8 +42,10 @@ const Homepage: NextPage<HomepageProps> = () => {
       author={thread.author}
       date={thread.createdAt}
       categories={thread.categories}
+      votes={thread.votes}
       messageType="thread"
       withAvatar
+      scoringCategories={scoringCategories}
     />
   ));
 

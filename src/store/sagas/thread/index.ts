@@ -21,6 +21,7 @@ import {
   changeCategoryThreads,
   changeSearchThreadResult,
   addLoadingError,
+  setFlashMessage,
 } from 'store/actions';
 
 import {
@@ -31,6 +32,7 @@ import {
   CREATE_THREAD_FORM_SUBMIT,
   FETCH_THREADS_BY_CATEGORY,
   SEARCH_THREAD,
+  TOGGLE_THREAD_LOCK,
 } from 'store/actionTypes';
 import { FETCH_THREAD_SINGLE_ERROR } from 'appConstant/loadingErrors';
 
@@ -212,6 +214,38 @@ export function* createThreadAnswer({ type, payload }) {
   } catch (err) {}
 }
 
+export function* toggleThreadLock({ type, payload }) {
+  const axios = getAxios();
+
+  const threadSingle = yield select(
+    (state: TState) => state.thread.threadSingle,
+  );
+
+  if (!threadSingle) {
+    return;
+  }
+
+  const data: any = {};
+
+  if (payload.reason) {
+    data.reason = payload.reason;
+  }
+
+  try {
+    const response: AxiosResponse = yield axios.post(
+      `${BASE_API_URL}${THREAD_LIST_ROUTE}/${threadSingle.id}/toggle-lock`,
+      data,
+    );
+
+    yield put(
+      setFlashMessage({
+        type: 'success',
+        message: 'Le thread a bien été modifié',
+      }),
+    );
+  } catch (err) {}
+}
+
 export const threadSaga = [
   takeLatest(FETCH_LATEST_THREADS, fetchLatestThreads),
   takeLatest(FETCH_CATEGORIES, fetchCategories),
@@ -219,5 +253,6 @@ export const threadSaga = [
   takeLatest(CREATE_THREAD_ANSWER_FORM_SUBMIT, createThreadAnswer),
   takeLatest(CREATE_THREAD_FORM_SUBMIT, threadCreateFormSubmit),
   takeLatest(FETCH_THREADS_BY_CATEGORY, fetchThreadByCategory),
+  takeLatest(TOGGLE_THREAD_LOCK, toggleThreadLock),
   debounce(500, SEARCH_THREAD, fetchSearchThread),
 ];

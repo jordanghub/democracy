@@ -11,6 +11,7 @@ import {
   CHANGE_CATEGORY_THREADS,
   SEARCH_THREAD,
   CHANGE_SEARCH_THREAD_RESULT,
+  TOGGLE_THREAD_LOCK,
 } from 'store/actionTypes';
 
 import {
@@ -34,6 +35,8 @@ import {
   ISearchThreadAction,
   IChangeThreadSearchResultPayload,
   IChangeThreadSearchResultAction,
+  IToggleThreadLockPayload,
+  IToggleThreadLockAction,
 } from './interface';
 
 export const fetchLatestThreads = (
@@ -106,5 +109,12 @@ export const changeSearchThreadResult = (
   payload: IChangeThreadSearchResultPayload,
 ): IChangeThreadSearchResultAction => ({
   type: CHANGE_SEARCH_THREAD_RESULT,
+  payload,
+});
+
+export const toggleThreadLock = (
+  payload: IToggleThreadLockPayload,
+): IToggleThreadLockAction => ({
+  type: TOGGLE_THREAD_LOCK,
   payload,
 });

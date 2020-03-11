@@ -1,29 +1,29 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from "react";
 import {
   Paper,
   AppBar,
   Tabs,
   Tab,
   CircularProgress,
-  Typography,
-} from '@material-ui/core';
+  Typography
+} from "@material-ui/core";
 
-import { RatingShow, TabPanel, RatingForm } from 'components';
-import { RatingTabsProps } from './interface';
+import { RatingShow, TabPanel, RatingForm } from "components";
+import { RatingTabsProps } from "./interface";
 
-import CloseIcon from '@material-ui/icons/Close';
-import * as Styled from './RatingTabs.style';
+import CloseIcon from "@material-ui/icons/Close";
+import * as Styled from "./RatingTabs.style";
 
 function a11yProps(index: any) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`
   };
 }
 
 export const RatingTabs = ({
   voteDisabled,
-  messageType = 'thread',
+  messageType = "thread",
   itemId,
   isLoggedIn,
   votes,
@@ -31,24 +31,24 @@ export const RatingTabs = ({
   fetchScoringCategoriesAction,
   fetchThreadVotesAction,
   fetchMessageVotesAction,
-  handleClose,
+  handleClose
 }: RatingTabsProps) => {
-  const item = votes.find((messageOrThread) => messageOrThread.id === itemId);
+  const item = votes.find(messageOrThread => messageOrThread.id === itemId);
 
   useEffect(() => {
     if (!scoringCategories) {
       fetchScoringCategoriesAction();
     }
 
-    if (messageType === 'thread') {
+    if (messageType === "thread") {
       fetchThreadVotesAction({
-        id: itemId,
+        id: itemId
       });
     }
 
-    if (messageType === 'message') {
+    if (messageType === "message") {
       fetchMessageVotesAction({
-        id: itemId,
+        id: itemId
       });
     }
   }, []);
@@ -59,7 +59,7 @@ export const RatingTabs = ({
     (event: React.ChangeEvent<{}>, newValue: number) => {
       changeTabItem(newValue);
     },
-    [],
+    []
   );
 
   return (
@@ -89,7 +89,7 @@ export const RatingTabs = ({
               </Tabs>
             </AppBar>
             <TabPanel value={tabItem} index={0}>
-              <Typography variant="h5" style={{ textAlign: 'center' }}>
+              <Typography variant="h5" style={{ textAlign: "center" }}>
                 Notes du message
               </Typography>
               <RatingShow
@@ -102,7 +102,7 @@ export const RatingTabs = ({
             <TabPanel value={tabItem} index={1}>
               {isLoggedIn && (
                 <>
-                  <Typography variant="h5" style={{ textAlign: 'center' }}>
+                  <Typography variant="h5" style={{ textAlign: "center" }}>
                     Voter pour ce message
                   </Typography>
                   <RatingForm
@@ -114,7 +114,7 @@ export const RatingTabs = ({
               )}
               {!isLoggedIn && (
                 <>
-                  <Typography style={{ textAlign: 'center' }}>
+                  <Typography style={{ textAlign: "center" }}>
                     Vous devez être connecté pour voter
                   </Typography>
                 </>

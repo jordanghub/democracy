@@ -11,6 +11,8 @@ export interface ThreadHomepageProps {
   categories?: ThreadCategory[];
   messageType?: string;
   withAvatar?: boolean;
+  votes?: any;
+  scoringCategories?: any;
 }
 
 type ThreadCategory = {

@@ -18,6 +18,11 @@ const Category: NextPage = memo(() => {
   const dispatch = useDispatch();
 
   const threads = useSelector((state: TState) => state.thread.categoryThreads);
+
+  const scoringCategories = useSelector(
+    (state: TState) => state.votes.scoringCategories,
+  );
+
   const paginationData = useSelector(
     (state: TState) => state.pagination['category-threads'],
   );
@@ -36,6 +41,8 @@ const Category: NextPage = memo(() => {
       date={thread.createdAt}
       categories={thread.categories}
       messageType="thread"
+      votes={thread.votes}
+      scoringCategories={scoringCategories}
       withAvatar
     />
   ));

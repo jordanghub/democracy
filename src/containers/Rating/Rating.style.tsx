@@ -23,6 +23,5 @@ export const PoperRating = styled(
   opacity: ${({ state }) =>
     state === 'entering' || state === 'entered' ? 1 : 0};
   position: relative;
-  min-width: 300px;
-  min-height: 750px;
+  min-width: 320px;
 `;

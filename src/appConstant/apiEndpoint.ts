@@ -2,7 +2,7 @@
  * List of api endpoints
  */
 
-export const BASE_API_URL = 'http://192.168.1.22:3000';
+export const BASE_API_URL = process.env.API_URL;
 
 export const THREAD_LIST_ROUTE = '/threads';
 export const CATEGORY_ENDPOINT = '/categories';

@@ -1,11 +1,11 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
 
 import * as Styled from './Thread.style';
 import { ThreadHomepage, ThreadMessage } from 'components';
 import { AnswerThreadForm } from 'containers/Forms/AnswerThreadForm';
 import { ThreadOriginalSelection } from 'components/Thread/ThreadOriginalSelection';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFlashMessage } from 'store/actions';
+import { setFlashMessage, toggleThreadLock } from 'store/actions';
 import socket from 'utils/websockets';
 import { EVENT_NEW_THREAD_MESSAGE } from 'appConstant/websockets';
 import { Backdrop, CircularProgress, Typography } from '@material-ui/core';
@@ -14,14 +14,28 @@ import { useThread } from 'hooks';
 import { useForms } from 'hooks';
 import { TState } from 'types/state';
 import { IThreadContainerProps } from './interface';
+import { ThreadModeration } from 'components/Thread/ThreadModeration';
+import { AlertTitle } from '@material-ui/lab';
+import { findRoleInUser } from 'utils/findInUserRole';
 
 export const Thread = ({ slug }: IThreadContainerProps) => {
   const dispatch = useDispatch();
 
-  const { isLoggedIn } = useSelector((state: TState) => state.user);
+  const { isLoggedIn, userData } = useSelector((state: TState) => state.user);
+  const { scoringCategories } = useSelector((state: TState) => state.votes);
+
+  const isModeratorOrAdmin = useMemo(
+    () => findRoleInUser(['ROLE_ADMIN', 'ROLE_MODERATOR'], userData?.roles),
+    [userData],
+  );
 
   const setFlashMessageAction = useCallback(
     (payload) => dispatch(setFlashMessage(payload)),
+    [dispatch],
+  );
+
+  const threadLockAction = useCallback(
+    (payload) => dispatch(toggleThreadLock(payload)),
     [dispatch],
   );
 
@@ -45,7 +59,7 @@ export const Thread = ({ slug }: IThreadContainerProps) => {
 
   if (!thread.threadSingle) {
     return (
-      <Backdrop open={!thread.threadSingle}>
+      <Backdrop open={!thread.threadSingle} timeout={500}>
         <CircularProgress color="primary" />
       </Backdrop>
     );
@@ -58,14 +72,18 @@ export const Thread = ({ slug }: IThreadContainerProps) => {
     createdAt,
     author,
     categories,
+    locked,
+    votes,
   } = thread.threadSingle;
 
-  const messagesList = messages.map((message, index) => (
+  const messagesList = messages.map((message) => (
     <ThreadMessage
+      scoringCategories={scoringCategories}
+      votes={message.votes || []}
       setFlashMessageAction={setFlashMessageAction}
       setInitialFormDataAction={setInitialFormData}
       threadId={id}
-      key={index}
+      key={message.id}
       id={message.id}
       highlightedItems={message.highlightedItems}
       content={message.content}
@@ -83,6 +101,12 @@ export const Thread = ({ slug }: IThreadContainerProps) => {
           title={originalSelection.thread.title}
         />
       )}
+      {isModeratorOrAdmin && (
+        <ThreadModeration
+          lockData={locked}
+          toggleThreadLockAction={threadLockAction}
+        />
+      )}
       <ThreadHomepage
         id={id}
         title={title}
@@ -91,16 +115,28 @@ export const Thread = ({ slug }: IThreadContainerProps) => {
         categories={categories}
         withoutLink
         messageType="thread"
+        votes={votes}
+        scoringCategories={scoringCategories}
       />
       <Styled.Messages>{messagesList}</Styled.Messages>
-      {isLoggedIn ? (
-        <AnswerThreadForm />
-      ) : (
+      {isLoggedIn && (!locked || isModeratorOrAdmin) && <AnswerThreadForm />}
+      {!isLoggedIn && !locked && (
         <Styled.NotLoggedInMessage>
           <Typography component="p" variant="h6">
             Vous devez être connecté pour envoyer un message
           </Typography>
         </Styled.NotLoggedInMessage>
+      )}
+
+      {locked && (
+        <Styled.LockedMessage severity="error">
+          <AlertTitle>
+            Ce thread a été vérouillé par {locked.user.username}
+          </AlertTitle>
+          {locked.reason && (
+            <Typography component="p">Raison: {locked.reason}</Typography>
+          )}
+        </Styled.LockedMessage>
       )}
     </Styled.Wrapper>
   );

@@ -10,6 +10,7 @@ import {
   FETCH_THREADS_BY_CATEGORY,
   SEARCH_THREAD,
   CHANGE_SEARCH_THREAD_RESULT,
+  TOGGLE_THREAD_LOCK,
 } from 'store/actionTypes';
 
 import { ThreadHomepage } from 'types/thread';
@@ -98,4 +99,12 @@ export interface IChangeThreadSearchResultAction {
 
 export interface IChangeThreadSearchResultPayload {
   searchResult: any;
+}
+
+export interface IToggleThreadLockAction {
+  type: typeof TOGGLE_THREAD_LOCK;
+  payload: IToggleThreadLockPayload;
+}
+export interface IToggleThreadLockPayload {
+  reason?: string;
 }

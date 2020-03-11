@@ -8,11 +8,14 @@ import { logout } from 'store/actions';
 
 import * as Styled from './BaseLayout.style';
 import { FlashMessage } from 'containers/FlashMessage/FlashMessage';
+import { Footer } from 'components/Footer';
+import Error from 'pages/_error';
 
 export const BaseLayout = ({
   children,
   title = 'Democracy',
   description,
+  statusCode,
 }: BaseLayoutProps) => {
   const dispatch = useDispatch();
 
@@ -23,8 +26,11 @@ export const BaseLayout = ({
   const { isLoggedIn, userData } = useSelector((state: TState) => state.user);
 
   const logoutAction = useCallback(() => dispatch(logout()), [dispatch]);
+  console.log(statusCode ? true : false);
 
-  return (
+  return statusCode ? (
+    <Error statusCode={statusCode} />
+  ) : (
     <div>
       <Head>
         <title>{title}</title>

@@ -118,7 +118,7 @@ export const Rating = ({ voteDisabled, messageType, itemId }: IRatingProps) => {
                 popperRef={popperRef}
                 open
                 anchorEl={ref.current}
-                placement="right"
+                placement="bottom-end"
                 disablePortal
                 transition
                 modifiers={{

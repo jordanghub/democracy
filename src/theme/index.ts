@@ -7,10 +7,10 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     overflow-x: hidden;
   }
-
-  html {
-    overflow-y: scroll;
+  body {
+    min-height: 100vh;
   }
+
   * {
     box-sizing: border-box;
   }  

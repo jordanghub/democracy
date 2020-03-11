@@ -9,6 +9,7 @@
     "@material-ui/lab": "^4.0.0-alpha.39",
     "@types/validator": "^12.0.1",
     "axios": "^0.19.2",
+    "chart.js": "^2.9.3",
     "final-form": "^4.18.6",
     "js-cookie": "^2.2.1",
     "next": "^9.2.0",
@@ -16,6 +17,7 @@
     "next-redux-saga": "^4.1.2",
     "next-redux-wrapper": "^4.0.1",
     "react": "^16.12.0",
+    "react-chartjs-2": "^2.9.0",
     "react-dom": "^16.12.0",
     "react-final-form": "^6.3.4",
     "react-markdown": "^4.3.1",
@@ -41,6 +43,7 @@
     "@types/styled-components": "^4.4.2",
     "babel-plugin-styled-components": "^1.10.6",
     "jest": "^25.1.0",
+    "prettier": "^1.19.1",
     "redux-devtools-extension": "^2.13.8",
     "redux-saga-tester": "^1.0.685",
     "typescript": "^3.7.5"
@@ -52,7 +55,7 @@
     ]
   },
   "scripts": {
-    "start": "next -p 8000 -H 0.0.0.0",
+    "start": "env API_URL=http://192.168.1.22:3000 next -p 8000 -H 0.0.0.0",
     "start:prod": "next start -p 8000 -H 0.0.0.0"
   }
 }

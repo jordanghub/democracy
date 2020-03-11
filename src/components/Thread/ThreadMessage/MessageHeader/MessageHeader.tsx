@@ -10,6 +10,7 @@ import { threadHomepageDate } from 'utils/dateFormat';
 import { ThreadAvatar } from 'components/User';
 
 import * as Styled from './MessageHeader.style';
+import { CircleVotes } from 'components/CircleVotes';
 
 export const MessageHeader = ({
   author,
@@ -17,24 +18,19 @@ export const MessageHeader = ({
   showRefs,
   date,
   messageId,
+  scoringCategories,
+  votes,
 }) => {
   return (
     <Styled.Header container alignItems="center" justify="space-between">
-      <Grid container item xs={12} sm={10} alignItems="center">
+      <Grid container item xs={12} sm={11} alignItems="center">
         <ThreadAvatar
           username={author.username}
           avatarLink={author.avatarFileName}
           date={threadHomepageDate(date)}
         />
       </Grid>
-      <Grid
-        className="thread-message-actions"
-        item
-        xs={12}
-        sm={2}
-        container
-        alignItems="center"
-      >
+      <Grid className="thread-message-actions" item xs={12} sm={1} container>
         <ToggleButton
           value="check"
           selected={showRefs}
@@ -47,6 +43,12 @@ export const MessageHeader = ({
         </ToggleButton>
         <Rating itemId={messageId} messageType="message" />
       </Grid>
+      <CircleVotes
+        // @ts-ignore
+        dfhjksdf={console.log(votes)}
+        votes={votes}
+        scoringCategories={scoringCategories}
+      />
     </Styled.Header>
   );
 };

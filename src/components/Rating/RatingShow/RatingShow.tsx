@@ -4,9 +4,26 @@ import CloseIcon from '@material-ui/icons/Close';
 import * as Styled from './RatingShow.style';
 import { Typography, Slider, FormHelperText, Grid } from '@material-ui/core';
 import { RatingShowProps } from './interface';
+import { RadarGraph } from 'components/RadarGraph';
+import { voteColors } from 'appConstant/misc';
 function valuetext(value: Number) {
   return `${value}`;
 }
+
+export const filterCriterias = (criterias, votes) => {
+  const labels = criterias.map((criteria) => criteria.name);
+
+  const votesValues = criterias.map((criteria) => {
+    const voteItem = votes.find((vote) => vote.category === criteria.name);
+
+    return voteItem?.average || 0;
+  });
+
+  return {
+    labels,
+    votesValues,
+  };
+};
 
 export const RatingShow = memo(
   ({
@@ -17,6 +34,7 @@ export const RatingShow = memo(
     handleClose,
     showCloseButton = false,
   }: RatingShowProps) => {
+    const votesVal = filterCriterias(criterias, votes);
     return (
       <Styled.Wrapper onClick={onClick}>
         {showCloseButton && (
@@ -31,8 +49,9 @@ export const RatingShow = memo(
             </Styled.CloseButton>
           </Styled.ShowWithoutTabsHeader>
         )}
+        {/* <RadarGraph labels={votesVal.labels} dataVal={votesVal.votesValues} /> */}
 
-        {criterias.map((criteria) => {
+        {criterias.map((criteria, index) => {
           const voteItem = votes.find(
             (vote) => vote.category === criteria.name,
           );
@@ -40,38 +59,34 @@ export const RatingShow = memo(
           return (
             <div key={criteria.name}>
               <Grid
+                key={criteria.name}
                 container
-                direction="column"
                 alignItems="center"
-                alignContent="center"
+                style={{
+                  marginTop: '1rem',
+                }}
+                justify="space-between"
               >
-                <Grid item>
-                  <Typography gutterBottom>
-                    {criteria.name} (
-                    {(voteItem && Number(voteItem.average)) || 0})
+                <Grid item container alignItems="center" xs={9}>
+                  <div
+                    style={{
+                      display: 'inline-block',
+                      backgroundColor: voteColors[index],
+                      width: '10px',
+                      height: '4px',
+                      marginRight: '0.5rem',
+                    }}
+                  ></div>
+                  <Typography>
+                    {criteria.name}: {voteItem?.average || 0}
                   </Typography>
                 </Grid>
-                <Grid item>
-                  {!voteItem && <FormHelperText>(Aucun vote)</FormHelperText>}
-                  {voteItem && (
-                    <FormHelperText>
-                      ({voteItem.voteCount} vote
-                      {voteItem.voteCount > 1 ? 's' : ''})
-                    </FormHelperText>
-                  )}
+                <Grid item xs={3} container>
+                  <Typography variant="caption">
+                    {voteItem?.voteCount || 0} vote(s)
+                  </Typography>
                 </Grid>
               </Grid>
-
-              <Slider
-                disabled
-                value={(voteItem && Number(voteItem.average)) || 0}
-                defaultValue={0}
-                getAriaValueText={valuetext}
-                valueLabelDisplay="off"
-                step={1}
-                min={0}
-                max={100}
-              />
             </div>
           );
         })}

@@ -10,11 +10,11 @@ import { batch } from 'react-redux';
 const checkErrors = ({ label, url }) => {
   const errors: any = {};
 
-  if (label === '') {
+  if (label === '' || label.trim() === '') {
     errors.label = 'Le label ne doit pas être vide';
   }
 
-  if (url === '') {
+  if (url === '' || url.trim() === '') {
     errors.url = "L'url ne doit pas être vide";
   } else {
     if (!validator.isURL(url)) {

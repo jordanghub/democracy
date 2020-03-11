@@ -9,6 +9,9 @@ export interface ThreadMessageProps {
   date: string;
   threadId: number;
   highlightedItems: any;
+  scoringCategories: any;
+  votes: any;
+
   setInitialFormDataAction: (payload: ISetInitialFormDataPayload) => void;
   setFlashMessageAction: (payload: SetFlashMessagePayload) => void;
 }

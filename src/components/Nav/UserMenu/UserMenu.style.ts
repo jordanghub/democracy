@@ -39,4 +39,7 @@ export const MenuToggle = styled.div`
 
 export const UserData = styled(Grid)`
   padding: 0.5rem;
+  & p {
+    margin-left: 0.5rem;
+  }
 `;

@@ -1,4 +1,4 @@
-import { Store, ActionCreator } from 'redux';
+import { Store } from 'redux';
 import { TState } from 'types/state';
 
 interface IFetchAndAwait {

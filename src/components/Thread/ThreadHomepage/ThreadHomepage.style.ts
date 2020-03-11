@@ -1,7 +1,12 @@
 import styled from 'styled-components';
-import { Paper, Typography } from '@material-ui/core';
+import { Paper, Typography, Chip, ChipProps } from '@material-ui/core';
 
-export const Wrapper = styled(Paper)`
+interface IWrapperProps {
+  voteAverage?: number;
+  voteColor?: string;
+}
+
+export const Wrapper = styled(Paper)<IWrapperProps>`
   margin-top: 1rem;
   padding: 1rem;
 
@@ -18,3 +23,7 @@ export const Categories = styled.div`
     margin-left: 0.5rem;
   }
 `;
+
+export const ChipStyle = styled(Chip)`
+  margin-top: 0.5rem;
+` as typeof Chip;
