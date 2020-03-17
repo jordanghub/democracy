@@ -1,8 +1,11 @@
 /**
  * List of api endpoints
  */
+import getConfig from 'next/config';
 
-export const BASE_API_URL = process.env.API_URL;
+const { publicRuntimeConfig } = getConfig();
+
+export const BASE_API_URL = publicRuntimeConfig.API_URL;
 
 export const THREAD_LIST_ROUTE = '/threads';
 export const CATEGORY_ENDPOINT = '/categories';
