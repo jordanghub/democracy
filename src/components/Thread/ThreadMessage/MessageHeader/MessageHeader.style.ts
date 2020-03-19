@@ -5,6 +5,9 @@ export const Header = styled(Grid)`
   margin-bottom: 1rem;
   margin-top: 1rem;
   & .thread-message-actions {
+    & svg {
+      color: ${(props) => props.theme.default.iconColor};
+    }
     align-items: flex-start;
     flex-direction: row;
     @media screen and (min-width: 600px) {

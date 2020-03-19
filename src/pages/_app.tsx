@@ -1,7 +1,7 @@
 import App from 'next/app';
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
-import { GlobalStyle, theme } from 'theme';
+
+import { GlobalStyle } from 'theme';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
 import cookies from 'cookie';
@@ -93,10 +93,8 @@ class MyApp extends App<MyAppProps> {
     const { Component, pageProps, store } = this.props;
     return (
       <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <GlobalStyle />
-          <Component {...pageProps} />
-        </ThemeProvider>
+        <GlobalStyle />
+        <Component {...pageProps} />
       </Provider>
     );
   }

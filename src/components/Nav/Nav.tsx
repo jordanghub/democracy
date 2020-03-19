@@ -75,7 +75,7 @@ export const Nav = memo(({ isLoggedIn, categories, userData }: NavProps) => {
   return (
     <Styled.Wrapper>
       {isMenuOpen && menuCategories}
-      <AppBar position="relative">
+      <AppBar position="relative" color="primary">
         <Toolbar>
           <Grid container justify="space-between" direction="row">
             <Grid item container alignItems="center" xs={12} sm>

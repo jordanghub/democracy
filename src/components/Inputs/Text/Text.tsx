@@ -1,7 +1,7 @@
 import React from 'react';
-import { TextField } from '@material-ui/core';
 import { TextProps } from './interface';
 import { Field } from 'react-final-form';
+import * as Styled from './Text.style';
 
 export const Text = ({
   name,
@@ -14,7 +14,7 @@ export const Text = ({
 }: TextProps) => (
   <Field name={name}>
     {({ input, meta }) => (
-      <TextField
+      <Styled.Wrapper
         hidden={hidden}
         error={!!(meta.touched && meta.error)}
         helperText={meta.touched ? meta.error : ''}

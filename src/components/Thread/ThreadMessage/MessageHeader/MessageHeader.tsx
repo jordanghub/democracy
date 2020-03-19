@@ -43,12 +43,7 @@ export const MessageHeader = ({
         </ToggleButton>
         <Rating itemId={messageId} messageType="message" />
       </Grid>
-      <CircleVotes
-        // @ts-ignore
-        dfhjksdf={console.log(votes)}
-        votes={votes}
-        scoringCategories={scoringCategories}
-      />
+      <CircleVotes votes={votes} scoringCategories={scoringCategories} />
     </Styled.Header>
   );
 };

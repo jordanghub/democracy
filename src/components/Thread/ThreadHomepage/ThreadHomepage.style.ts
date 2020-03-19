@@ -25,5 +25,9 @@ export const Categories = styled.div`
 `;
 
 export const ChipStyle = styled(Chip)`
+  &.MuiChip-root {
+    background-color: ${(props) =>
+      props.theme.threadHomepage.categoryBackground};
+  }
   margin-top: 0.5rem;
 ` as typeof Chip;

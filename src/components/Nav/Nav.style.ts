@@ -42,6 +42,10 @@ export const Wrapper = styled.div`
     display: none;
   }
 
+  & header {
+    background: ${(props) => props.theme.default.navBackground};
+  }
+
   @media screen and (min-width: 1024px) {
     display: flex;
     flex-wrap: wrap;

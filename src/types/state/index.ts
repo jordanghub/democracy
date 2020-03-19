@@ -34,6 +34,7 @@ export interface IVotesState {
 }
 
 export interface TAppState {
+  isDarkMode: boolean;
   isPageLoading: boolean;
   loadingErrors: {
     [key: string]: {

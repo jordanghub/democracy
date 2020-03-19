@@ -7,6 +7,7 @@ import {
   CHANGE_IS_PAGE_LOADING,
   RESET_FLASH_MESSAGE,
   ADD_LOADING_ERROR,
+  TOGGLE_DARK_MODE,
 } from 'store/actionTypes';
 
 import { TAppState } from 'types/state';
@@ -15,6 +16,7 @@ import { AppReducerActionTypes } from 'store/reducers/app/interface';
 export const initialAppState: TAppState = {
   isPageLoading: false,
   loadingErrors: {},
+  isDarkMode: false,
 };
 
 export function appReducer(
@@ -70,6 +72,16 @@ export function appReducer(
             message: action.payload.message,
           },
         },
+      };
+    }
+
+    case TOGGLE_DARK_MODE: {
+      if (!action.payload) {
+        localStorage.setItem('darkMode', !state.isDarkMode);
+      }
+      return {
+        ...state,
+        isDarkMode: action.payload ? action.payload.status : !state.isDarkMode,
       };
     }
 

@@ -148,7 +148,6 @@ export function* registerFormSubmit({ type, payload }) {
 }
 
 export function* editUserFormSubmit({ type, payload }) {
-  console.log('user edit saga');
   const axios = getAxios();
 
   const userData = yield select((state: TState) => state.user.userData);

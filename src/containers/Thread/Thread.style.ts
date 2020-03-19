@@ -10,5 +10,13 @@ export const NotLoggedInMessage = styled.div`
 `;
 
 export const LockedMessage = styled(Alert)`
+  & div.MuiAlert-icon {
+    color: ${(props) => props.theme.threadLock.iconColor};
+  }
+  &.MuiAlert-standardError {
+    background: ${(props) => props.theme.threadLock.background};
+    color: ${(props) => props.theme.threadLock.color};
+    padding-left: 0;
+  }
   margin-top: 1rem;
 `;

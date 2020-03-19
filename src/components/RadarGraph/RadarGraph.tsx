@@ -76,7 +76,6 @@ export const RadarGraph = ({ labels = [], dataVal = [] }) => {
       },
     ],
   };
-  console.log;
 
   return (
     <Styled.Wrapper>

@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
   }
 
   & .MuiSvgIcon-root {
-    color: teal;
+    color: ${(props) => props.theme.default.iconColor};
   }
 `;
 export const PoperRating = styled(

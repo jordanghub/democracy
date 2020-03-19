@@ -8,6 +8,8 @@ import {
   IResetFlashMessageAction,
   IAddLoadingErrorPayload,
   IAddLoadingErrorAction,
+  IToggleDarkModeAction,
+  IToggleDarkModePayload,
 } from './interface';
 
 import {
@@ -17,6 +19,8 @@ import {
   CHANGE_IS_PAGE_LOADING,
   RESET_FLASH_MESSAGE,
   ADD_LOADING_ERROR,
+  TOGGLE_DARK_MODE,
+  CHECK_STORAGE_VALUES,
 } from 'store/actionTypes';
 
 export const routeChangeStart = (): RouteChangeStartAction => ({
@@ -49,4 +53,15 @@ export const addLoadingError = (
 ): IAddLoadingErrorAction => ({
   type: ADD_LOADING_ERROR,
   payload,
+});
+
+export const toggleDarkMode = (
+  payload: IToggleDarkModePayload = null,
+): IToggleDarkModeAction => ({
+  type: TOGGLE_DARK_MODE,
+  payload,
+});
+
+export const checkStorageValues = () => ({
+  type: CHECK_STORAGE_VALUES,
 });

@@ -4,6 +4,7 @@ import {
   ROUTE_CHANGE_START,
   CHANGE_IS_PAGE_LOADING,
   RESET_FLASH_MESSAGE,
+  TOGGLE_DARK_MODE,
 } from 'store/actionTypes';
 import { Color } from '@material-ui/lab';
 
@@ -47,4 +48,12 @@ export interface IAddLoadingErrorPayload {
   key: string;
   code?: number;
   message?: string;
+}
+
+export interface IToggleDarkModeAction {
+  type: typeof TOGGLE_DARK_MODE;
+  payload?: IToggleDarkModePayload;
+}
+export interface IToggleDarkModePayload {
+  status: boolean;
 }

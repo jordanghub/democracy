@@ -8,5 +8,8 @@ export const Wrapper = styled(Paper)`
 `;
 
 export const HightlightedPart = styled.span`
-  background-color: rgba(0, 0, 0, 0.12);
+  background-color: ${(props) =>
+    props.theme.threadSelection.threadHighlightColor};
+  color: white;
+  padding: 0.3rem 0;
 `;
