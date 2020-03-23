@@ -5,14 +5,14 @@ import { Typography } from '@material-ui/core';
 
 import * as Styled from './ThreadOriginalSelection.style';
 
-export const ThreadOriginalSelection = ({ threadId, title, selectedText }) => {
+export const ThreadOriginalSelection = ({ slug, title, selectedText }) => {
   return (
     <Styled.Wrapper severity="info">
       <AlertTitle>
         Ce thread à été ouvert à partir d'une selection dans un message d'un
         autre thread
       </AlertTitle>
-      <LinkComponent to={`/thread/[slug]`} visibleLink={`/thread/${threadId}`}>
+      <LinkComponent to={`/thread/[slug]`} visibleLink={`/thread/${slug}`}>
         {title}
       </LinkComponent>
       <Typography>{selectedText}</Typography>

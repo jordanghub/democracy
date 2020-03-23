@@ -34,6 +34,7 @@ const Category: NextPage = memo(() => {
 
   const threadList = threads?.map((thread) => (
     <ThreadHomepage
+      slug={thread.slug}
       key={thread.id}
       id={thread.id}
       title={thread.title}

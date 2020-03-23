@@ -39,14 +39,30 @@ import { FETCH_THREAD_SINGLE_ERROR } from 'appConstant/loadingErrors';
 export function* fetchSearchThread({ type, payload }) {
   const axios = getAxios();
 
+  const params: any = {
+    search: payload.search,
+    page: payload.page || 1,
+  };
+
+  if (payload.full) {
+    params.full = '1';
+  }
+
   try {
     const response: AxiosResponse = yield axios.get(
       `${BASE_API_URL}${SEARCH_THREAD_ENDPOINT}`,
       {
-        params: {
-          search: payload.search,
-        },
+        params,
       },
+    );
+
+    yield put(
+      setPaginationData({
+        resource: 'search-result',
+        count: response.data.count,
+        pages: response.data.pages,
+        currentPage: response.data.currentPage,
+      }),
     );
 
     yield put(
@@ -138,7 +154,7 @@ export function* threadCreateFormSubmit({ type, payload }) {
       data,
     );
 
-    Router.push('/thread/[slug]', `/thread/${response.data.id}`, {
+    Router.push('/thread/[slug]', `/thread/${response.data.slug}`, {
       shallow: true,
     });
   } catch (err) {

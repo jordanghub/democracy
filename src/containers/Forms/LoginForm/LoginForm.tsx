@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { FormRenderProps, Form, AnyObject } from 'react-final-form';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { FormApi } from 'final-form';
 import { Button } from '@material-ui/core';
 
@@ -10,6 +10,7 @@ import * as Styled from './LoginForm.style';
 import { TState } from 'types/state';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { useForms } from 'hooks';
+import { resendConfirmationEmail } from 'store/actions';
 
 export const LoginFormComponent = ({ handleSubmit }: FormRenderProps) => {
   return (
@@ -25,6 +26,13 @@ export const LoginFormComponent = ({ handleSubmit }: FormRenderProps) => {
 
 export const LoginForm = () => {
   const { resetFormData, loginFormSubmit } = useForms();
+
+  const dispatch = useDispatch();
+
+  const resendConfirmatonEmailAction = useCallback(
+    () => dispatch(resendConfirmationEmail()),
+    [dispatch],
+  );
 
   useEffect(() => {
     return () => resetFormData({ formName: 'login' });
@@ -42,6 +50,15 @@ export const LoginForm = () => {
         <Alert severity="error">
           <AlertTitle>Erreur lors de l'envoi</AlertTitle>
           {formData.errors.submitError}
+          {formData.errors.errorType &&
+            formData.errors.errorType === 'not_activated' && (
+              <Button
+                onClick={resendConfirmatonEmailAction}
+                variant="contained"
+              >
+                Renvoyer l'email de confirmation
+              </Button>
+            )}
         </Alert>
       )}
       <Form

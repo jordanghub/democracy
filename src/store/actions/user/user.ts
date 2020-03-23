@@ -9,6 +9,9 @@ import {
   IFetchUserDataAction,
   IChangeUserDataPayload,
   IChangeUserDataAction,
+  IResendConfirmationEmailAction,
+  ISetUserLoginDetailsAction,
+  ISetUserLoginDetailsPayload,
 } from './interface';
 
 import {
@@ -19,6 +22,8 @@ import {
   GET_NEW_TOKEN_WITH_REFRESH,
   FETCH_USER_DATA,
   CHANGE_USER_DATA,
+  RESEND_CONFIRMATION_EMAIL,
+  SET_USER_LOGIN_DETAILS,
 } from 'store/actionTypes';
 
 export const logout = (): LogoutAction => ({
@@ -54,5 +59,16 @@ export const changeUserData = (
   payload: IChangeUserDataPayload,
 ): IChangeUserDataAction => ({
   type: CHANGE_USER_DATA,
+  payload,
+});
+
+export const resendConfirmationEmail = (): IResendConfirmationEmailAction => ({
+  type: RESEND_CONFIRMATION_EMAIL,
+});
+
+export const setUserLoginDetails = (
+  payload: ISetUserLoginDetailsPayload,
+): ISetUserLoginDetailsAction => ({
+  type: SET_USER_LOGIN_DETAILS,
   payload,
 });

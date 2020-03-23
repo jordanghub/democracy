@@ -40,7 +40,7 @@ const mapSelection = (items: any, content: string) => {
             itemParts[0],
             <HighlightedItem
               text={item.selectedItem.selectedText}
-              threadId={item.threadReferenceToId}
+              threadId={item.selectedItem.referenceThread.slug}
             />,
             itemParts[1],
           ];
@@ -205,7 +205,9 @@ export const ThreadMessage = memo(
             content={content}
           />
 
-          <MessageSources sources={sources} />
+          {sources && sources.length > 0 && (
+            <MessageSources sources={sources} />
+          )}
         </Styled.Wrapper>
       </Zoom>
     );

@@ -96,7 +96,7 @@ export const Thread = ({ slug }: IThreadContainerProps) => {
     <Styled.Wrapper>
       {originalSelection && (
         <ThreadOriginalSelection
-          threadId={originalSelection.thread.id}
+          slug={originalSelection.thread.slug}
           selectedText={originalSelection.selectedText}
           title={originalSelection.thread.title}
         />
@@ -108,6 +108,7 @@ export const Thread = ({ slug }: IThreadContainerProps) => {
         />
       )}
       <ThreadHomepage
+        slug={slug}
         id={id}
         title={title}
         author={author}

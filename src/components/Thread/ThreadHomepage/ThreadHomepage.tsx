@@ -10,6 +10,7 @@ import { CircleVotes } from 'components/CircleVotes';
 
 export const ThreadHomepage = ({
   id,
+  slug,
   title,
   withoutLink,
   author,
@@ -31,7 +32,7 @@ export const ThreadHomepage = ({
               ) : (
                 <LinkComponent
                   to={`/thread/[slug]`}
-                  visibleLink={`/thread/${id}`}
+                  visibleLink={`/thread/${slug}`}
                 >
                   {title}
                 </LinkComponent>

@@ -8,6 +8,8 @@ import {
   CHANGE_USER_DATA,
   CHANGE_USER_TOKEN,
   REFRESH_NOTIFICATION_WEBSOCKET,
+  RESEND_CONFIRMATION_EMAIL,
+  SET_USER_LOGIN_DETAILS,
 } from 'store/actionTypes';
 
 export interface LogoutAction {
@@ -48,3 +50,16 @@ export interface IChangeUserDataAction {
 }
 
 export interface IChangeUserDataPayload {}
+
+export interface IResendConfirmationEmailAction {
+  type: typeof RESEND_CONFIRMATION_EMAIL;
+}
+
+export interface ISetUserLoginDetailsAction {
+  type: typeof SET_USER_LOGIN_DETAILS;
+  payload: ISetUserLoginDetailsPayload;
+}
+export interface ISetUserLoginDetailsPayload {
+  username: string;
+  password: string;
+}

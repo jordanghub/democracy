@@ -8,6 +8,7 @@ export interface ThreadHomepage {
   votes?: IVote[];
   createdAt?: string;
   categories?: IThreadCategory[];
+  slug: string;
 }
 
 export interface IThreadCategory {

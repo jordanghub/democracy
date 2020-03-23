@@ -14,6 +14,8 @@ import {
   createMuiTheme,
   ThemeProvider as MaterialThemeProvider,
   NoSsr,
+  Modal,
+  Typography,
 } from '@material-ui/core';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import {
@@ -21,6 +23,7 @@ import {
   WbSunny as LightIcon,
 } from '@material-ui/icons';
 import { ToggleButton } from '@material-ui/lab';
+import { LoginForm } from 'containers/Forms';
 
 export const BaseLayout = ({
   children,
@@ -100,6 +103,7 @@ export const BaseLayout = ({
               </ToggleButton>
             </Styled.DarkModeToggle>
           </NoSsr>
+
           {children}
         </MaterialThemeProvider>
       </Styled.Wrapper>

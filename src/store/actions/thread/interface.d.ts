@@ -90,6 +90,8 @@ export interface ISearchThreadAction {
 
 export interface ISearchThreadPayload {
   search: string;
+  full?: boolean;
+  page: number;
 }
 
 export interface IChangeThreadSearchResultAction {

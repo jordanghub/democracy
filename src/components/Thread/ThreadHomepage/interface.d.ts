@@ -6,6 +6,7 @@ export interface ThreadHomepageProps {
     id: number;
     avatarFileName?: string;
   };
+  slug: string;
   withoutLink?: boolean;
   date: string;
   categories?: ThreadCategory[];

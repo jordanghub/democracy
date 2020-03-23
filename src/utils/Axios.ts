@@ -118,6 +118,12 @@ export const axiosInterceptors = (store: Store, res, req) => {
             break;
           }
           case 401: {
+            const { type } = error?.response?.data;
+
+            if (type) {
+              break;
+            }
+
             try {
               if (isServer && !refreshToken) {
                 logoutActions(res);

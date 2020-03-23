@@ -34,7 +34,10 @@ export const SearchResult = ({
   const threadResults = searchResult?.map((thread) => (
     <MenuItem key={thread.id} onClick={handleClose}>
       <DescriptionOutlined fontSize="small" />
-      <LinkComponent to={`/thread/[slug]`} visibleLink={`/thread/${thread.id}`}>
+      <LinkComponent
+        to={`/thread/[slug]`}
+        visibleLink={`/thread/${thread.slug}`}
+      >
         {thread.title.slice(0, 25)}...
       </LinkComponent>
     </MenuItem>
@@ -58,6 +61,7 @@ export const SearchResult = ({
         {!searchResult && <CircularProgress size={40} />}
         {threadResults}
         {categoriesResult}
+        <a href="#">Voir plus</a>
       </Paper>
     </Styled.SearchResult>
   );

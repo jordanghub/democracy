@@ -1,9 +1,8 @@
 import { getAxios } from 'utils/Axios';
-import axiosModule from 'axios';
 import Router from 'next/router';
 import cookie from 'js-cookie';
 
-import { takeLatest, put, call, select } from 'redux-saga/effects';
+import { takeLatest, put, call, select, debounce } from 'redux-saga/effects';
 
 import {
   REGISTER_FORM_SUBMIT,
@@ -11,6 +10,7 @@ import {
   LOGOUT,
   FETCH_USER_DATA,
   USER_EDIT_FORM_SUBMIT,
+  RESEND_CONFIRMATION_EMAIL,
 } from 'store/actionTypes';
 
 import {
@@ -21,6 +21,7 @@ import {
   setRefreshStatus,
   changeUserData,
   userEditFormSubmit,
+  setUserLoginDetails,
 } from 'store/actions';
 
 import {
@@ -29,6 +30,7 @@ import {
   LOGIN_ENDPOINT,
   REFRESH_ENDPOINT,
   CURRENT_USER_ENDPOINT,
+  RESEND_VALIDATION_EMAIL,
 } from 'appConstant/apiEndpoint';
 import { AxiosResponse } from 'axios';
 import { ICustomAxiosConfig } from 'types/axios';
@@ -100,6 +102,26 @@ export function* loginFormSubmit({ type, payload }) {
             },
           }),
         );
+      } else if (err.response.status === 401) {
+        if (err.response.data && err.response.data.type) {
+          if (err.response.data.type === 'not_activated') {
+            yield put(
+              setFormError({
+                formName: 'login',
+                errors: {
+                  submitError: "Votre compte n'est pas activé",
+                  errorType: err.response.data.type,
+                },
+              }),
+            );
+            yield put(
+              setUserLoginDetails({
+                username: payload.username,
+                password: payload.password,
+              }),
+            );
+          }
+        }
       }
     }
   }
@@ -204,10 +226,52 @@ export function* editUserFormSubmit({ type, payload }) {
   }
 }
 
+export function* resendConfirmationEmail() {
+  const { userData } = yield select((state: TState) => state.user);
+
+  if (userData) {
+    return;
+  }
+
+  const { loginDetails } = yield select((state: TState) => state.user);
+
+  if (!loginDetails) {
+    return;
+  }
+
+  const axios = getAxios();
+
+  try {
+    const response: AxiosResponse = yield axios.post(
+      `${BASE_API_URL}${RESEND_VALIDATION_EMAIL}`,
+      {
+        username: loginDetails.username,
+        password: loginDetails.password,
+      },
+    );
+
+    yield put(
+      setFlashMessage({
+        type: 'success',
+        message:
+          "Un nouveau lien d'activation a été envoyé à l'adresse email donnée lors de l'inscription",
+      }),
+    );
+  } catch (err) {
+    yield put(
+      setFlashMessage({
+        type: 'error',
+        message: "Une erreur est survenue lors de l'envoi de l'email",
+      }),
+    );
+  }
+}
+
 export const userSagas = [
   takeLatest(REGISTER_FORM_SUBMIT, registerFormSubmit),
   takeLatest(LOGIN_FORM_SUBMIT, loginFormSubmit),
   takeLatest(FETCH_USER_DATA, fetchUserData),
   takeLatest(LOGOUT, logout),
   takeLatest(USER_EDIT_FORM_SUBMIT, editUserFormSubmit),
+  debounce(600, RESEND_CONFIRMATION_EMAIL, resendConfirmationEmail),
 ];

@@ -30,7 +30,7 @@ ThreadShowPage.getInitialProps = async ({
   const result: any = await fetchAndAwait({
     action: fetchThreadSingle,
     actionPayload: {
-      id: Number(query.slug),
+      id: query.slug,
     },
     dataSelector: (state) => state.thread.threadSingle,
     errorSelector: (state) =>

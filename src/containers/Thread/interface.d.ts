@@ -6,6 +6,7 @@ export interface ThreadFullProps {
   date: string;
   author: any;
   originalSelection: any;
+  slug?: string;
 }
 
 export interface IThreadContainerProps {

@@ -5,6 +5,7 @@ import {
   ISetRefreshStatusAction,
   IChangeUserDataAction,
   IChangeUSerTokenAction,
+  ISetUserLoginDetailsAction,
 } from 'store/actions/user/interface';
 
 export type UserReducerActionTypes =
@@ -12,4 +13,5 @@ export type UserReducerActionTypes =
   | LoginSuccess
   | SetAuthStatusAction
   | ISetRefreshStatusAction
-  | IChangeUserDataAction;
+  | IChangeUserDataAction
+  | ISetUserLoginDetailsAction;

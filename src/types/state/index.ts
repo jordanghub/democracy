@@ -24,6 +24,10 @@ export interface IUserState {
   refreshFailed: boolean | null;
   userData?: any;
   token?: string;
+  loginDetails?: {
+    username: string;
+    password: string;
+  };
 }
 
 export interface IVotesState {

@@ -4,6 +4,7 @@ import {
   SET_AUTH_STATUS,
   SET_REFRESH_STATUS,
   CHANGE_USER_DATA,
+  SET_USER_LOGIN_DETAILS,
 } from 'store/actionTypes';
 
 import { TAppState, IUserState } from 'types/state';
@@ -51,6 +52,15 @@ export function userReducer(
       return {
         ...state,
         userData: action.payload,
+      };
+    }
+
+    case SET_USER_LOGIN_DETAILS: {
+      return {
+        ...state,
+        loginDetails: {
+          ...action.payload,
+        },
       };
     }
 

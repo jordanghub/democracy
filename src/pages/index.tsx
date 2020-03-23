@@ -36,6 +36,7 @@ const Homepage: NextPage<HomepageProps> = () => {
   //const   = useSelector((state: TState) => state.thread.latestThreads);
   const threadList = threads?.map((thread) => (
     <ThreadHomepage
+      slug={thread.slug}
       key={thread.id}
       id={thread.id}
       title={thread.title}
